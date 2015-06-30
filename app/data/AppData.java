@@ -4,9 +4,7 @@ import model.Company;
 import model.Identification;
 import play.Logger;
 
-import java.util.HashSet;
-import java.util.Set;
-import java.util.stream.Stream;
+import java.util.*;
 
 /**
  * Created by sleski on 30.06.2015.
@@ -15,15 +13,15 @@ public class AppData {
 
     private static AppData instance = null;
 
-    private Set<Company> companies;
-    private Set<Identification> identifications;
+    private List<Company> companies;
+    private List<Identification> identifications;
 
     /**
      * To use inside.
      */
     private AppData() {
-        companies = new HashSet<>();
-        identifications = new HashSet<>();
+        companies = new ArrayList<>();
+        identifications = new ArrayList<>();
     }
 
     /**
@@ -39,11 +37,11 @@ public class AppData {
         return instance;
     }
 
-    public Set<Company> getCompanies() {
+    public List<Company> getCompanies() {
         return companies;
     }
 
-    public Set<Identification> getIdentifications() {
+    public List<Identification> getIdentifications() {
         return identifications;
     }
 
@@ -53,6 +51,17 @@ public class AppData {
 
     public boolean isIdentificationExist(Identification newIdentification) {
         return identifications.contains(newIdentification);
+    }
+
+    public void makeIdentificationsOrder(){
+        /*
+        Comparator<Book> descPriceComp = (Book b1, Book b2) -> (int) (b2.getPrice() - b1.getPrice());
+
+        Collections.sort(listBooks, descPriceComp);
+         */
+        Comparator<Identification> comparator = (Identification i1,Identification i2) -> (int)(i2.getWaiting_time() - i1.getWaiting_time());
+        Collections.sort(new ArrayList<>(identifications),comparator);
+
     }
     /**
      * Use only in test!

@@ -6,7 +6,6 @@ import converter.CompanyConverter;
 import data.AppData;
 import model.Company;
 import model.Identification;
-import play.Logger;
 import play.libs.Json;
 import play.mvc.*;
 
