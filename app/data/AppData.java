@@ -64,21 +64,10 @@ public class AppData {
     }
 
     public List<Identification> makeIdentificationsOrder(){
-        /*
-        Comparator<Book> descPriceComp = (Book b1, Book b2) -> (int) (b2.getPrice() - b1.getPrice());
-
-        Collections.sort(listBooks, descPriceComp);
-        User match = users.stream().filter((user) -> user.getId() == uid).findAny().get();
-
-        Comparator<User> byName = Comparator.comparing(user -> user.getUsername());
-        Comparator<User> byId = Comparator.comparing(user -> user.getId());
-        Comparator<User> byNickname = Comparator.comparing(user -> user.getNickname());
-
-
-         */
         Comparator<Identification> byWaitingTime = Comparator.comparing(identification -> identification.getWaiting_time());
-
-        return identifications.stream().sorted(byWaitingTime.reversed()).collect(Collectors.toList());
+        Comparator<Identification> byCurrentSLAPercentage = Comparator
+                .comparing(identification -> identification.getCompany().getCurrent_sla_percentage());
+        return identifications.stream().sorted(byWaitingTime.reversed().thenComparing(byCurrentSLAPercentage)).collect(Collectors.toList());
     }
     /**
      * Use only in test!

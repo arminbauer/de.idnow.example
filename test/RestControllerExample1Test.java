@@ -3,10 +3,12 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.type.TypeFactory;
 import data.AppData;
+import javafx.util.Pair;
 import model.Identification;
 import org.junit.Before;
 import org.junit.Test;
 import play.Logger;
+import play.libs.F;
 import play.libs.Json;
 import play.libs.ws.WS;
 import play.libs.ws.WSResponse;
@@ -49,12 +51,23 @@ public class RestControllerExample1Test extends MainTest{
                 assertEquals(WS.url("http://localhost:3333/api/v1/startIdentification").post(identification).get(10000)
                         .getStatus(), OK);
 
-                Promise<JsonNode> jsonPromise = WS.url("http://localhost:3333/api/v1/identifications").get()
-                        .map(response -> {
-                            return response.asJson();
-                        });
-                JsonNode jsonNode = jsonPromise.get(1000);
-//                jsonPromise. TODO check response status should be OK
+
+                Promise<Pair<JsonNode,Integer>> pairPromise = WS.url("http://localhost:3333/api/v1/identifications").get().map(
+                        new F.Function<WSResponse, Pair<JsonNode,Integer>>() {
+                            public Pair<JsonNode,Integer> apply(WSResponse response) {
+                                Integer status=response.getStatus();
+                                JsonNode json = response.asJson();
+                                return new Pair(json,status);
+                            }
+                        }
+                );
+
+                Pair<JsonNode,Integer> pair = pairPromise.get(1000);
+                JsonNode jsonNode = pair.getKey();
+                int status = pair.getValue();
+
+                assertEquals(status, OK);
+
                 ObjectMapper mapper = new ObjectMapper();
                 try {
                     List<Identification> identificationsWithOrder =  mapper.readValue(jsonNode.toString(),
