@@ -8,8 +8,8 @@ import org.apache.commons.lang3.builder.HashCodeBuilder;
  */
 public class Identification {
 
-    private long id;
-    private String  name, companyid;
+    private long id, companyid;
+    private String  name;
     private int waiting_time;
     // Unix format!
     private long time;
@@ -30,14 +30,6 @@ public class Identification {
         this.name = name;
     }
 
-    public String getCompanyid() {
-        return companyid;
-    }
-
-    public void setCompanyid(String companyid) {
-        this.companyid = companyid;
-    }
-
     public int getWaiting_time() {
         return waiting_time;
     }
@@ -52,6 +44,14 @@ public class Identification {
 
     public void setTime(long time) {
         this.time = time;
+    }
+
+    public long getCompanyid() {
+        return companyid;
+    }
+
+    public void setCompanyid(long companyid) {
+        this.companyid = companyid;
     }
 
     @Override

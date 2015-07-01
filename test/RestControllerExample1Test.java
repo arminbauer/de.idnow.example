@@ -1,7 +1,6 @@
 import com.fasterxml.jackson.databind.JsonNode;
 import data.AppData;
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
 import play.libs.Json;
 import play.libs.ws.WS;
@@ -21,7 +20,6 @@ public class RestControllerExample1Test extends MainTest{
     }
 
     @Test
-    @Ignore
     public void example1() {
         running(testServer(3333, fakeApplication(inMemoryDatabase())), new Runnable() {
             @Override

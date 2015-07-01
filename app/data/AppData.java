@@ -5,6 +5,7 @@ import model.Identification;
 import play.Logger;
 
 import java.util.*;
+import java.util.stream.Collectors;
 
 /**
  * Created by sleski on 30.06.2015.
@@ -53,11 +54,22 @@ public class AppData {
         return identifications.contains(newIdentification);
     }
 
+    public Company findCompanyById(long companyId) {
+        List<Company> filteredCompanies = companies.stream().filter((company) -> company.getId() == companyId).limit(2)
+                .collect(
+                        Collectors.toList());
+        if (filteredCompanies.size() > 0) {
+            return filteredCompanies.get(0);
+        }
+        return null;
+    }
+
     public void makeIdentificationsOrder(){
         /*
         Comparator<Book> descPriceComp = (Book b1, Book b2) -> (int) (b2.getPrice() - b1.getPrice());
 
         Collections.sort(listBooks, descPriceComp);
+        User match = users.stream().filter((user) -> user.getId() == uid).findAny().get();
          */
         Comparator<Identification> comparator = (Identification i1,Identification i2) -> (int)(i2.getWaiting_time() - i1.getWaiting_time());
         Collections.sort(new ArrayList<>(identifications),comparator);

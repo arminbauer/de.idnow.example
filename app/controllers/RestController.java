@@ -21,6 +21,10 @@ public class RestController extends Controller {
         if (appData.isIdentificationExist(identification)) {
             return status(409);
         }
+        Company company = appData.findCompanyById(identification.getCompanyid());
+        if (company == null) {
+            return status(412);
+        }
         appData.getIdentifications().add(identification);
         return ok();
     }
