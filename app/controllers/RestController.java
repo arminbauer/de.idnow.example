@@ -9,6 +9,8 @@ import model.Identification;
 import play.libs.Json;
 import play.mvc.*;
 
+import java.util.List;
+
 public class RestController extends Controller {
 
     private AppData appData = AppData.getInstance();
@@ -25,6 +27,7 @@ public class RestController extends Controller {
         if (company == null) {
             return status(412);
         }
+        identification.setCompany(company);
         appData.getIdentifications().add(identification);
         return ok();
     }
@@ -49,7 +52,8 @@ public class RestController extends Controller {
         //Create new identification JSON with JsonNode identification = Json.newObject();
         //Add identification to identifications list
 
-        return ok(identifications);
+        List<Identification> identificationList = appData.makeIdentificationsOrder();
+        return ok(Json.toJson(identificationList));
     }
 
 }

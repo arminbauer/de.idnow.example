@@ -32,7 +32,7 @@ public class AppData {
      */
     public static AppData getInstance() {
         if (instance == null) {
-            Logger.info("Create instance of AppSingleton.");
+            Logger.info("Create instance of AppData.");
             instance = new AppData();
         }
         return instance;
@@ -56,24 +56,29 @@ public class AppData {
 
     public Company findCompanyById(long companyId) {
         List<Company> filteredCompanies = companies.stream().filter((company) -> company.getId() == companyId).limit(2)
-                .collect(
-                        Collectors.toList());
+                .collect(Collectors.toList());
         if (filteredCompanies.size() > 0) {
             return filteredCompanies.get(0);
         }
         return null;
     }
 
-    public void makeIdentificationsOrder(){
+    public List<Identification> makeIdentificationsOrder(){
         /*
         Comparator<Book> descPriceComp = (Book b1, Book b2) -> (int) (b2.getPrice() - b1.getPrice());
 
         Collections.sort(listBooks, descPriceComp);
         User match = users.stream().filter((user) -> user.getId() == uid).findAny().get();
-         */
-        Comparator<Identification> comparator = (Identification i1,Identification i2) -> (int)(i2.getWaiting_time() - i1.getWaiting_time());
-        Collections.sort(new ArrayList<>(identifications),comparator);
 
+        Comparator<User> byName = Comparator.comparing(user -> user.getUsername());
+        Comparator<User> byId = Comparator.comparing(user -> user.getId());
+        Comparator<User> byNickname = Comparator.comparing(user -> user.getNickname());
+
+
+         */
+        Comparator<Identification> byWaitingTime = Comparator.comparing(identification -> identification.getWaiting_time());
+
+        return identifications.stream().sorted(byWaitingTime.reversed()).collect(Collectors.toList());
     }
     /**
      * Use only in test!

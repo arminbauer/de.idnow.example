@@ -1,5 +1,6 @@
 package model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 
@@ -13,6 +14,9 @@ public class Identification {
     private int waiting_time;
     // Unix format!
     private long time;
+
+    @JsonIgnore
+    private Company company;
 
     public long getId() {
         return id;
@@ -52,6 +56,14 @@ public class Identification {
 
     public void setCompanyid(long companyid) {
         this.companyid = companyid;
+    }
+
+    public Company getCompany() {
+        return company;
+    }
+
+    public void setCompany(Company company) {
+        this.company = company;
     }
 
     @Override
