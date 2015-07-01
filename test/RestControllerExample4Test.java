@@ -5,7 +5,6 @@ import com.fasterxml.jackson.databind.type.TypeFactory;
 import javafx.util.Pair;
 import model.Identification;
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
 import play.Logger;
 import play.libs.F;
@@ -18,15 +17,12 @@ import java.util.List;
 
 import static org.junit.Assert.assertEquals;
 import static play.mvc.Http.Status.OK;
-import static play.test.Helpers.fakeApplication;
-import static play.test.Helpers.inMemoryDatabase;
-import static play.test.Helpers.running;
-import static play.test.Helpers.testServer;
+import static play.test.Helpers.*;
 
 /**
  * Created by sleski on 30.06.2015.
  */
-public class RestControllerExample3Test extends MainTest{
+public class RestControllerExample4Test extends MainTest{
 
     @Before
     public void destroy() {
@@ -34,20 +30,19 @@ public class RestControllerExample3Test extends MainTest{
     }
 
     @Test
-    public void example3() {
+    public void example4() {
         running(testServer(3333, fakeApplication(inMemoryDatabase())), new Runnable() {
             @Override
             public void run() {
                 JsonNode company = Json.parse("{\"id\": 1, \"name\": \"Test Bank\", \"sla_time\": 60, \"sla_percentage\": 0.9, \"current_sla_percentage\": 0.95}");
                 assertEquals(WS.url("http://localhost:3333/api/v1/addCompany").post(company).get(10000).getStatus(), OK);
 
-                JsonNode identification = Json.parse("{\"id\": 1, \"name\": \"Peter Huber\", \"time\": 1435667215, \"waiting_time\": 30, \"companyid\": 1}");
+                JsonNode identification = Json.parse("{\"id\": 1, \"name\": \"Peter Huber\", \"time\": 1435667215, \"waiting_time\": 45, \"companyid\": 1}");
                 assertEquals(WS.url("http://localhost:3333/api/v1/startIdentification").post(identification).get(10000).getStatus(), OK);
 
-                company = Json.parse("{\"id\": 2, \"name\": \"Test Bank\", \"sla_time\": 120, \"sla_percentage\": 0.8, \"current_sla_percentage\": 0.95}");
+                company = Json.parse("{\"id\": 2, \"name\": \"Test Bank\", \"sla_time\": 120, \"sla_percentage\": 0.8, \"current_sla_percentage\": 0.8}");
                 assertEquals(WS.url("http://localhost:3333/api/v1/addCompany").post(company).get(10000).getStatus(), OK);
 
-                // First - Expected order: Identification 1, Identification 2 (since company 1 has a lower, more urgent SLA)
                 identification = Json.parse("{\"id\": 2, \"name\": \"Peter Huber\", \"time\": 1435667215, \"waiting_time\": 30, \"companyid\": 2}");
                 assertEquals(WS.url("http://localhost:3333/api/v1/startIdentification").post(identification).get(10000).getStatus(), OK);
 
@@ -63,6 +58,7 @@ public class RestControllerExample3Test extends MainTest{
 
                 Pair<JsonNode,Integer> pair = pairPromise.get(1000);
                 JsonNode jsonNode = pair.getKey();
+                System.out.println("jsond = " + jsonNode);
                 int status = pair.getValue();
 
                 assertEquals(status, OK);
