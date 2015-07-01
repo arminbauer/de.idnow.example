@@ -5,6 +5,7 @@ import com.fasterxml.jackson.databind.type.TypeFactory;
 import javafx.util.Pair;
 import model.Identification;
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 import play.Logger;
 import play.libs.F;
@@ -33,7 +34,7 @@ public class RestControllerExample3Test extends MainTest{
     }
 
     @Test
-    public void example2() {
+    public void example3() {
         running(testServer(3333, fakeApplication(inMemoryDatabase())), new Runnable() {
             @Override
             public void run() {
@@ -49,7 +50,6 @@ public class RestControllerExample3Test extends MainTest{
                 // First - Expected order: Identification 1, Identification 2 (since company 1 has a lower, more urgent SLA)
                 identification = Json.parse("{\"id\": 2, \"name\": \"Peter Huber\", \"time\": 1435667215, \"waiting_time\": 30, \"companyid\": 2}");
                 assertEquals(WS.url("http://localhost:3333/api/v1/startIdentification").post(identification).get(10000).getStatus(), OK);
-
 
                 F.Promise<Pair<JsonNode,Integer>> pairPromise = WS.url("http://localhost:3333/api/v1/identifications").get().map(
                         new F.Function<WSResponse, Pair<JsonNode,Integer>>() {

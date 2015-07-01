@@ -53,6 +53,9 @@ public class Company {
         this.current_sla_percentage = current_sla_percentage;
     }
 
+    public float getPercentage() {
+        return (getCurrent_sla_percentage() - getSla_percentage()); //
+    }
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

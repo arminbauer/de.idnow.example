@@ -63,7 +63,6 @@ public class RestControllerExample2Test extends MainTest{
 
                 Pair<JsonNode,Integer> pair = pairPromise.get(1000);
                 JsonNode jsonNode = pair.getKey();
-                System.out.println("jsond = " + jsonNode);
                 int status = pair.getValue();
 
                 assertEquals(status, OK);

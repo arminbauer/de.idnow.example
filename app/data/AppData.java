@@ -68,9 +68,9 @@ public class AppData {
         Comparator<Identification> byCurrentSLAPercentage = Comparator
                 .comparing(identification -> identification.getCompany().getCurrent_sla_percentage());
         Comparator<Identification> bySLADifference = Comparator.comparing(
-                identification -> (identification.getCompany().getSla_time() - identification.getCompany().getSla_time()));
+                identification -> (identification.getCompany().getPercentage()));
         return identifications.stream().sorted(byWaitingTime.reversed().thenComparing(byCurrentSLAPercentage)
-                .thenComparing(bySLADifference.reversed())).collect(Collectors.toList());
+                .thenComparing(bySLADifference)).collect(Collectors.toList());
     }
     /**
      * Use only in test!
