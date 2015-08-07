@@ -1,7 +1,57 @@
-@(message: String)
+@(companyList : List[Company], identificationList : List[Identification], solutionList: List[String])
 
 @main("Welcome to Play") {
 
-    @play20.welcome(message, style = "Java")
+    Existing companies:
+    <ul id="companyList">
+        @for(c <- companyList) {
+        <li>@c.getName (@c.getId) with SLA_time = @c.getSlaTime, SLA_percentage = @c.getSlaPercentage, Current_SLA_percentage = @c.getCurrentSlaPercentage</li>
+        }
+    </ul>
+
+    Pending identifications:
+    <ul id="identificationList">
+        @for(i <- identificationList) {
+        <li>@i.getName (@i.getId) belonging to @i.getCompanyId: Waiting_time = @i.getWaitingTime</li>
+        }
+    </ul>
+
+    Solution:
+    <ul id="SolutionList">
+        @for(s <- solutionList) {
+        <li>@s</li>
+        }
+    </ul>
+
+
+    <form action="@routes.RestController.addCompany()" method="post" class="navbar-form navbar-left">
+        <div class="form-group">
+            ID: <input type="text" name="id" class="form-control"> <br>
+            Name: <input type="text" name="name" class="form-control"> <br>
+            SLA time: <input type="text" name="slaTime" class="form-control"> <br>
+            SLA percentage: <input type="text" name="slaPercentage" class="form-control"> <br>
+            Current SLA percentage: <input type="text" name="currentSlaPercentage" class="form-control"> <br>
+            <button id="addCompany">Add company</button> <br>
+        </div>
+    </form>
+
+    <form action="@routes.RestController.startIdentification()" method="post" class="navbar-form navbar-left">
+        <div class="form-group">
+            ID: <input type="text" name="id" class="form-control"> <br>
+            Name: <input type="text" name="name" class="form-control"> <br>
+            Waiting time: <input type="text" name="waitingTime" class="form-control"> <br>
+            Company ID:
+            <select id="selectCompany" name="companyId">
+
+                @for(c <- companyList) {
+
+                <option name="companyId" value="@c.getId">@c.getName</option>
+
+                }
+            </select>
+            <br>
+            <button>Start identification</button> <br>
+        </div>
+    </form>
 
 }
