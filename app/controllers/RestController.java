@@ -5,6 +5,9 @@ import com.fasterxml.jackson.databind.JsonNode;
 import play.libs.Json;
 import play.mvc.*;
 
+import models.*;
+import java.util.*;
+
 public class RestController extends Controller {
 
     public Result startIdentification() {
@@ -13,7 +16,11 @@ public class RestController extends Controller {
     	
     	//Do something with the identification
     	
-        return ok();
+        // read the JsonNode as an Identification
+        Identification identification = Json.fromJson(json, Identification.class);
+        Models.identificationList.add(identification);
+
+        return ok(new Boolean(identification == null).toString());
     }
 
     public Result addCompany() {
@@ -22,6 +29,10 @@ public class RestController extends Controller {
     	
     	//Do something with the company
     	
+        // read the JsonNode as a Company
+        Company company = Json.fromJson(json, Company.class);
+        Models.companyList.put(company.getId(),company);
+
         return ok();
     }
 
@@ -33,7 +44,10 @@ public class RestController extends Controller {
     	//Create new identification JSON with JsonNode identification = Json.newObject();
     	//Add identification to identifications list 
     	
-        return ok(identifications);
+        Collections.sort(Models.identificationList);
+ 
+      // return ok(identifications);
+      return ok(Json.toJson(Models.identificationList));
     }
 
 }
