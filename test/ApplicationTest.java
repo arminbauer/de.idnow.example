@@ -15,6 +15,8 @@ import play.i18n.Lang;
 import play.libs.F;
 import play.libs.F.*;
 import play.twirl.api.Content;
+import util.DBEmulator;
+import util.IdentificationService;
 
 import static play.test.Helpers.*;
 import static org.junit.Assert.*;
@@ -36,10 +38,18 @@ public class ApplicationTest {
 
     @Test
     public void renderTemplate() {
-        Content html = views.html.index.render("Your new application is ready.");
+
+        Content html = views.html.index.render(
+                DBEmulator.getInstance().getCompanyList(),
+                DBEmulator.getInstance().getIdentificationList(),
+                IdentificationService.getInstance().computeOrder()
+        );
         assertEquals("text/html", contentType(html));
-        assertTrue(contentAsString(html).contains("Your new application is ready."));
+
+        assertTrue(contentAsString(html).contains("Solution:"));
     }
+
+
 
 
 }

@@ -33,7 +33,6 @@ $( document ).ready(function() {
           }));
           $('#companyList').append('<li>' + item.name + '</li>');
 
-          $("ul#theList").append("<li><a href='url-here'>Link Text</a></li>");
       });
 
     });

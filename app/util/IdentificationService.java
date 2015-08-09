@@ -3,8 +3,6 @@ package util;
 import models.Company;
 import models.Identification;
 
-import java.io.FileOutputStream;
-import java.io.PrintStream;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -38,22 +36,20 @@ public class IdentificationService {
                 // no company has current SLA smaller then SLA (this is good :))
                 // then get the identification that was the longer waiting time
                 Identification identification = getIdentificationWithBiggestWaitingTime(identificationList);
-                //if (identification != null) {
-                    solutionList.add(identification.getName());
-                    // remove this identification from the memory so it will not be computed again
-                    //DBEmulator.getInstance().deleteIdentification(identification);
-                    identificationList.remove(identification);
-                //}
+                solutionList.add(identification.getName());
+
+                // remove this identification from the memory so it will not be computed again
+                identificationList.remove(identification);
+                //TODO: recalculate current SLA time for company with id: identification.getCompanyId()
             } else {
                 // there are companies that do not reach the SLA percentage target
                 Identification identification = getIdentificationWithBiggestWaitingTime(identificationList, company.getId());
+                solutionList.add(identification.getName());
 
-                //if (identification != null) {
-                    solutionList.add(identification.getName());
-                    // remove this identification from the memory so it will not be computed again
-                    //DBEmulator.getInstance().deleteIdentification(identification);
-                    identificationList.remove(identification);
-                //}
+                // remove this identification from the memory so it will not be computed again
+                identificationList.remove(identification);
+
+                //TODO: recalculate current SLA time for company with id: company.getCompanyId()
             }
         };
 
@@ -71,7 +67,6 @@ public class IdentificationService {
         for(Company c : companyList){
             double currentSlaDiff = c.getCurrentSlaPercentage() - c.getSlaPercentage();
 
-            //
             if (currentSlaDiff < slaDiff){
 
                 // if company has identifications
@@ -82,7 +77,6 @@ public class IdentificationService {
             }
         }
 
-        //
         return company;
     }
 

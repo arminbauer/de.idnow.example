@@ -18,11 +18,10 @@
 
     Solution:
     <ul id="SolutionList">
-        @for(s <- solutionList) {
-        <li>@s</li>
+        @for((s, index) <- solutionList.zipWithIndex) {
+        <li>@(index + 1) - @s</li>
         }
     </ul>
-
 
     <form action="@routes.RestController.addCompany()" method="post" class="navbar-form navbar-left">
         <div class="form-group">
@@ -42,11 +41,8 @@
             Waiting time: <input type="text" name="waitingTime" class="form-control"> <br>
             Company ID:
             <select id="selectCompany" name="companyId">
-
                 @for(c <- companyList) {
-
-                <option name="companyId" value="@c.getId">@c.getName</option>
-
+                    <option name="companyId" value="@c.getId">@c.getName</option>
                 }
             </select>
             <br>

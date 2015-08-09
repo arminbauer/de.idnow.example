@@ -15,9 +15,6 @@ import java.util.*;
 
 public class RestController extends Controller {
 
-//    private List<Company> companyList = new ArrayList<>();
-//    private Map<String, List<Identification>> identificationMap = new HashMap<>();
-
     public Result startIdentification() {
     	//Get the parsed JSON data
     	//JsonNode json = request().body().asJson();
