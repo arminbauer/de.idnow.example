@@ -2,8 +2,6 @@ package models;
 
 import com.fasterxml.jackson.databind.JsonNode;
 
-import play.libs.Json;
-
 public class Company {
 
 	private int id;
@@ -11,7 +9,6 @@ public class Company {
 	private long sla_seconds;
 	private float sla_percent;
 	private float current_sla_percent; //this month
-	JsonNode company = Json.parse("{\"id\": 1, \"name\": \"Test Bank\", \"sla_time\": 60, \"sla_percentage\": 0.9, \"current_sla_percentage\": 0.95}");
 
 	public static final String COMP_ID = "id";
 	public static final String COMP_NAME = "name";
