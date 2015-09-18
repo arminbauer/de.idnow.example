@@ -68,7 +68,7 @@ public class Ident implements Comparable<Ident>{
 	}
 	
 	final private IdentData identData;
-	private JsonNode json = null;
+	private volatile JsonNode json = null;
 	private final Company company;
 	
 	private final static IdentFactory FACTORY = new IdentFactory();
