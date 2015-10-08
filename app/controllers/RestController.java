@@ -1,39 +1,78 @@
 package controllers;
 
+import business.company.entity.Company;
+import business.identification.entity.Identification;
 import com.fasterxml.jackson.databind.JsonNode;
-
+import data.IdentificationTO;
+import play.db.jpa.JPA;
+import play.db.jpa.Transactional;
 import play.libs.Json;
-import play.mvc.*;
+import play.mvc.Controller;
+import play.mvc.Result;
+
+import javax.persistence.Query;
+import java.util.List;
+import java.util.stream.Collectors;
 
 public class RestController extends Controller {
 
+    @Transactional
     public Result startIdentification() {
     	//Get the parsed JSON data
     	JsonNode json = request().body().asJson();
+
+        IdentificationTO identificationTO = Json.fromJson (json, IdentificationTO.class);
+        //Do something with the identification
+
+        Identification identification = Identification.fromTO (identificationTO);
+
+        JPA.em ().persist (identification);
+
     	
-    	//Do something with the identification
-    	
-        return ok();
+        return created ();
     }
 
+    @Transactional
     public Result addCompany() {
     	//Get the parsed JSON data
     	JsonNode json = request().body().asJson();
+
+        Company company = Json.fromJson (json, Company.class);
+
+
+        JPA.em ().persist (company);
+
     	
-    	//Do something with the company
-    	
-        return ok();
+        return created ();
     }
 
+    @Transactional
     public Result identifications() {
     	JsonNode identifications = Json.newArray();
     	
     	//Get the current identification
     	//Compute correct order
     	//Create new identification JSON with JsonNode identification = Json.newObject();
-    	//Add identification to identifications list 
-    	
+    	//Add identification to identifications list
+
+        Query namedQuery = JPA.em ().createNamedQuery ("Identification.all");
+        @SuppressWarnings ("unchecked")
+        List<Identification> resultList = namedQuery.getResultList ();
+
+        identifications = Json.toJson (resultList.stream ().map(IdentificationTO::fromBO).collect (Collectors.toList ()));
         return ok(identifications);
+    }
+
+
+    @Transactional
+    public Result companies() {
+
+        Query namedQuery = JPA.em ().createNamedQuery ("Company.all");
+
+        @SuppressWarnings ("unchecked")
+        List<Company> resultList = namedQuery.getResultList ();
+
+        return ok(Json.toJson (resultList));
     }
 
 }
