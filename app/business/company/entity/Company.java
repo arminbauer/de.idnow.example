@@ -30,6 +30,11 @@ public class Company {
     private Double currentSlaPercent;
 
 
+    public Double getSLAPercentageUrgency () {
+
+        return (this.currentSlaPercent - this.slaPercentage);
+    }
+
     public Long getId () {
 
         return id;

@@ -54,6 +54,11 @@ public class Identification {
         return bo;
     }
 
+    public Long getSLATimeUrgency () {
+
+        return (this.company.getSlaTime () - this.getWaitingTime ());
+    }
+
     public Long getId () {
 
         return id;

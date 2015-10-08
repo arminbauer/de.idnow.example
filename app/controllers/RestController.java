@@ -59,6 +59,31 @@ public class RestController extends Controller {
         @SuppressWarnings ("unchecked")
         List<Identification> resultList = namedQuery.getResultList ();
 
+
+        // sort by waiting time: higher means more urgent
+        resultList.sort((i1,i2) -> (i2.getWaitingTime ().compareTo (i1.getWaitingTime ())));
+
+        // sort by company SLA percentage lower means more urgent
+        resultList.sort (
+                (i1, i2) ->
+                        (i1.getCompany ().getSlaPercentage ().compareTo (i2.getCompany ().getSlaPercentage ()))
+        );
+
+        // sort by difference between  Current SLA and SLA percentage: lower means urgent
+        resultList.sort (
+                (i1,i2) ->
+                        ( i1.getCompany ().getSLAPercentageUrgency ().compareTo (i2.getCompany ().getSLAPercentageUrgency ()))
+        );
+
+        // sort by difference between SLA Time and waiting time: lower means urgent
+        resultList.sort (
+                (i1,i2) ->
+                        ( i1.getSLATimeUrgency ().compareTo (i2.getSLATimeUrgency ()))
+        );
+
+
+
+
         identifications = Json.toJson (resultList.stream ().map(IdentificationTO::fromBO).collect (Collectors.toList ()));
         return ok(identifications);
     }
