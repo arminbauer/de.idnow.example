@@ -1,6 +1,7 @@
 package data;
 
 import business.identification.entity.Identification;
+import play.data.validation.Constraints;
 
 /**
  * @author: hardik
@@ -8,14 +9,19 @@ import business.identification.entity.Identification;
  */
 public class IdentificationTO {
 
+    @Constraints.Required
     private Long id;
 
+    @Constraints.Required
     private String name;
 
+    @Constraints.Required
     private Long time;
 
+    @Constraints.Required
     private Long waitingTime;
 
+    @Constraints.Required
     private Long companyId;
 
     public static IdentificationTO fromBO( Identification identification) {
