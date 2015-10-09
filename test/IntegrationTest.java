@@ -21,17 +21,10 @@ public class IntegrationTest {
     public void test() {
         running(testServer(3333, fakeApplication(inMemoryDatabase())), HTMLUNIT, new Callback<TestBrowser>() {
             public void invoke(TestBrowser browser) {
-
-                try {
-                    browser.goTo("http://localhost:3333");
-                } catch (Exception e) {
-                    Logger.warn ( "Fails due to jQuery, seems to be an issue with htmlunit. " +
-                                  "Browser renders without problem: Error=" + e.getMessage () );
-                }
-
+                browser.goTo("http://localhost:3333");
                 String content = browser.pageSource ();
                 Logger.info ( "Content: " + content );
-                assertTrue (content.contains ( "Welcome to Play" ) );
+                assertTrue (content.contains ( "Your new application is ready." ) );
             }
         });
     }
