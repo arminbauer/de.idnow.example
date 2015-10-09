@@ -1,0 +1,19 @@
+@import utils._
+@(identForm: Form[data.IdentificationTO])
+<fieldset>
+
+    @formMessages()
+
+    @textField(identForm("id"),"Id","Id")
+
+    @textField(identForm("name"),"Name","Name")
+
+    @textField(identForm("time"),"Time","Time")
+
+    @textField(identForm("waitingTime"),"WaitingTime","WaitingTime")
+
+    @textField(identForm("companyId"),"CompanyId","CompanyId")
+
+    @submitButton("Save")
+
+</fieldset>

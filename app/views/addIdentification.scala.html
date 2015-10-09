@@ -1,0 +1,10 @@
+@(identForm: Form[data.IdentificationTO])
+@main("Create Identification"){
+
+
+    <form action="@routes.Application.postAddIdentification" method="post" class="form-group loginForm" >
+    @identFields(identForm)
+    </form>
+
+
+}
