@@ -78,8 +78,11 @@ public class RestControllerTest {
                 assertEquals (wsResponse.getStatus (), OK);
                 JsonNode jsonNode = wsResponse.asJson ();
                 assertEquals (jsonNode.size (), 2);
+
                 IdentificationTO id1 = Json.fromJson (jsonNode.get (0), IdentificationTO.class);
                 assertEquals (id1.getId ().longValue (), 2L);
+                IdentificationTO id2 = Json.fromJson (jsonNode.get (1), IdentificationTO.class);
+                assertEquals (id2.getId ().longValue (), 1L);
             }
         } );
 
@@ -112,6 +115,8 @@ public class RestControllerTest {
                 assertEquals (wsResponse.getStatus (), OK);
                 JsonNode jsonNode = wsResponse.asJson ();
                 assertEquals (jsonNode.size (), 2);
+
+
                 IdentificationTO id1 = Json.fromJson (jsonNode.get (0), IdentificationTO.class);
                 assertEquals (id1.getId ().longValue (), 2L);
                 IdentificationTO id2 = Json.fromJson (jsonNode.get (1), IdentificationTO.class);
@@ -147,6 +152,8 @@ public class RestControllerTest {
                 assertEquals (wsResponse.getStatus (), OK);
                 JsonNode jsonNode = wsResponse.asJson ();
                 assertEquals (jsonNode.size (), 2);
+
+
                 IdentificationTO id1 = Json.fromJson (jsonNode.get (0), IdentificationTO.class);
                 assertEquals (id1.getId ().longValue (), 1L);
                 IdentificationTO id2 = Json.fromJson (jsonNode.get (1), IdentificationTO.class);
@@ -182,6 +189,13 @@ public class RestControllerTest {
                 assertEquals (wsResponse.getStatus (), OK);
                 JsonNode jsonNode = wsResponse.asJson ();
                 assertEquals (jsonNode.size (), 2);
+
+
+
+                /* Expected Resule
+                    Identification 1
+                    Identification 2
+                 */
                 IdentificationTO id1 = Json.fromJson (jsonNode.get (0), IdentificationTO.class);
                 assertEquals (id1.getId ().longValue (), 1L);
                 IdentificationTO id2 = Json.fromJson (jsonNode.get (1), IdentificationTO.class);
