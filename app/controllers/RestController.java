@@ -1,39 +1,57 @@
 package controllers;
 
+import java.util.List;
+import java.util.Set;
+
+import javax.inject.Inject;
+
+import models.CompanyDTO;
+import models.IdentificationDTO;
+
 import com.fasterxml.jackson.databind.JsonNode;
 
+import play.db.jpa.Transactional;
 import play.libs.Json;
 import play.mvc.*;
+import services.CompanyService;
+import services.IdentificationService;
 
 public class RestController extends Controller {
 
-    public Result startIdentification() {
-    	//Get the parsed JSON data
-    	JsonNode json = request().body().asJson();
-    	
-    	//Do something with the identification
-    	
-        return ok();
-    }
+	@Inject
+	CompanyService companyService;
+	
+	@Inject
+	IdentificationService identificationService;
+	
+	@Transactional
+	public Result startIdentification() {
+		// Get the parsed JSON data
+		JsonNode json = request().body().asJson();
 
-    public Result addCompany() {
-    	//Get the parsed JSON data
-    	JsonNode json = request().body().asJson();
-    	
-    	//Do something with the company
-    	
-        return ok();
-    }
+		IdentificationDTO identification=Json.fromJson(json, IdentificationDTO.class);
+		
+		identificationService.add(identification);
 
-    public Result identifications() {
-    	JsonNode identifications = Json.newArray();
-    	
-    	//Get the current identification
-    	//Compute correct order
-    	//Create new identification JSON with JsonNode identification = Json.newObject();
-    	//Add identification to identifications list 
-    	
-        return ok(identifications);
-    }
+		return ok();
+	}
+	
+	@Transactional
+	public Result addCompany() {
+		// Get the parsed JSON data
+		JsonNode json = request().body().asJson();
+
+		CompanyDTO company = Json.fromJson(json, CompanyDTO.class);
+		companyService.add(company);
+
+		return ok();
+	}
+
+	@Transactional(readOnly=true)
+	public Result identifications() {
+		List<IdentificationDTO> identificationDTOs = identificationService.getAll();
+		JsonNode identifications = Json.toJson(identificationDTOs);
+		return ok(identifications);
+	}
 
 }
