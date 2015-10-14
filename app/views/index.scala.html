@@ -1,7 +1,26 @@
 @(message: String)
 
-@main("Welcome to Play") {
+@main("IDnow Example") {
+    <script type='text/javascript' src='@routes.Assets.at("javascripts/index.js")' ></script>
+    <link rel="stylesheet" href='@routes.Assets.at("stylesheets/index.css")' />
+    
+    <img id="logo" src=@routes.Assets.at("images/idnow-logo.png") />
 
-    @play20.welcome(message, style = "Java")
+    <form method="POST" action="@routes.RestController.startIdentification()">
+    	<input class="dataInput" type="number" name="id"/><span class="dataLabel">ID</span><br>
+        <input class="dataInput" type="text" name="name"/><span class="dataLabel">Name</span><br>
+        <input class="dataInput" type="number" name="time"/><span class="dataLabel">Time</span><br>
+        <input class="dataInput" type="number" name="waiting_time"/><span class="dataLabel">Waiting time</span><br>
+        <input class="dataInput" type="number" name="companyid"/><span class="dataLabel">Company ID</span><br>
+        <button>Add Identification</button>
+    </form>
+        
+    <br><br>
+    <button id="addTestIdentification">Add Test Identification</button>
+    <button id="addTestCompany">Add Test Company</button>
+    <br>
+    <button id="listIdentifications">List Identifications</button>
+    
+    <ul id="identifications"></ul>
 
 }
