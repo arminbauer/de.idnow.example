@@ -1,0 +1,35 @@
+@CHARSET "ISO-8859-1";
+
+* {
+	font-family: "Segoe UI", Helvetica, Arial, sans-serif;
+}
+
+li {
+	list-style-type: none; 
+}
+
+#logo {
+	margin-bottom: 10px;
+}
+
+.dataInput {
+	margin-bottom: 10px;
+	width: 200px;
+}
+
+.dataLabel {
+	position: absolute;
+	left: 230px;
+}
+
+#listIdentifications {
+	margin-top: 20px;
+}
+
+#addTestCompany {
+	margin-top: 20px;
+}
+
+#addTestIdentification {
+	margin-top: 20px;
+}
