@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+
+<html lang="en">
+    <head>
+        <title>APIv1 addIdentification </title>
+		<meta charset="utf-8">
+    </head>
+	
+    <body>
+        <div id="card">
+			<h1 class="smoothTransition innerPadding">Add A Identification</h1>
+			<form id="identificationData" class="innerPadding" onsubmit="return sendData()">
+				<input type="text" name="id" placeholder="id"></input><br>
+				<input type="text" name="companyid" placeholder="companyid"></input><br>
+				<input type="text" name="name" placeholder="name"></input><br>
+				<input type="text" name="time" placeholder="time"></input><br>
+				<input type="text" name="waiting_time" placeholder="waiting_time"></input><br>
+				<input type="submit" value="Submit"></input><br>
+			</form>
+		</div>
+    </body>
+	
+	<style>
+	body{
+		font-family: "Arial";
+		font-size: "10em";
+		padding-top: 35px;
+	}
+	
+	#card{
+		width: 500px;
+		padding: 10px;
+		margin: auto;
+		
+		border-radius: 3px;
+		border: 1px solid gainsboro;
+	}
+	
+	input{
+		margin-bottom: 15px;	
+	}
+	
+	input[type=text]{
+		width: 98%;
+	}
+
+    h1{
+		color: #2E2E2C;
+		border-bottom: 1px solid gainsboro;
+		padding-bottom: 20px;
+	}
+	
+	.innerPadding{
+		padding-left: 10px;
+		padding-right: 10px;
+	}
+	
+	.smoothTransition{
+		-webkit-transition: all 0.5s ease-in-out;
+		-moz-transition: all 0.5s ease-in-out;
+		-o-transition: all 0.5s ease-in-out;
+		-ms-transition: all 0.5s ease-in-out;
+		transition: all 0.5s ease-in-out;
+	}
+    </style>
+	
+	<script>
+		function sendData(){
+			var form = document.getElementById("identificationData");
+			var data = {
+			"id":			parseInt(form["id"].value),
+			"companyid":	parseInt(form["companyid"].value),
+			"name":			form["name"].value,
+			"waiting_time":	parseInt(form["waiting_time"].value),
+			"time":			parseInt(form["time"].value)
+			};
+			
+			var xhr = new XMLHttpRequest();
+			xhr.open("POST", "/api/v1/startIdentification", true);
+			xhr.setRequestHeader('Content-Type', 'application/json; charset=UTF-8');
+
+			//catching response
+			xhr.onloadend = function(){
+				if(xhr.status >= 400){ //error
+					alert("ErrorCode: " + xhr.status);
+					
+				}else{ //success
+					form["id"].value 			= "";
+					form["companyid"].value 	= "";
+					form["name"].value 			= "";
+					form["waiting_time"].value 	= "";
+					form["time"].value 			= "";
+				}
+			};
+			
+			xhr.send(JSON.stringify(data));
+			
+			return false;
+		}
+	</script>
+</html>
