@@ -2,6 +2,12 @@
 
 @main("Welcome to Play") {
 
-    @play20.welcome(message, style = "Java")
+<form method="post" action="@routes.RestController.startIdentificationForm()">
+    <input type="text" name="name" placeholder="Name"/><br/>
+    <input type="hidden" name="time" value="12345678"/>
+    <input type="text" name="waiting_time" placeholder="Waiting time in seconds"/><br/>
+    <input type="text" name="companyid" placeholder="Company ID"/><br/>
+    <button type="submit">Add</button>
+</form>
 
 }
