@@ -55,7 +55,7 @@ public class RestControllerTest {
             JsonNode identification2 = Json.parse("{\"name\": \"Franz Schmidt\", \"time\": 1435668215, \"waiting_time\": 45, \"companyid\": 1}");
             assertEquals(WS.url("http://localhost:3333/api/v1/startIdentification").post(identification2).get(10000).getStatus(), OK);
 
-            JsonNode jsonNode = WS.url("http://localhost:3333/api/v1/identifications").get().get(10000).asJson();
+            JsonNode jsonNode = WS.url("http://localhost:3333/api/v1/pendingIdentifications").get().get(10000).asJson();
 
             Iterator<JsonNode> elements = jsonNode.elements();
             JsonNode jsonNode1 = elements.next();
