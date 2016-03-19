@@ -2,6 +2,28 @@
 
 @main("Welcome to Play") {
 
-    @play20.welcome(message, style = "Java")
+    <script type="text/javascript" src="@routes.Assets.versioned("js/index.js")"></script>
+
+    <ul id="getCompanies"></ul>
+    <label>Add a new company here:</label>
+    <form action="@routes.RestController.addCompany()" method="post">
+        <label for="name">name</label> <input type="text" name="name">
+        <label for="sla_time">sla_time</label> <input type="number" name="sla_time">
+        <label for="sla_percentage">sla_percentage</label><input type="number" step="any" name="sla_percentage">
+        <label for="current_sla_percentage">current_sla_percentage</label> <input type="number" step="any" name ="current_sla_percentage">
+        <button>Add Company</button>
+    </form>
+
+    <ul id="getIdentifications"></ul>
+    <label>Add a new identification here:</label>
+    <form action="@routes.RestController.addIdentification()" method="post">
+        <label for="name">name</label> <input type="text" name="name">
+        <label for="time">time</label> <input type="number" name="time">
+        <label for="waiting_time">waiting_time</label><input type="number" name="waiting_time">
+        <label for="companyid">companyid</label> <input type="text" name ="companyid">
+        <button>Add Identification</button>
+    </form>
+
+
 
 }
