@@ -1,13 +1,18 @@
 package models;
 
+import play.db.ebean.Model;
+
+import javax.persistence.Entity;
+import javax.persistence.Id;
 import javax.xml.bind.annotation.XmlTransient;
 
 /**
  * @author Manuel Poppe.
  */
+@Entity
+public class Company extends Model {
 
-public class Company {
-
+    @Id
     private String id;
     private String name;
     private Long sla_time;

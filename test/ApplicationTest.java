@@ -1,19 +1,17 @@
 import org.junit.Test;
+import play.mvc.Result;
+import play.test.WithApplication;
 import play.twirl.api.Content;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
-import static play.test.Helpers.contentAsString;
-import static play.test.Helpers.contentType;
+import static org.junit.Assert.*;
+import static play.test.Helpers.*;
 
 
 /**
- *
  * Simple (JUnit) tests that can call all parts of a play app.
  * If you are interested in mocking a whole application, see the wiki for more details.
- *
  */
-public class ApplicationTest {
+public class ApplicationTest extends WithApplication {
 
     @Test
     public void simpleCheck() {
