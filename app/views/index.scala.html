@@ -2,6 +2,15 @@
 
 @main("Welcome to Play") {
 
-    @play20.welcome(message, style = "Java")
+    <label>Add a new identification here:</label>
+    <form action="@routes.RestController.addIdentification()" method="post">
+        <label for="name">name</label> <input type="text" name="name">
+        <label for="time">time</label> <input type="number" name="time">
+        <label for="waiting_time">waiting_time</label><input type="number" name="waiting_time">
+        <label for="companyid">companyid</label> <input type="text" name ="companyid">
+        <button>Add Identification</button>
+    </form>
+
+
 
 }
