@@ -5,7 +5,9 @@
 # Home page
 GET     /                           controllers.Application.index()
 POST    /api/v1/addCompany          controllers.RestController.addCompany()
-POST    /api/v1/startIdentification controllers.RestController.startIdentification()
+GET    /api/v1/getCompanies         controllers.RestController.getCompanies()
+POST    /api/v1/addIdentification   controllers.RestController.addIdentification()
+GET    /api/v1/getIdentifications   controllers.RestController.getIdentifications()
 GET     /api/v1/identifications     controllers.RestController.identifications()
 
 # Map static resources from the /public folder to the /assets URL path
