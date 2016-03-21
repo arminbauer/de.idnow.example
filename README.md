@@ -98,3 +98,10 @@ Bonus task:
 - Clone this Github repository
 - Check in your code
 - Create a pull request against this Github repository
+
+## Implementation details
+
+From the description I assumed the sorting order is as follows:
+1. SLA of the company, lowest first 
+2. waiting time of the ident, highest first 
+3. current SLA percentage of that company, lowest first
