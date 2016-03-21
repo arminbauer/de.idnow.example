@@ -1,39 +1,39 @@
 package controllers;
 
-import com.fasterxml.jackson.databind.JsonNode;
-
+import model.Company;
+import model.Identification;
+import play.db.jpa.Transactional;
 import play.libs.Json;
-import play.mvc.*;
+import play.mvc.Controller;
+import play.mvc.Result;
+import repository.IdentificationRepository;
+
+import java.util.List;
 
 public class RestController extends Controller {
 
+	IdentificationRepository identificationRepository = new IdentificationRepository();
+
+	@Transactional
     public Result startIdentification() {
-    	//Get the parsed JSON data
-    	JsonNode json = request().body().asJson();
-    	
-    	//Do something with the identification
-    	
+		Identification identification = Identification.fromJson(request().body().asJson());
+		identification.save();
+
         return ok();
     }
 
+	@Transactional
     public Result addCompany() {
-    	//Get the parsed JSON data
-    	JsonNode json = request().body().asJson();
-    	
-    	//Do something with the company
-    	
+		Company company = Company.fromJson(request().body().asJson());
+		company.save();
+
         return ok();
     }
 
+	@Transactional
     public Result identifications() {
-    	JsonNode identifications = Json.newArray();
-    	
-    	//Get the current identification
-    	//Compute correct order
-    	//Create new identification JSON with JsonNode identification = Json.newObject();
-    	//Add identification to identifications list 
-    	
-        return ok(identifications);
+		List<Identification> identifications = identificationRepository.findAllSorted();
+        return ok(Json.toJson(identifications));
     }
 
 }
