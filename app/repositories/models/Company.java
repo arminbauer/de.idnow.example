@@ -6,7 +6,7 @@ import com.fasterxml.jackson.annotation.JsonBackReference;
 import play.data.format.Formats;
 
 import javax.persistence.*;
-import java.sql.Timestamp;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -47,12 +47,13 @@ public class Company extends BaseModel {
     @CreatedTimestamp
     @Formats.DateTime(pattern = "yyyy-MM-dd HH:mm:ss")
     @Column(updatable = false)
-    private Timestamp dateCreated;
+    private Date dateCreated = new Date();
 
     @Temporal(TemporalType.TIMESTAMP)
     @UpdatedTimestamp
     @Formats.DateTime(pattern = "yyyy-MM-dd HH:mm:ss")
-    private Timestamp dateUpdated;
+    @Column(updatable = true)
+    private Date dateUpdated = new Date();
 
     public int getId() {
         return id;

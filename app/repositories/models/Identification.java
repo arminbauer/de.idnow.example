@@ -42,10 +42,10 @@ public class Identification extends BaseModel {
     private Company company;
 
     @CreatedTimestamp
-    private Date dateCreated;
+    private Date dateCreated = new Date();
 
     @UpdatedTimestamp
-    private Date dateUpdated;
+    private Date dateUpdated = new Date();
 
     public int getId() {
         return id;

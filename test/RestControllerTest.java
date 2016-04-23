@@ -17,7 +17,6 @@ import static play.test.Helpers.*;
  */
 public class RestControllerTest {
 
-
     private static final String HOST = "http://localhost:3333";
 
     private static final String ADD_COMPANY = "/api/v1/addCompany";
@@ -25,8 +24,6 @@ public class RestControllerTest {
     private static final String START_IDENTIFICATION = "/api/v1/startIdentification";
 
     private static final String IDENTIFICATIONS = "/api/v1/identifications";
-
-    JsonNode identifications;
 
     private static JsonNode createCompany(int id, String name, long slaTime, double slaPercentage, double currentSlaPercentage) {
         CompanyDTO companyDTO = new CompanyDTO();

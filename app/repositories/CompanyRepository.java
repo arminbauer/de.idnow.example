@@ -6,6 +6,8 @@ import repositories.models.Company;
 import java.util.List;
 
 /**
+ * @see repositories.Repository
+ * <p>
  * Created by ebajrami on 4/23/16.
  */
 public class CompanyRepository implements Repository<Company> {

@@ -10,7 +10,8 @@ libraryDependencies ++= Seq(
   javaJdbc,
   cache,
   javaWs,
-  "mysql" % "mysql-connector-java" % "5.1.18"
+  "mysql" % "mysql-connector-java" % "5.1.18",
+  "org.mockito" % "mockito-all" % "1.10.19" % "test"
 )
 
 // Play provides two styles of routers, one expects its actions to be injected, the
@@ -18,3 +19,4 @@ libraryDependencies ++= Seq(
 routesGenerator := InjectedRoutesGenerator
 
 
+jacoco.settings

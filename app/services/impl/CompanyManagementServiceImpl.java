@@ -7,18 +7,21 @@ import services.CompanyManagementService;
 import services.dto.CompanyDTO;
 import services.exceptions.InvalidCompanyException;
 
-import java.util.List;
-
 import static com.google.common.base.Preconditions.checkArgument;
 import static com.google.common.base.Preconditions.checkNotNull;
 
 /**
+ * Service used for manupulation of company data. For now only adding company implmeneted as reqested
  * Created by ebajrami on 4/23/16.
  */
 public class CompanyManagementServiceImpl implements CompanyManagementService {
 
-    @Inject
     private CompanyRepository companyRepository;
+
+    @Inject
+    public CompanyManagementServiceImpl(CompanyRepository companyRepository) {
+        this.companyRepository = companyRepository;
+    }
 
     @Override
     public void addCompany(CompanyDTO companyDTO) throws InvalidCompanyException {
@@ -40,8 +43,4 @@ public class CompanyManagementServiceImpl implements CompanyManagementService {
         companyRepository.add(company);
     }
 
-    @Override
-    public List<Company> findAll() {
-        return companyRepository.findAll();
-    }
 }
