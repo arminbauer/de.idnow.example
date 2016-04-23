@@ -1,14 +1,23 @@
-package services.dto;
+package repositories.models;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
+import com.avaje.ebean.annotation.CreatedTimestamp;
+import com.avaje.ebean.annotation.UpdatedTimestamp;
+
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.ManyToOne;
+import java.util.Date;
 
 /**
- * Created by ebajrami on 4/23/16.
+ * Created by ebajrami on 4/22/16.
  */
-public class IdentificationDTO {
+@Entity
+public class Identification extends BaseModel {
+
     /**
      * The unique ID of the identification
      */
+    @Id
     private int id;
 
     /**
@@ -24,13 +33,19 @@ public class IdentificationDTO {
     /**
      * The current waiting time of the identification in seconds (since the user started)
      */
-    @JsonProperty("waiting_time")
     private long waitingTime;
 
     /**
      * The ID of the company to which this identification belongs
      */
-    private int companyId;
+    @ManyToOne
+    private Company company;
+
+    @CreatedTimestamp
+    private Date dateCreated;
+
+    @UpdatedTimestamp
+    private Date dateUpdated;
 
     public int getId() {
         return id;
@@ -64,11 +79,11 @@ public class IdentificationDTO {
         this.waitingTime = waitingTime;
     }
 
-    public int getCompanyId() {
-        return companyId;
+    public Company getCompany() {
+        return company;
     }
 
-    public void setCompanyId(int companyId) {
-        this.companyId = companyId;
+    public void setCompany(Company company) {
+        this.company = company;
     }
 }

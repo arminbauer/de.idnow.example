@@ -1,36 +1,24 @@
-package models;
+package services.dto;
 
-import com.avaje.ebean.Model;
-
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.OneToMany;
-import java.util.Date;
-import java.util.List;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 /**
- * Created by ebajrami on 4/22/16.
+ * Created by ebajrami on 4/23/16.
  */
-@Entity
-public class Company extends Model {
+public class CompanyDTO {
 
-    @Id
     private int id;
 
     private String name;
 
+    @JsonProperty("sla_time")
     private long slaTime;
 
+    @JsonProperty("sla_percentage")
     private double slaPercentage;
 
-    private long currentSlaPercentage;
-
-    @OneToMany(mappedBy = "company")
-    private List<Identification> identifications;
-
-    private Date dateCreated;
-
-    private Date dateUpdated;
+    @JsonProperty("current_sla_percentage")
+    private double currentSlaPercentage;
 
     public int getId() {
         return id;
@@ -64,15 +52,11 @@ public class Company extends Model {
         this.slaPercentage = slaPercentage;
     }
 
-    public long getCurrentSlaPercentage() {
+    public double getCurrentSlaPercentage() {
         return currentSlaPercentage;
     }
 
-    public void setCurrentSlaPercentage(long currentSlaPercentage) {
+    public void setCurrentSlaPercentage(double currentSlaPercentage) {
         this.currentSlaPercentage = currentSlaPercentage;
-    }
-
-    public List<Identification> getIdentifications() {
-        return identifications;
     }
 }
