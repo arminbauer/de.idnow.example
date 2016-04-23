@@ -4,9 +4,9 @@
 # --- !Ups
 
 create table company (
-  id                        integer auto_increment not null,
-  date_created              datetime(6),
-  date_updated              datetime(6),
+  id                        integer not null,
+  date_created              timestamp,
+  date_updated              timestamp,
   name                      varchar(255),
   sla_time                  bigint,
   sla_percentage            double,
@@ -15,15 +15,19 @@ create table company (
 ;
 
 create table identification (
-  id                        integer auto_increment not null,
-  date_created              datetime(6),
-  date_updated              datetime(6),
+  id                        integer not null,
+  date_created              timestamp,
+  date_updated              timestamp,
   name                      varchar(255),
   time                      bigint,
   waiting_time              bigint,
   company_id                integer,
   constraint pk_identification primary key (id))
 ;
+
+create sequence company_seq;
+
+create sequence identification_seq;
 
 alter table identification add constraint fk_identification_company_1 foreign key (company_id) references company (id) on delete restrict on update restrict;
 create index ix_identification_company_1 on identification (company_id);
@@ -32,11 +36,15 @@ create index ix_identification_company_1 on identification (company_id);
 
 # --- !Downs
 
-SET FOREIGN_KEY_CHECKS=0;
+SET REFERENTIAL_INTEGRITY FALSE;
 
-drop table company;
+drop table if exists company;
 
-drop table identification;
+drop table if exists identification;
 
-SET FOREIGN_KEY_CHECKS=1;
+SET REFERENTIAL_INTEGRITY TRUE;
+
+drop sequence if exists company_seq;
+
+drop sequence if exists identification_seq;
 

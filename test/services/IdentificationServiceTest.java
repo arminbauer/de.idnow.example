@@ -5,6 +5,7 @@ import org.junit.Test;
 import repositories.CompanyRepository;
 import repositories.IdentificationRepository;
 import services.dto.IdentificationDTO;
+import services.exceptions.DuplicateIdentificationException;
 import services.exceptions.InvalidCompanyException;
 import services.impl.IdentificationServiceImpl;
 
@@ -27,7 +28,7 @@ public class IdentificationServiceTest {
     }
 
     @Test(expected = InvalidCompanyException.class)
-    public void testIdentificationService() throws InvalidCompanyException {
+    public void testIdentificationService() throws InvalidCompanyException, DuplicateIdentificationException {
         IdentificationDTO identificationDTO = new IdentificationDTO();
         identificationDTO.setId(1);
         identificationDTO.setName("Mocked Named");

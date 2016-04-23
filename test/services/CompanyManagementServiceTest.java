@@ -1,6 +1,5 @@
 package services;
 
-import junit.framework.TestCase;
 import org.junit.Test;
 import repositories.CompanyRepository;
 import repositories.models.Company;
@@ -16,7 +15,7 @@ import static org.mockito.Mockito.when;
 /**
  * Created by ebajrami on 4/23/16.
  */
-public class CompanyManagementServiceTest extends TestCase {
+public class CompanyManagementServiceTest {
 
     private CompanyManagementService companyManagementService;
 
