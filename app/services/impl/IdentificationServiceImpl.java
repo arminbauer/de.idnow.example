@@ -50,7 +50,28 @@ public class IdentificationServiceImpl implements IdentificationService {
 
     @Override
     public List<IdentificationDTO> getPendingIdentifications() {
-        return identificationRepository.getSorted().stream().map(item -> {
+        return identificationRepository.findAll().stream().sorted((ident1, ident2) -> {
+            double slaFirst = ident1.getCompany().getSlaTime();
+            double slaSecond = ident2.getCompany().getSlaTime();
+            double waited1 = ident1.getWaitingTime();
+            double waited2 = ident2.getWaitingTime();
+
+            double percentOfTimePassed1 = waited1 / slaFirst;
+            double percentOfTimePassed2 = waited2 / slaSecond;
+
+
+            if (percentOfTimePassed1 == percentOfTimePassed2) {
+                return (ident1.getCompany().getCurrentSlaPercentage() / ident1.getCompany().getSlaPercentage()) > (ident2.getCompany().getCurrentSlaPercentage() / ident2.getCompany().getSlaPercentage()) ?
+                        1 : -1;
+            }
+            // first is more urgent
+            if (percentOfTimePassed1 <= percentOfTimePassed2) {
+                return 1;
+            } else {
+                return -1;
+            }
+
+        }).map(item -> {
             IdentificationDTO identificationDTO = new IdentificationDTO();
             identificationDTO.setCompanyId(item.getCompany().getId());
             identificationDTO.setId(item.getId());
