@@ -1,7 +1,19 @@
-@(message: String)
+@(companies: Collection[Company])(idents: Collection[Identification])
 
-@main("Welcome to Play") {
+@import tags._
 
-    @play20.welcome(message, style = "Java")
+@main("IDnow Demo") {
+
+
+    <div>
+    @companiesTable(companies)
+    </div>
+
+
+    <div>
+    @identsTable(idents)
+    </div>
 
 }
+    
+    

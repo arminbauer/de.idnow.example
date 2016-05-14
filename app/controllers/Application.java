@@ -1,14 +1,28 @@
 package controllers;
 
-import play.*;
-import play.mvc.*;
+import com.google.inject.Inject;
+import dao.CompanyStore;
+import play.mvc.Controller;
+import play.mvc.Result;
+import services.IdentificationsQueue;
+import views.html.index;
 
-import views.html.*;
+import javax.inject.Singleton;
 
+@Singleton
 public class Application extends Controller {
 
+    private final IdentificationsQueue queue;
+    private final CompanyStore companyStore;
+
+    @Inject
+    public Application(IdentificationsQueue queue, CompanyStore companyStore) {
+        this.queue = queue;
+        this.companyStore = companyStore;
+    }
+
     public Result index() {
-        return ok(index.render("Your new application is ready."));
+        return ok(index.render(companyStore.findAll(), queue.getAllIdentifications()));
     }
 
 }

@@ -1,0 +1,23 @@
+@(idents: Collection[models.Identification])
+<table id="idents">
+    <thead>
+        <tr>
+            <td>Id</td>
+            <td>Name</td>
+            <td>Time</td>
+            <td>Waiting_time</td>
+            <td>CompanyId</td>
+        </tr>
+    </thead>
+    <tbody>
+        @for(ident <- idents) {
+            <tr>
+                <td> @ident.getId</td>
+                <td> @ident.getName</td>
+                <td> @ident.getCreatedTs</td>
+                <td> @ident.getWaitTimeSeconds</td>
+                <td> @ident.getCompanyId</td>
+            </tr>
+        }
+    </tbody>
+</table>

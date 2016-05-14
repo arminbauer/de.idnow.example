@@ -1,0 +1,6 @@
+{
+  "name": "Test1",
+  "sla_time": 60,
+  "sla_percentage": 0.80,
+  "current_sla_percentage": 0.90
+}
