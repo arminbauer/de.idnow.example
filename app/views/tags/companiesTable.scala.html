@@ -1,0 +1,24 @@
+@(companies: Collection[models.Company])
+
+<table id="companies">
+    <thead>
+        <tr>
+            <td>Id</td>
+            <td>Name</td>
+            <td>SLA_time</td>
+            <td>SLA_percentage</td>
+            <td>Current_SLA_percentage</td>
+        </tr>
+    </thead>
+    <tbody>
+        @for(company <- companies) {
+            <tr>
+                <td> @company.getId</td>
+                <td> @company.getName</td>
+                <td> @company.getSlaTimeSeconds</td>
+                <td> @company.getSlaPercentage</td>
+                <td> @company.getCurrentSlaPercentage</td>
+            </tr>
+        }</tbody>
+
+</table>
