@@ -13,6 +13,9 @@ import java.util.concurrent.CompletionStage;
 import javax.inject.Provider;
 import javax.inject.Singleton;
 
+/**
+ * ErrorHandler for handling the exceptions and sending the appropriate responses
+ */
 @Singleton
 public class ErrorHandler extends DefaultHttpErrorHandler {
 
@@ -21,6 +24,14 @@ public class ErrorHandler extends DefaultHttpErrorHandler {
         super(configuration, environment, sourceMapper, routes);
     }
 
+    /**
+     * In case of an error thrown by the application, send 500 back.
+     * Request validation errors are handled by the service and controller layers.
+     *
+     * @param request
+     * @param exception
+     * @return
+     */
     public CompletionStage<Result> onServerError(RequestHeader request, Throwable exception) {
         return CompletableFuture.completedFuture(
                 Results.internalServerError(exception.getMessage())

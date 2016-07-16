@@ -3,6 +3,8 @@ package service.ifaces;
 import java.util.List;
 
 /**
+ * Base service class
+ *
  * Created by sreenath on 15.07.16.
  */
 public interface IBaseService<T> {

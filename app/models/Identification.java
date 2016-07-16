@@ -7,6 +7,8 @@ import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 
 /**
+ * Model class for Identification
+ *
  * Created by sreenath on 15.07.16.
  */
 @Entity

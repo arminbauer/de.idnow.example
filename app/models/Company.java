@@ -6,6 +6,8 @@ import javax.persistence.Entity;
 import javax.persistence.Id;
 
 /**
+ * Model class for Company
+ *
  * Created by sreenath on 15.07.16.
  */
 @Entity

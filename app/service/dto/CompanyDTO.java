@@ -6,6 +6,9 @@ import org.hibernate.validator.constraints.NotEmpty;
 import play.data.validation.Constraints;
 
 /**
+ * DTO object for Company.
+ * Direct representation of the JSON for interaction with user.
+ *
  * Created by sreenath on 15.07.16.
  */
 public class CompanyDTO {

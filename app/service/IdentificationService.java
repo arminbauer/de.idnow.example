@@ -32,9 +32,12 @@ public class IdentificationService implements IIdentificationService {
      */
     @Override
     public List getAll() {
+        // Get the full list
         List<Identification> identifications = Ebean.find(Identification.class).findList();
+        // Sort in decreasing order
         identifications.sort(new IdComparator());
         Collections.reverse(identifications);
+        // Convert to DTOs
         List<IdentificationDTO> identificationDTOs = new ArrayList<>();
         identifications.stream().forEach((id) -> identificationDTOs.add(getDTO(id)));
         return identificationDTOs;
@@ -86,8 +89,6 @@ public class IdentificationService implements IIdentificationService {
     }
 
     private class IdComparator implements Comparator<Identification> {
-
-        private long currentTime = System.currentTimeMillis()/1000;
 
         /**
          * Compares two identifications based on the value of urgency.
