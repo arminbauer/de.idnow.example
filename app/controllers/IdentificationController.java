@@ -28,8 +28,7 @@ public class IdentificationController extends Controller {
     	JsonNode json = request().body().asJson();
         IdentificationDTO identificationDTO = Json.fromJson(json, IdentificationDTO.class);
         // Validate the Data
-        Form<IdentificationDTO> form = Form.form(IdentificationDTO.class).bindFromRequest();
-        if (form.hasErrors()) {
+        if (isBlank(identificationDTO.getNameOfUser()) || isBlank(identificationDTO.getCompanyId())) {
             return badRequest("Invalid JSON");
         }
         // Persist the data
@@ -46,5 +45,9 @@ public class IdentificationController extends Controller {
     public Result identifications() {
         List<IdentificationDTO> identifications = identificationService.getAll();
         return ok(Json.toJson(identifications));
+    }
+
+    private boolean isBlank(String s) {
+        return (s == null) || (s.isEmpty());
     }
 }

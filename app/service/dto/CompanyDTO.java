@@ -1,6 +1,7 @@
 package service.dto;
 
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import org.hibernate.validator.constraints.NotEmpty;
 import play.data.validation.Constraints;
 
@@ -12,15 +13,19 @@ public class CompanyDTO {
     String id;
     @Constraints.Required
     @NotEmpty
+    @JsonProperty("Name")
     String name;
     @Constraints.Required
     @Constraints.Min(0)
+    @JsonProperty("SLA_time")
     int slaTimeSeconds;
     @Constraints.Min(0)
     @Constraints.Max(1)
+    @JsonProperty("SLA_percentage")
     double slaPercent;
     @Constraints.Min(0)
     @Constraints.Max(1)
+    @JsonProperty("Current_SLA_percentage")
     double currentSlaPercent;
 
     public String getId() {

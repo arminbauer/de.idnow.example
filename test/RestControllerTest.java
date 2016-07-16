@@ -31,15 +31,14 @@ import java.util.concurrent.ExecutionException;
 public class RestControllerTest {
 
 	final static Logger logger = LoggerFactory.getLogger(RestControllerTest.class);
-
 	@Test
 	public void createCompany() {
 		running(testServer(3333, fakeApplication(inMemoryDatabase())), new Runnable() {
 			@Override
 			public void run() {
-				JsonNode company = Json.parse("{\"id\": 1, \"name\": \"Test Bank\", \"sla_time\": 60, \"sla_percentage\": 0.9, \"current_sla_percentage\": 0.95}");
+				JsonNode company = Json.parse("{\"Name\":\"Test Bank\", \"SLA_percentage\":0.8, \"Current_SLA_percentage\":0.95, \"SLA_time\":120}");
 				JsonNode companyNode = sendPostRequest("http://localhost:3333/api/v1/addCompany", company);
-				assertEquals(companyNode.findPath("name").asText(), "Test Bank");
+				assertEquals(companyNode.findPath("Name").asText(), "Test Bank");
 			}
 		});
 	}
@@ -50,19 +49,19 @@ public class RestControllerTest {
 			@Override
 			public void run() {
 				// Create company
-				JsonNode company = Json.parse("{\"id\": 1, \"name\": \"Test Bank\", \"sla_time\": 60, \"sla_percentage\": 0.9, \"current_sla_percentage\": 0.95}");
+				JsonNode company = Json.parse("{\"Name\":\"Test Bank\", \"SLA_percentage\":0.8, \"Current_SLA_percentage\":0.95, \"SLA_time\":120}");
 				JsonNode companyNode = sendPostRequest("http://localhost:3333/api/v1/addCompany", company);
-				assertEquals(companyNode.findPath("name").asText(), "Test Bank");
-				String companyId = company.findPath("name").asText();
+				assertEquals(companyNode.findPath("Name").asText(), "Test Bank");
+				String companyId = companyNode.findPath("id").asText();
 
 				// Create identification
-				JsonNode identification = Json.parse(String.format("{\"nameOfUser\": \"Test User\", \"companyId\": \"%s\", \"startTime\": 1468670686, \"waitTime\": 30}", companyId));
+				JsonNode identification = Json.parse("{\"Name\":\"Test User\", \"Companyid\":\"" + companyId + "\", \"Time\":1468670686, \"Waiting_time\":30}");
 				JsonNode idNode = sendPostRequest("http://localhost:3333/api/v1/startIdentification", identification);
-				assertEquals(idNode.findPath("nameOfUser").asText(), "Test User");
+				assertEquals(idNode.findPath("Name").asText(), "Test User");
 
 				// Get identifications
-				ArrayNode body = (ArrayNode) sendGetRequest("http://localhost:3333/api/v1/identifications");
-				assertEquals(body.get(0).findPath("nameOfUser").asText(), "Test User");
+				ArrayNode body = (ArrayNode) sendGetRequest("http://localhost:3333/api/v1/pendingIdentifications");
+				assertEquals(body.get(0).findPath("Name").asText(), "Test User");
 			}
 		});
 	}
@@ -98,5 +97,9 @@ public class RestControllerTest {
 		}
 		return null;
 	}
+
+
+
+
 
 }

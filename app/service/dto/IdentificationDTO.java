@@ -1,5 +1,6 @@
 package service.dto;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import org.hibernate.validator.constraints.NotEmpty;
 import play.data.validation.Constraints;
 
@@ -10,16 +11,18 @@ public class IdentificationDTO {
 
     String id;
     @Constraints.Required
-    @NotEmpty
+    @JsonProperty("Name")
     String nameOfUser;
     @Constraints.Required
     @Constraints.Min(0)
+    @JsonProperty("Time")
     long startTime;
     @Constraints.Required
     @Constraints.Min(0)
+    @JsonProperty("Waiting_time")
     long waitTimeSeconds;
     @Constraints.Required
-    @NotEmpty
+    @JsonProperty("Companyid")
     String companyId;
 
     public String getId() {
