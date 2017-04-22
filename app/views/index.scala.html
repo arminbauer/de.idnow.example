@@ -2,6 +2,41 @@
 
 @main("Welcome to Play") {
 
-    @play20.welcome(message, style = "Java")
+<br/>
+<h2>Company definition</h2><br/>
+<br/>
+<form action="@routes.RestController.addCompany()" method="post">
+    <h7>Id</h7><br/>
+    <input type="text" name="id"/>
+    <br/><h7>Name</h7><br/>
+    <input type="text" name="name"/>
+    <br/><h7>SLA Time</h7><br/>
+    <input type="text" name="SLATime"/>
+    <br/><h7>SLA Percentage</h7><br/>
+    <input type="text" name="SLAPercentage"/>
+    <br/><h7>Current SLA Percentage</h7><br/>
+    <input type="text" name="currentSLAPercentage"/>
+    <br/>
+    <button>Add Company</button>
+</form>
+
+<br/>
+<h2>Identification definition</h2><br/>
+<br/>
+<form action="@routes.RestController.startIdentification()" method="post">
+    <h7>Id</h7><br/>
+    <input type="text" name="id"/>
+    <br/><h7>Name</h7><br/>
+    <input type="text" name="name"/>
+    <br/><h7>Time</h7><br/>
+    <input type="text" name="time"/>
+    <br/><h7>Waiting time</h7><br/>
+    <input type="text" name="waitingTime"/>
+    <br/><h7>Company Id</h7><br/>
+    <input type="text" name="companyId"/>
+    <br/>
+    <button>Add Identification</button>
+</form>
+
 
 }
