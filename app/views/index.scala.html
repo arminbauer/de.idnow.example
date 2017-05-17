@@ -1,7 +1,20 @@
-@(message: String)
+@main(title = "IDNow example") {
+    <h2>Identifications Queue</h2>
 
-@main("Welcome to Play") {
+    @if(flash.containsKey("company-success")) {
+    <div class="alert-message warning">
+        <strong>Company!</strong> @flash.get("company-success")
+    </div>
+    }
 
-    @play20.welcome(message, style = "Java")
+    <div class="actions">
+        <a href="@routes.Application.addCompany()">Add company</a>
+        <a href="@routes.Application.addIdentification()">Add identification</a>
+    </div>
+
+    <div id="identifications">
+
+    </div>
+
 
 }
