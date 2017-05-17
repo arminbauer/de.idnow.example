@@ -1,0 +1,24 @@
+@(myForm: Form[Identification])
+
+
+@import helper._
+
+<h1>Add a company</h1>
+
+@form(action = routes.Application.saveIdentification()) {
+<fieldset>
+
+    @inputText(myForm("id"), '_label -> "ID")
+    @inputText(myForm("name"), '_label -> "Name")
+    @inputText(myForm("waiting_time"), '_label -> "Waiting time")
+    @inputText(myForm("companyid"), '_label -> "Company ID")
+
+</fieldset>
+
+<div class="actions">
+    <input type="submit" value="Create this company" class="btn primary"> or
+    <a href="@routes.Application.index()" class="btn">Cancel</a>
+</div>
+
+}
+
