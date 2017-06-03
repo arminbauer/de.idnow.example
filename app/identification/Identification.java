@@ -9,6 +9,7 @@ import lombok.Data;
 @Builder
 public class Identification {
     private long id;
+    private String name;
     private long time;
     private long companyId;
     private long waitingTime;
