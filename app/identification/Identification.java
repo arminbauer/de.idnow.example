@@ -14,7 +14,7 @@ public class Identification {
     private long time;
     private long companyId;
 
-    public long waitingTime() {
+    public long getWaitingTime() {
         return ZonedDateTime.now().toEpochSecond() - time;
     }
 }

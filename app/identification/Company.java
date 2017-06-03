@@ -16,4 +16,8 @@ public class Company {
     public long getId() {
         return id;
     }
+
+    public boolean overdue(Identification identification) {
+        return identification.getWaitingTime() > slaTime;
+    }
 }
