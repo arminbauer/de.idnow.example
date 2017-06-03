@@ -1,6 +1,7 @@
 package controllers;
 
 import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.node.ArrayNode;
 import identification.Company;
 import identification.Identification;
 import identification.IdentificationPrioritizer;
@@ -32,13 +33,9 @@ public class RestController extends Controller {
     }
 
     public Result identifications() {
-    	JsonNode identifications = Json.newArray();
-    	
-    	//Get the current identification
-    	//Compute correct order
-    	//Create new identification JSON with JsonNode identification = Json.newObject();
-    	//Add identification to identifications list 
-    	
+    	ArrayNode identifications = Json.newArray();
+        identificationPrioritizer.prioritize()
+                .forEach(identification -> identifications.add(identificationJsonMapper.toJson(identification)));
         return ok(identifications);
     }
 
