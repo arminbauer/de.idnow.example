@@ -9,13 +9,10 @@ import java.math.BigDecimal;
 @Builder
 public class Company {
     private long id;
+    private String name;
     private long slaTime;
     private BigDecimal slaPercentage;
     private BigDecimal currentSla;
-
-    public long getId() {
-        return id;
-    }
 
     public boolean overdue(Identification identification) {
         return identification.getWaitingTime() > slaTime;

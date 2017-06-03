@@ -1,6 +1,7 @@
 package controllers;
 
 import com.fasterxml.jackson.databind.JsonNode;
+import identification.Company;
 import identification.Identification;
 import identification.IdentificationPrioritizer;
 import play.libs.Json;
@@ -12,6 +13,7 @@ public class RestController extends Controller {
     // normally this should be handled by IoC container, like Spring.
     private static IdentificationPrioritizer identificationPrioritizer = new IdentificationPrioritizer();
     private IdentificationJsonMapper identificationJsonMapper = new IdentificationJsonMapper();
+    private CompanyJsonMapper companyJsonMapper = new CompanyJsonMapper();
 
     public Result startIdentification() {
     	JsonNode json = request().body().asJson();
@@ -22,10 +24,9 @@ public class RestController extends Controller {
     }
 
     public Result addCompany() {
-    	//Get the parsed JSON data
     	JsonNode json = request().body().asJson();
-    	
-    	//Do something with the company
+    	Company company = companyJsonMapper.fromJson(json);
+    	identificationPrioritizer.add(company);
     	
         return ok();
     }
