@@ -1,38 +1,41 @@
 package controllers;
 
 import com.fasterxml.jackson.databind.JsonNode;
-
+import com.fasterxml.jackson.databind.node.ArrayNode;
+import identification.Company;
+import identification.Identification;
+import identification.IdentificationPrioritizer;
 import play.libs.Json;
-import play.mvc.*;
+import play.mvc.Controller;
+import play.mvc.Result;
 
 public class RestController extends Controller {
 
+    // normally this should be handled by IoC container, like Spring.
+    private static IdentificationPrioritizer identificationPrioritizer = new IdentificationPrioritizer();
+    private IdentificationJsonMapper identificationJsonMapper = new IdentificationJsonMapper();
+    private CompanyJsonMapper companyJsonMapper = new CompanyJsonMapper();
+
     public Result startIdentification() {
-    	//Get the parsed JSON data
     	JsonNode json = request().body().asJson();
-    	
-    	//Do something with the identification
+        Identification identification = identificationJsonMapper.fromJson(json);
+        identificationPrioritizer.add(identification);
     	
         return ok();
     }
 
     public Result addCompany() {
-    	//Get the parsed JSON data
     	JsonNode json = request().body().asJson();
-    	
-    	//Do something with the company
+    	Company company = companyJsonMapper.fromJson(json);
+    	identificationPrioritizer.add(company);
     	
         return ok();
     }
 
     public Result identifications() {
-    	JsonNode identifications = Json.newArray();
-    	
-    	//Get the current identification
-    	//Compute correct order
-    	//Create new identification JSON with JsonNode identification = Json.newObject();
-    	//Add identification to identifications list 
-    	
+    	ArrayNode identifications = Json.newArray();
+        identificationPrioritizer.prioritize()
+                .forEach(identification -> identifications.add(identificationJsonMapper.toJson(identification)));
         return ok(identifications);
     }
 
