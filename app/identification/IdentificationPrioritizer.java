@@ -21,30 +21,29 @@ public class IdentificationPrioritizer {
     }
 
     private static class PriorityComparator implements Comparator<Identification> {
+        private static final Comparator<Company> countriesPriorityComparator = Comparator
+                .comparing(Company::getSlaPercentage).reversed()
+                .thenComparingLong(Company::getSlaTime)
+                .thenComparing(Company::getCurrentSla);
+
         private Map<Long, Company> companies;
 
-        public PriorityComparator(Map<Long, Company> companies) {
+        PriorityComparator(Map<Long, Company> companies) {
             this.companies = companies;
         }
 
         @Override
         public int compare(Identification i1, Identification i2) {
-            if (companies.get(i1.getCompanyId()).overdue(i1))
+            Company c1 = companies.get(i1.getCompanyId());
+            Company c2 = companies.get(i2.getCompanyId());
+            if (c1.overdue(i1))
                 return 1;
-            if (companies.get(i2.getCompanyId()).overdue(i2))
+            if (c2.overdue(i2))
                 return -1;
             if (i1.getCompanyId() == i2.getCompanyId())
                 return -Long.compare(i1.getWaitingTime(), i2.getWaitingTime());
             else {
-                Company c1 = companies.get(i1.getCompanyId());
-                Company c2 = companies.get(i2.getCompanyId());
-                int result = -(c1.getSlaPercentage().compareTo(c2.getSlaPercentage()));
-                if (result != 0)
-                    return result;
-                result = Long.compare(c1.getSlaTime(), c2.getSlaTime());
-                if (result != 0)
-                    return result;
-                return c1.getCurrentSla().compareTo(c2.getCurrentSla());
+                return countriesPriorityComparator.compare(c1, c2);
             }
         }
     }

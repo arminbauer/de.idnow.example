@@ -8,7 +8,7 @@ import java.time.ZonedDateTime;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-public class IdentificationTest {
+public class IdentificationPrioritizerTest {
 
     private IdentificationPrioritizer identificationPrioritizer = new IdentificationPrioritizer();
     private final Long now = ZonedDateTime.now().toEpochSecond();
