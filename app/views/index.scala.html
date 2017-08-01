@@ -1,7 +1,46 @@
-@(message: String)
+@(message: String) 
 
-@main("Welcome to Play") {
+@main("IDnow") {
+	<h1>Add Identification</h1>
 
-    @play20.welcome(message, style = "Java")
+    <form id="IdentificationForm">
+    	<label> Id</label><br/>
+   		<input id="id" type="text" name="name"/><br/><br/>
+   		<label> Name</label><br/>
+		<input id="name" type="text" name="name"/><br/><br/>
+		<label> Time</label><br/>
+		<input id="time" type="text" name="time"/><br/><br/>
+		<label> Waiting time</label><br/>
+		<input id="waitingTime" type="text" name="waiting_time"/><br/><br/>
+		<label> Company Id</label><br/>
+		<input id="companyId" type="text" name="companyid"/><br/><br/>
+		<button onclick="submit">Add</button>
+	</form>
+	
+	<script>
+	var form = $('#IdentificationForm');
+
+	form.submit(function (e) {
+        e.preventDefault();
+        
+        //Get data from form
+        var data = form.serializeArray().reduce(function(a, x) { a[x.name] = x.value; return a; }, {});
+        console.log(data);
+
+        $.ajax({
+            type: "POST",
+            url: "/api/v1/startIdentification",
+            data: JSON.stringify(data),
+            contentType: "application/json; charset=utf-8",
+            success: function () {
+                console.log('Identification added.');
+            },
+            error: function (data) {
+                console.log('An error occurred.');
+                console.log(data);
+            },
+        });
+    });
+	</script>
 
 }
