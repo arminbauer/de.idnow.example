@@ -1,14 +1,21 @@
 package controllers;
 
-import play.*;
-import play.mvc.*;
+import models.IdentificationTO;
+import play.data.Form;
+import play.mvc.Controller;
+import play.mvc.Result;
+import views.html.index;
 
-import views.html.*;
+import static play.data.Form.form;
 
 public class Application extends Controller {
 
+
     public Result index() {
-        return ok(index.render("Your new application is ready."));
+
+        Form<IdentificationTO> form = form(IdentificationTO.class);
+
+        return ok(index.render(form));
     }
 
 }
