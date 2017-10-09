@@ -4,6 +4,11 @@ import com.avaje.ebean.Model;
 
 import javax.persistence.*;
 
+/**
+ * Created by Wolfgang Ostermeier on 09.10.2017.
+ *
+ * Entity class for Identification objects
+ */
 @Entity
 public class Identification extends Model {
 

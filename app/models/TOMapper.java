@@ -1,8 +1,10 @@
-package TOs;
+package models;
 
-import models.Company;
-import models.Identification;
-
+/**
+ * Created by Wolfgang Ostermeier on 09.10.2017.
+ *
+ * Class that maps TO-Objects(parsed from Json) into Entity-Objects
+ */
 public class TOMapper {
 
     public static Identification map(IdentificationTO identificationTO){
@@ -11,7 +13,7 @@ public class TOMapper {
         identification.setId(identificationTO.getId());
         identification.setName(identificationTO.getName());
         identification.setTime(identificationTO.getTime());
-        identification.setWaitingTime(identificationTO.getWaiting_time());
+        identification.setWaitingTime(identificationTO.getWaitingTime());
 
         Company company = Company.find.byId(identificationTO.getCompanyid());
 
@@ -25,9 +27,9 @@ public class TOMapper {
         Company company = new Company();
         company.setId(companyTO.getId());
         company.setName(companyTO.getName());
-        company.setCurrentSlaPercentage(companyTO.getCurrent_sla_percentage());
-        company.setSlaPercentage(companyTO.getSla_percentage());
-        company.setSlaTime(companyTO.getSla_time());
+        company.setCurrentSlaPercentage(companyTO.getCurrentSlaPercentage());
+        company.setSlaPercentage(companyTO.getSlaPercentage());
+        company.setSlaTime(companyTO.getSlaTime());
 
         return company;
     }

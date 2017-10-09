@@ -1,7 +1,12 @@
-package TOs;
+package models;
 
-import models.Company;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
+/**
+ * Created by Wolfgang Ostermeier on 09.10.2017.
+ *
+ * IndentificationTO class that gets parsed from JSON
+ */
 public class IdentificationTO {
 
     private int id;
@@ -10,7 +15,8 @@ public class IdentificationTO {
 
     private long time;
 
-    private int waiting_time;
+    @JsonProperty("waiting_time")
+    private int waitingTime;
 
     private int companyid;
 
@@ -38,12 +44,12 @@ public class IdentificationTO {
         this.time = time;
     }
 
-    public int getWaiting_time() {
-        return waiting_time;
+    public int getWaitingTime() {
+        return waitingTime;
     }
 
-    public void setWaiting_time(int waiting_time) {
-        this.waiting_time = waiting_time;
+    public void setWaitingTime(int waitingTime) {
+        this.waitingTime = waitingTime;
     }
 
     public int getCompanyid() {

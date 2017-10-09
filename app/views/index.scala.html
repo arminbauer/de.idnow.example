@@ -1,7 +1,28 @@
-@(message: String)
+@(identForm: Form[IdentificationTO])
 
-@main("Welcome to Play") {
+@main("Add Identification") {
 
-    @play20.welcome(message, style = "Java")
+<h3>Submit a new Identification Request:</h3>
+
+@if(flash.containsKey("error")){
+<div style="color: red;">
+    @flash.get("error")
+</div>
+}
+
+@if(flash.containsKey("success")){
+<div style="color: green;">
+    @flash.get("success")
+</div>
+}
+
+    @helper.form(action=routes.RestController.startFormIdentification()){
+    @helper.inputText(identForm("id"),'_label -> "ID(Integer):")
+    @helper.inputText(identForm("name"),'_label -> "Name(String):")
+    @helper.inputText(identForm("time"),'_label -> "Time(Unix-Format):")
+    @helper.inputText(identForm("waitingTime"),'_label -> "Waiting Time(in seconds):")
+    @helper.inputText(identForm("companyid"),'_label -> "Company ID(Integer):")
+    <input type="submit" value="Submit">
+    }
 
 }

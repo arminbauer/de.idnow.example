@@ -8,6 +8,11 @@ import javax.persistence.OneToMany;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Created by Wolfgang Ostermeier on 09.10.2017.
+ *
+ * Entity class for Company objects
+ */
 @Entity
 public class Company extends Model {
 

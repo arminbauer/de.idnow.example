@@ -1,24 +1,23 @@
 package controllers;
 
-import TOs.CompanyTO;
-import TOs.IdentificationTO;
-import TOs.TOMapper;
-import com.avaje.ebean.Model;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
-
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
-import models.Company;
-import models.Identification;
+import models.*;
+import play.data.Form;
 import play.libs.Json;
-import play.mvc.*;
-import utils.comparators.IdentificationComparator;
+import play.mvc.Controller;
+import play.mvc.Result;
 import utils.sorter.IdentificationSorter;
 
 import java.util.List;
 
+/**
+ * Created by Wolfgang Ostermeier on 09.10.2017.
+ *
+ * Controller to process REST-Calls and Form-encoded-POSTs
+ */
 public class RestController extends Controller {
 
     public Result startIdentification() {
@@ -36,6 +35,29 @@ public class RestController extends Controller {
             return badRequest(e.getMessage());
         }
         return ok();
+    }
+
+    public Result startFormIdentification() {
+        //Get the Form data
+        Form<IdentificationTO> identificationTOForm = Form.form(IdentificationTO.class).bindFromRequest();
+        if(identificationTOForm.hasErrors()){
+            flash("error", "Please correct the errors in the form below.");
+            return badRequest(views.html.index.render(identificationTOForm));
+        }
+        Identification identification = TOMapper.map(identificationTOForm.get());
+
+        if(identification.getCompany() == null){
+            flash("error", "There is no Company with your specified company ID in the database.");
+            return badRequest(views.html.index.render(identificationTOForm));
+        }
+        try {
+            identification.save();
+        } catch (Exception e) {
+            flash("error", "An error occurred while saving the Identification Request.");
+            return badRequest(views.html.index.render(identificationTOForm));
+        }
+        flash("success", "The Identification Request was successfully saved into the database.");
+        return ok(views.html.index.render(identificationTOForm));
     }
 
     public Result addCompany() {
@@ -57,7 +79,6 @@ public class RestController extends Controller {
 
         //Get the current identifications
         List<Identification> identificationList = Identification.find.fetch("company").findList();
-
 
          //Compute correct order
         IdentificationSorter.sortIdentifications(identificationList)
