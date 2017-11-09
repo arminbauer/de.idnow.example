@@ -3,10 +3,14 @@
 # ~~~~
 
 # Home page
-GET     /                           controllers.Application.index()
-POST    /api/v1/addCompany          controllers.RestController.addCompany()
-POST    /api/v1/startIdentification controllers.RestController.startIdentification()
-GET     /api/v1/identifications     controllers.RestController.identifications()
+GET     /                                   controllers.Application.index()
+GET     /views/identification               controllers.Application.identification()
+GET     /views/company                      controllers.Application.company()
+POST    /api/v1/addCompany                  controllers.RestController.addCompany()
+POST    /api/v1/addCompanyWithForm          controllers.RestController.addCompanyWithForm()
+POST    /api/v1/startIdentification         controllers.RestController.startIdentification()
+POST    /api/v1/startIdentificationWithForm controllers.RestController.startIdentificationWithForm()
+GET     /api/v1/identifications             controllers.RestController.identifications()
 
 # Map static resources from the /public folder to the /assets URL path
-GET     /assets/*file               controllers.Assets.versioned(path="/public", file: Asset)
+GET     /assets/*file                       controllers.Assets.versioned(path="/public", file: Asset)
