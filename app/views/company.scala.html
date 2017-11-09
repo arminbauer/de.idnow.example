@@ -1,0 +1,33 @@
+@(companyForm: play.data.Form[CompanyJSON])
+
+@main("Add company") {
+    <input type="button" onclick="location.href='@routes.Application.index()';" value="Go to start" />
+
+    <div>
+        <h3>Add a new Company:</h3>
+        @helper.form(action=routes.RestController.addCompanyWithForm()) {
+            @helper.inputText(companyForm("id"),'_label -> "Id (UUID):")
+            @helper.inputText(companyForm("name"),'_label -> "Name (String):")
+            @helper.inputText(companyForm("slaTime"),'_label -> "Sla time (int, in seconds):")
+            @helper.inputText(companyForm("slaPercentage"),'_label -> "Sla percentage (float):")
+            @helper.inputText(companyForm("currentSlaPercentage"),'_label -> "Current sla percentage (float):")
+            <input type="submit" value="Submit">
+            }
+    </div>
+
+    <div>
+        <h3>Result:</h3>
+
+        @if(flash.containsKey("error")) {
+            <div style="color: red;">
+            @flash.get("error")
+            </div>
+        }
+
+        @if(flash.containsKey("success")) {
+            <div style="color: green;">
+            @flash.get("success")
+            </div>
+        }
+    </div>
+}

@@ -1,0 +1,33 @@
+@(identForm: play.data.Form[IdentificationJSON])
+
+@main("Add identification") {
+    <input type="button" onclick="location.href='@routes.Application.index()';" value="Go to start" />
+
+    <div>
+        <h3>Add a new Identification:</h3>
+        @helper.form(action=routes.RestController.startIdentificationWithForm()) {
+            @helper.inputText(identForm("id"),'_label -> "Id (UUID):")
+            @helper.inputText(identForm("name"),'_label -> "Name (String):")
+            @helper.inputText(identForm("time"),'_label -> "Time (long, unix epoch seconds):")
+            @helper.inputText(identForm("waitingTime"),'_label -> "Waiting Time (int, in seconds):")
+            @helper.select(identForm("companyId"), helper.options(CompanyStore.getCompanyDetails()))
+            <input type="submit" value="Submit">
+            }
+    </div>
+
+    <div>
+        <h3>Result:</h3>
+
+        @if(flash.containsKey("error")) {
+            <div style="color: red;">
+            @flash.get("error")
+            </div>
+        }
+
+        @if(flash.containsKey("success")) {
+            <div style="color: green;">
+            @flash.get("success")
+            </div>
+        }
+    </div>
+}
