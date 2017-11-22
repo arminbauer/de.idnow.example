@@ -27,4 +27,9 @@ public class StoreCompanyRepository implements CompanyRepository {
     public Company getCompany(long id) {
         return idNowStoreRepository.getCompany(id);
     }
+
+    @Override
+    public void removeAllData() {
+        idNowStoreRepository.deleteAll();
+    }
 }

@@ -65,5 +65,11 @@ public class MockStore implements IdNowStoreRepository {
         return null;
     }
 
+    @Override
+    public void deleteAll() {
+        identificationStore.removeAll(identificationStore);
+        companyStore.removeAll(companyStore);
+    }
+
 
 }

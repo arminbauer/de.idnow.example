@@ -18,6 +18,8 @@ public interface IdNowStoreRepository {
     Identification addIdentification(Identification identification) throws DuplicatedElementException, CompanyNotExist;
     Identification getIdentificaation(long id);
 
+    void deleteAll();
+
     class DuplicatedElementException extends Exception {
         public DuplicatedElementException() {
             super("The element has been added.");

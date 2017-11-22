@@ -76,4 +76,9 @@ public class RestController extends Controller implements IdNowAPI<Result> {
         return ok(Json.toJson(rs));
     }
 
+    public Result reset() {
+        companyRepository.removeAllData();
+        return ok();
+    }
+
 }

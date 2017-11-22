@@ -10,4 +10,6 @@ public interface CompanyRepository {
     CompanyJson addCompany(CompanyJson json) throws IdNowStoreRepository.DuplicatedElementException;
 
     Company getCompany(long id);
+
+    void removeAllData();
 }
