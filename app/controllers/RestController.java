@@ -55,14 +55,16 @@ public class RestController extends Controller {
 
             final Float slaDifferenceOne = o1.getCompany().getCurrentSlaPercentage() - o1.getCompany().getSlaPercentage();
             final Float slaDifferenceTwo = o2.getCompany().getCurrentSlaPercentage() - o2.getCompany().getSlaPercentage();
-
-            if (slaDifferenceOne.compareTo(slaDifferenceTwo) != 0) {
-                return slaDifferenceOne.compareTo(slaDifferenceTwo);
+            final int compareSlaDifference = slaDifferenceOne.compareTo(slaDifferenceTwo);
+            final int compareCompanyIds = o1.getCompany().getId().compareTo(o2.getCompany().getId());
+            final int compareWaitingTimes = o2.getWaitingTime().compareTo(o1.getWaitingTime());
+            if (compareSlaDifference != 0) {
+                return compareSlaDifference;
             } else {
-                if (o1.getCompany().getId().compareTo(o2.getCompany().getId()) != 0) {
-                    return o1.getCompany().getId().compareTo(o2.getCompany().getId());
+                if (compareCompanyIds != 0) {
+                    return compareCompanyIds;
                 } else {
-                    return o2.getWaitingTime().compareTo(o1.getWaitingTime());
+                    return compareWaitingTimes;
                 }
             }
         }).collect(Collectors.toList());
