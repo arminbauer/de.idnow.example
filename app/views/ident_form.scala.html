@@ -1,0 +1,17 @@
+@(form: Form[Identification])
+
+@main("ident_form") {
+
+    <h3>add identification request</h3>
+
+    @* Could not find a way to set contentType of the form to application/json... *@
+    @helper.form(action = routes.RestController.startIdentification()) {
+        @helper.inputText(form("id"))
+        @helper.inputText(form("name"))
+        @helper.inputText(form("time"))
+        @helper.inputText(form("waitingTime"))
+        @helper.inputText(form("companyId"))
+
+        <button type="submit">Save</button>
+    }
+}
