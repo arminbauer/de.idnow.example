@@ -3,6 +3,7 @@ package models;
 import javax.validation.constraints.NotNull;
 import java.util.UUID;
 
+// No builder pattern for now, for simplicity.
 public class Company {
 
     // Assumed constraint.
@@ -13,9 +14,20 @@ public class Company {
     @NotNull(message = "Name cannot be null.")
     private String name;
 
-    private long SLATime; // No validation currently.
-    private float SLAPercentage; // No validation currently.
-    private float currentSLAPercentage; // No validation currently.
+    private Long slaTime; // No validation currently.
+    private Float slaPercentage; // No validation currently.
+    private Float currentSLAPercentage; // No validation currently.
+
+    public Company() {
+    }
+
+    public Company(UUID id, String name, Long slaTime, Float slaPercentage, Float currentSLAPercentage) {
+        this.id = id;
+        this.name = name;
+        this.slaTime = slaTime;
+        this.slaPercentage = slaPercentage;
+        this.currentSLAPercentage = currentSLAPercentage;
+    }
 
     public UUID getId() {
         return id;
@@ -33,27 +45,27 @@ public class Company {
         this.name = name;
     }
 
-    public long getSLATime() {
-        return SLATime;
+    public Long getSlaTime() {
+        return slaTime;
     }
 
-    public void setSLATime(long SLATime) {
-        this.SLATime = SLATime;
+    public void setSlaTime(Long slaTime) {
+        this.slaTime = slaTime;
     }
 
-    public float getSLAPercentage() {
-        return SLAPercentage;
+    public Float getSlaPercentage() {
+        return slaPercentage;
     }
 
-    public void setSLAPercentage(float SLAPercentage) {
-        this.SLAPercentage = SLAPercentage;
+    public void setSlaPercentage(Float slaPercentage) {
+        this.slaPercentage = slaPercentage;
     }
 
-    public float getCurrentSLAPercentage() {
+    public Float getCurrentSLAPercentage() {
         return currentSLAPercentage;
     }
 
-    public void setCurrentSLAPercentage(float currentSLAPercentage) {
+    public void setCurrentSLAPercentage(Float currentSLAPercentage) {
         this.currentSLAPercentage = currentSLAPercentage;
     }
 
@@ -62,8 +74,8 @@ public class Company {
         return "Company{" +
                 "id=" + id +
                 ", name='" + name + '\'' +
-                ", SLATime=" + SLATime +
-                ", SLAPercentage=" + SLAPercentage +
+                ", slaTime=" + slaTime +
+                ", slaPercentage=" + slaPercentage +
                 ", currentSLAPercentage=" + currentSLAPercentage +
                 '}';
     }
