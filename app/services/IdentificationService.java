@@ -11,19 +11,21 @@ import java.util.stream.Collectors;
 @Singleton
 public class IdentificationService {
 
-
     /*
      * I am not 100% sure that I deduced the proper ordering strategy for companies.
      *
      * Example 3, as written in README, gives impression that SLA_time has priority
-     * over SLA_percentage and Current_SLA_percentage
+     * over SLA_percentage and Current_SLA_percentage.
      *
      * But looking at "example 4" gives impression that SLA_time should have a lower priority than
      * SLA percentage delta.
      *
      * Current implementation - we first consider the deltas for SLA percentages, then the SLA_time.
-
+     * Lastly, identifications are sorted within each company scope, by waiting time DESC.
+     *
      * Open question is what should be done in case Current_SLA_percentage is less than SLA_percentage?
+     * And also what should happen for an identification with waiting time larger than the SLA_time of corresponding
+     * company?
      * */
     private static final Comparator<Company> slaPercentageComparator =
             (o1, o2) -> Float.compare(
