@@ -18,6 +18,12 @@ public class RestController extends Controller {
 	public Result startIdentification() {
     	//Get the parsed JSON data
     	JsonNode json = request().body().asJson();
+    	
+    	// Null check
+    	if(json == null){
+    		return badRequest("Null Value");
+    	}
+    	
     	Identification ident = (Identification) Json.fromJson(json, Identification.class);
     	ident.save();
     	
@@ -28,11 +34,16 @@ public class RestController extends Controller {
     public Result addCompany() throws SQLException {
     	//Get the parsed JSON data
     	JsonNode json = request().body().asJson();
-    	if(json!=null){
-	    	//persist the object into temproary database
-	    	Company company = (Company) Json.fromJson(json, Company.class);
-	    	company.save();
+    	
+    	// Null check
+    	if(json == null){
+    		return badRequest("Null Value");
     	}
+    	
+		//persist the object into temproary database
+    	Company company = (Company) Json.fromJson(json, Company.class);
+    	company.save();
+    	
     	return ok();
     }
     /*The identifications ordered in the optimal order regarding the SLA of the company,
@@ -49,13 +60,7 @@ public class RestController extends Controller {
     	// urgent idents = (How much time left to comlete SLA.) - (How much task left to complete) -- calculated in identification object
     	Collections.sort(identList);
     	
-    	// Earlier worked in Spring and New to Play, Eqivalent assertEqual and could not find to get the value in test cases so just printed here
-    	for(Identification ident : identList){
-    		System.out.println("Identification : "+ident.id);
-    	}
-    	
-    	
-        return ok(Json.toJson(identList));
+    	return ok(Json.toJson(identList));
     }
 
 }

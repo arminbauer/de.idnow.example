@@ -1,5 +1,7 @@
 package models.dto;
 
+import java.util.UUID;
+
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.OneToOne;
@@ -16,6 +18,25 @@ public class Identification extends Model implements Comparable{
 	public int waiting_time;
 	public Integer companyid;
 	
+	
+	public Identification(){
+		
+	}
+	
+	
+	
+	public Identification(Integer id, String name, long time, int waiting_time,
+			Integer companyid) {
+		super();
+		this.id = id;
+		this.name = name;
+		this.time = time;
+		this.waiting_time = waiting_time;
+		this.companyid = companyid;
+	}
+
+
+
 	public static Finder find = new Finder(Integer.class, Identification.class);
 	
 	
