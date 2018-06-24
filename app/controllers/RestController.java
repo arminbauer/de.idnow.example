@@ -1,15 +1,16 @@
 package controllers;
 
 import com.fasterxml.jackson.databind.JsonNode;
-
 import models.Company;
 import models.Identification;
 import play.libs.Json;
-import play.mvc.*;
+import play.mvc.Controller;
+import play.mvc.Result;
 import repositories.GenericRepository;
 import services.IdentificationService;
 
 import javax.inject.Inject;
+import java.util.List;
 
 public class RestController extends Controller {
 
@@ -20,8 +21,8 @@ public class RestController extends Controller {
     private IdentificationService identificationService;
 
     public Result startIdentification() {
-    	//Get the parsed JSON data
     	JsonNode json = request().body().asJson();
+
         Identification identification = Json.fromJson(json, Identification.class);
 
         identificationService.save(identification, json.get("companyid").asInt());
@@ -39,14 +40,8 @@ public class RestController extends Controller {
     }
 
     public Result identifications() {
-    	JsonNode identifications = Json.newArray();
-    	
-    	//Get the current identification
-    	//Compute correct order
-    	//Create new identification JSON with JsonNode identification = Json.newObject();
-    	//Add identification to identifications list 
-    	
-        return ok(identifications);
-    }
+        List<Identification> pending = identificationService.getAllPending();
 
+        return ok(Json.toJson(pending));
+    }
 }
