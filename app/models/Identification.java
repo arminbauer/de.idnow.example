@@ -7,9 +7,19 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
+import javax.persistence.NamedQuery;
 import java.util.Objects;
 
+import static repositories.IdentificationRepository.LIST_ORDERED_IDENTIFICATIONS;
+
 @Entity
+@NamedQuery(
+    name = LIST_ORDERED_IDENTIFICATIONS,
+    query = "select i from Identification i " +
+            "join i.company c " +
+            "where i.pending = true " +
+            "order by c.slaTime asc, c.currentSlaPercentage asc, i.waitingTime desc"
+)
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class Identification {
     @Id
@@ -84,8 +94,14 @@ public class Identification {
 
     @Override
     public int hashCode() {
-
         return Objects.hash(id);
     }
 
+    @Override
+    public String toString() {
+        return "Identification{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                '}';
+    }
 }
