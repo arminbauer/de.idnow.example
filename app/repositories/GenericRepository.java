@@ -23,4 +23,12 @@ public class GenericRepository<T> {
             em.persist(entity);
         });
     }
+
+    public T findById(Class<T> entityClass, Integer id) {
+        try {
+            return jpaApi.withTransaction(() -> JPA.em().find(entityClass, id));
+        }  catch (Throwable ex) {
+            throw new RuntimeException(ex);
+        }
+    }
 }
