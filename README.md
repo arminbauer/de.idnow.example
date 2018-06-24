@@ -1,5 +1,20 @@
 #Welcome to the IDnow example project
 
+##My Observations
+1) My Models are with Jpa + Jackson
+    
+    I do not like to return my models to the views. I just did that to keep things simple. Usually I like to use DTOs.
+    
+2) DAO Injection
+
+    I am injection Company DAO into Identification Services. I just did it to make it simple. Usually I would inject a service inside another
+
+3) I have refactored the routes to look more like rest. I have left the /identifications as listing only the pending, if that was not the desired behaviour in production I would use a query param, e.g.: `status=pending`
+4) Builders and Factories. I really like to use those for tests or even production code. I just did not add them here to keep things simpler.
+5) I prefer to keep business rules inside services, not the controllers. That is why you will find a service created. I did not create a service for Company because we only have one action that is to persist a company.
+6) I did the ordering on the JPA query. I also created a Comparator. I prefer to keep this kind of ordering on the query, but to let you see some business code I created the comparator: `PendingIdentificationComparator`.
+7) I did not create the page because I am not good with stiling. ='(
+
 ##Setup
 
 You need:
