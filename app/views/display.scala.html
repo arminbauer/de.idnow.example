@@ -1,0 +1,15 @@
+@import objects.Identification
+@(iden : List[Identification])
+
+<html>
+    <head>All Identifications</head>
+    <body>
+        @for(i <- iden){
+            <p>@i.getId()</p>
+            <p>@i.getName()</p>
+            <p>@i.getCompanyId()</p>
+            <p>@i.getTime()</p>
+            <p>@i.getWaitingTime()</p>
+        }
+    </body>
+</html>
