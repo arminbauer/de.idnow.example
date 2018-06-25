@@ -1,3 +1,4 @@
+import static com.thoughtworks.selenium.SeleneseTestBase.assertEquals;
 import static org.junit.Assert.assertEquals;
 import static play.mvc.Http.Status.OK;
 import static play.test.Helpers.fakeApplication;
@@ -27,7 +28,7 @@ public class RestControllerTest {
 		running(testServer(3333, fakeApplication(inMemoryDatabase())), new Runnable() {
 			@Override
 			public void run() {
-				assertEquals(WS.url("http://localhost:3333/api/v1/identifications").get().get(10000).getStatus(), OK);
+				assertEquals(WS.url("http://localhost:3333/api/v1/pendingIdentifications").get().get(10000).getStatus(), OK);
 			}
 		});
 

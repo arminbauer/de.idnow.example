@@ -1,0 +1,18 @@
+@import objects.Identification
+@(idenForm : Form[Identification])
+@import helper._
+
+
+    <html>
+        <head>Add Identification</head>
+        <body>
+            @helper.form(action = routes.RestController.createFormIdentifications()){
+                @helper.inputText(idenForm("ID"))
+                @helper.inputText(idenForm("NAME"))
+                @helper.inputText(idenForm("TIME"))
+                @helper.inputText(idenForm("WAITING TIME"))
+                @helper.inputText(idenForm("COMPANY ID"))
+                <input type="submit" value="ADD">
+            }
+        </body>
+    </html>

@@ -16,6 +16,7 @@ import play.libs.F;
 import play.libs.F.*;
 import play.twirl.api.Content;
 
+import static com.thoughtworks.selenium.SeleneseTestBase.assertEquals;
 import static play.test.Helpers.*;
 import static org.junit.Assert.*;
 
@@ -36,9 +37,9 @@ public class ApplicationTest {
 
     @Test
     public void renderTemplate() {
-        Content html = views.html.index.render("Your new application is ready.");
+        Content html = views.html.index.render("");
         assertEquals("text/html", contentType(html));
-        assertTrue(contentAsString(html).contains("Your new application is ready."));
+        assertTrue(contentAsString(html).contains(""));
     }
 
 
