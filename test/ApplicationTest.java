@@ -1,20 +1,13 @@
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
-import com.fasterxml.jackson.databind.JsonNode;
+import models.Company;
+import models.Identification;
 import org.junit.*;
 
-import play.mvc.*;
-import play.test.*;
-import play.data.DynamicForm;
-import play.data.validation.ValidationError;
-import play.data.validation.Constraints.RequiredValidator;
-import play.i18n.Lang;
+import play.data.Form;
 import play.libs.F;
-import play.libs.F.*;
+import play.test.TestBrowser;
 import play.twirl.api.Content;
+
+import java.util.ArrayList;
 
 import static play.test.Helpers.*;
 import static org.junit.Assert.*;
@@ -36,9 +29,14 @@ public class ApplicationTest {
 
     @Test
     public void renderTemplate() {
-        Content html = views.html.index.render("Your new application is ready.");
-        assertEquals("text/html", contentType(html));
-        assertTrue(contentAsString(html).contains("Your new application is ready."));
+        running(testServer(3333, fakeApplication(inMemoryDatabase())), () -> {
+            Form<Identification> identificationForm = Form.form(Identification.class);
+            Form<Company> companyForm = Form.form(Company.class);
+            Content html = views.html.main.render(new ArrayList<>(), new ArrayList<>(), identificationForm, companyForm);
+            assertEquals("text/html", contentType(html));
+            assertTrue(contentAsString(html).contains("List of Identifications"));
+        });
+
     }
 
 

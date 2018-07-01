@@ -1,15 +1,67 @@
-@(title: String)(content: Html)
+@import models.Identification
+@import models.Company
+@import java.util
 
-<!DOCTYPE html>
+@(identifications : util.List[Identification], companies : util.List[Company], identificationForm : Form[Identification], companyForm : Form[Company])
 
-<html lang="en">
-    <head>
-        <title>@title</title>
-        <link rel="stylesheet" media="screen" href="@routes.Assets.versioned("stylesheets/main.css")">
-        <link rel="shortcut icon" type="image/png" href="@routes.Assets.versioned("images/favicon.png")">
-        <script src="@routes.Assets.versioned("javascripts/hello.js")" type="text/javascript"></script>
-    </head>
+<html>
     <body>
-        @content
+        <h1>List of Companies</h1>
+        <table>
+            <tr>
+                <th>Id</th>
+                <th>Name</th>
+                <th>SLA time</th>
+                <th>SLA percentage</th>
+                <th>Current SLA percentage</th>
+            </tr>
+            @for(c <- companies){
+                <tr>
+                    <td>@c.id</td>
+                    <td>@c.name</td>
+                    <td>@c.slaTime</td>
+                    <td>@c.slaPercentage</td>
+                    <td>@c.currentSlaPercentage</td>
+                </tr>
+            }
+        </table>
+        <br>
+        <h2>Add company</h2>
+        @helper.form(action = routes.Application.addCompany()){
+            @helper.inputText(field = companyForm("name"), '_label -> "Name")
+            @helper.inputText(field = companyForm("slaTime"), '_label -> "SLA time")
+            @helper.inputText(field = companyForm("slaPercentage"), '_label -> "SLA percentage")
+            @helper.inputText(field = companyForm("currentSlaPercentage"), '_label -> "Current SLA percentage")
+            <input type="submit" value="Add">
+        }
+        <br>
+        <h1>List of Identifications sorted by SLA</h1>
+        <table>
+            <tr>
+                <th>Id</th>
+                <th>Name</th>
+                <th>Time</th>
+                <th>Waiting time</th>
+                <th>Company id</th>
+            </tr>
+            @for(i <- identifications){
+                <tr>
+                    <td>@i.id</td>
+                    <td>@i.name</td>
+                    <td>@i.time</td>
+                    <td>@i.waitingTime</td>
+                    <td>@i.companyId</td>
+                </tr>
+            }
+        </table>
+        <br>
+        <h2>Start identification</h2>
+        @helper.form(action = routes.Application.startIdentification()){
+            @helper.inputText(field = identificationForm("name"), '_label -> "Name")
+            @helper.inputText(field = identificationForm("time"), '_label -> "Time")
+            @helper.inputText(field = identificationForm("waitingTime"), '_label -> "Waiting time")
+            @helper.inputText(field = identificationForm("companyId"), '_label -> "Company id")
+            <input type="submit" value="Start">
+        }
     </body>
 </html>
