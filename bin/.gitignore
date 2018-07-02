@@ -1,0 +1,13 @@
+/ApplicationTest.class
+/IntegrationTest$1.class
+/IntegrationTest.class
+/RestControllerTest$1.class
+/RestControllerTest$2.class
+/RestControllerTest.class
+/application.conf
+/controllers/
+/helpers/
+/logback.xml
+/models/
+/routes
+/views/

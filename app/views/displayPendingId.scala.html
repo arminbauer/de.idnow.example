@@ -1,0 +1,43 @@
+@import models.Identification
+
+@(identifications: List[List[Identification]])
+
+@import helper._
+
+@main("Pending Identifications") {
+
+    <div>
+		<h1 align="center">Pending Identifications</h1><br>
+		<div align="center">
+	   		<table style="border: 1px solid black;">
+	   			<thead style="border: 1px solid black;">
+	   				<tr style="border: 1px solid black;">
+	   					<td style="padding: 15px;">Id</td>
+	   					<td style="padding: 15px;">Name</td>
+	   					<td style="padding: 15px;">Time</td>
+	   					<td style="padding: 15px;">Waiting Time</td>
+	   					<td style="padding: 15px;">Company Id</td>
+	   				</tr>
+	   			</thead>
+	   			<tbody>
+				    @for(i <- identifications){
+				    	@for(j <- i){
+				    	<tr style="border: 1px solid black;">
+				    		<td style="padding: 15px;">@j.getId()</td>
+				    		<td style="padding: 15px;">@j.getName()</td>
+				    		<td style="padding: 15px;">@j.getTime()</td>
+				    		<td style="padding: 15px;">@j.getWaitingTime()</td>
+				    		<td style="padding: 15px;">@j.getCompanyId()</td>
+				    	</tr>
+				    	}
+				    }
+			    </tbody>
+	    	</table>
+    	</div>
+    	<br>
+      <div align="center">
+			<a href="@routes.Application.index()"><button>BACK</button></a>
+	  </div>
+	</div>
+
+}

@@ -1,0 +1,26 @@
+@import models.Identification
+@(identifications: List[Identification], identForm: Form[Identification])
+
+@import helper._
+
+@main("Identification Form") {
+	<div align="center">
+   		<h1 align="center">Add Identifications</h1>
+    </div>
+    <br><br>
+    <div align="center">
+	    @helper.form(action = routes.RestController.addIdentification()){
+	   			@helper.inputText(identForm("id"))
+	            @helper.inputText(identForm("name"))
+	            @helper.inputText(identForm("time"))
+	            @helper.inputText(identForm("waitingTime"))
+	            @helper.inputText(identForm("companyId"))
+	            <input type="submit" value="ADD">
+	    }
+    </div>
+    <br>
+    <div align="center">
+		<a href="@routes.Application.index()"><button>BACK</button></a>
+	</div>
+
+}

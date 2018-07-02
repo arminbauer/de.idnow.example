@@ -1,7 +1,19 @@
 @(message: String)
 
-@main("Welcome to Play") {
-
-    @play20.welcome(message, style = "Java")
+@main("Welcome") {
+	<h1 align="center">-Welcome-</h1>
+    <div align="center" style="padding: 100px 100px 100px 100px">		
+		<div>
+			<a href="@routes.RestController.getCompanyForm()"><button>Add Company</button></a>
+		</div>
+		<br><br>
+		<div>
+			<a href="@routes.RestController.getIdentificationForm()"><button>Add Identification</button></a>
+		</div>
+		<br><br>
+		<div>
+			<a href="@routes.RestController.getPendingIdentification()"><button>View Pending Identifications</button></a>
+		</div>
+	</div>
 
 }
