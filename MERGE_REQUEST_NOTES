@@ -1,0 +1,15 @@
+Company and Identification classes are the models I created based on the tasks specification.
+
+CompanyRepository and IdentificationRepository are the classes used to simulate database access repos in a typical web application.
+I've used in memory collections since I didn't have time to configure and use an in-memory database.
+
+Newly added identifications are kept in a priority queue data structure in order to implement the business ordering amongst the identifications.
+Java priority queues keep the order of the objects based on the natural ordering of its elements which can be customized upon override of the compareTo() method.
+This is what I did in order to implement the priority-based-ordering of identification objects.
+
+In real world production environments, there would be too many identification objects created and using an in-memory collection wouldn't be efficient.
+I'd keep the identifications and companies in the database and track the acceptance status and priority ranking of identifications in their respective table.
+A strong ranking score calculation formula would be pretty helpful which would ensure the processing of identifications from companies where relatively low SLA percentages are met.
+Based on the rankings, I'd fetch the most recent identifications and process them in batches preferably via multiple threads since it's a time criticial operation.
+
+
