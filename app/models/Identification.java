@@ -3,6 +3,7 @@ package models;
 import com.avaje.ebean.Model;
 import com.avaje.ebean.annotation.Index;
 import com.fasterxml.jackson.annotation.JsonGetter;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
@@ -11,7 +12,7 @@ import json.UnixTimestampDateTimeSerializer;
 
 import javax.persistence.*;
 import java.time.Duration;
-import java.time.Instant;
+import java.time.LocalDateTime;
 
 /**
  * @author Dmitrii Bogdanov
@@ -31,7 +32,7 @@ public class Identification extends Model {
   @JsonSerialize(using = UnixTimestampDateTimeSerializer.class)
   @JsonDeserialize(using = UnixTimestampDateTimeDeserializer.class)
   @Column(nullable = false)
-  private Instant startedAt;
+  private LocalDateTime startedAt;
   @ManyToOne(optional = false)
   @JoinColumn(name = "COMPANY_ID", nullable = false, updatable = false)
   @Column(nullable = false)
@@ -59,11 +60,11 @@ public class Identification extends Model {
     this.username = username;
   }
 
-  public Instant getStartedAt() {
+  public LocalDateTime getStartedAt() {
     return startedAt;
   }
 
-  public void setStartedAt(final Instant startedAt) {
+  public void setStartedAt(final LocalDateTime startedAt) {
     this.startedAt = startedAt;
   }
 
@@ -76,14 +77,15 @@ public class Identification extends Model {
   }
 
   @Transient
-  @JsonSerialize(using = UnixTimestampDateTimeSerializer.class)
-  @JsonDeserialize(using = UnixTimestampDateTimeDeserializer.class)
   @JsonGetter("Waiting_time")
+  @JsonIgnore
   public long waitingTime() {
-    return Duration.between(startedAt, Instant.now()).toMillis() / 1000;
+    return Duration.between(startedAt, LocalDateTime.now()).toMillis() / 1000;
   }
 
+  @Transient
   @JsonGetter("Companyid")
+  @JsonIgnore
   public Long companyId() {
     return company.getId();
   }
