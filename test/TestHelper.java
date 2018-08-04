@@ -36,6 +36,7 @@ class TestHelper {
     final Identification identification = new Identification();
     identification.setId(id);
     identification.setCompanyId(company.getId());
+    identification.setCompany(company);
     identification.setUsername(username);
     identification.setStartedAt(startedAt);
     return identification;

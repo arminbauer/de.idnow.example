@@ -47,6 +47,17 @@ public class IdentificationSortingHelperTest {
     Assert.assertEquals(expected, sorted);
   }
 
+  @Test
+  public void testSortBySlaSortsLowerCurrentSlaFirstForSameWaitingTimes() {
+    final Company company1 = company1();
+    final Company company2 = company2();
+    final Identification identification1 = identification(company1, 30);
+    final Identification identification2 = identification(company2, 30);
+    final List<Identification> sorted = helper.sortBySla(Arrays.asList(identification1, identification2));
+    final List<Identification> expected = Arrays.asList(identification2, identification1);
+    Assert.assertEquals(expected, sorted);
+  }
+
   @Nonnull
   private Identification identification(final Company company1, final int waitingTime) {
     return TestHelper.buildIdentification(RANDOM.nextLong(), company1, "default", LocalDateTime.now().minus(waitingTime, ChronoUnit.SECONDS));
