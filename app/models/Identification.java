@@ -5,6 +5,7 @@ import com.avaje.ebean.annotation.Index;
 import com.fasterxml.jackson.annotation.JsonGetter;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonSetter;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import json.UnixTimestampDateTimeDeserializer;
@@ -43,6 +44,8 @@ public class Identification extends Model {
   @Index
   @Column(nullable = false)
   private boolean isDeleted = false;
+  @Transient
+  private Long companyId;
 
   public Long getId() {
     return id;
@@ -68,10 +71,12 @@ public class Identification extends Model {
     this.startedAt = startedAt;
   }
 
+  @JsonIgnore
   public Company getCompany() {
     return company;
   }
 
+  @JsonIgnore
   public void setCompany(final Company company) {
     this.company = company;
   }
@@ -85,9 +90,18 @@ public class Identification extends Model {
 
   @Transient
   @JsonGetter("Companyid")
-  @JsonIgnore
-  public Long companyId() {
-    return company.getId();
+  public Long getCompanyId() {
+    if (company == null) {
+      return companyId;
+    } else {
+      return company.getId();
+    }
+  }
+
+  @Transient
+  @JsonSetter("Companyid")
+  public void setCompanyId(final Long companyId) {
+    this.companyId = companyId;
   }
 
   public boolean isPending() {
