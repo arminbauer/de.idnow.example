@@ -10,7 +10,6 @@ import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
 import java.util.Arrays;
 import java.util.Collections;
-import java.util.List;
 import java.util.Random;
 
 /**
@@ -42,9 +41,7 @@ public class IdentificationSortingHelperTest {
     final Company company1 = company1();
     final Identification identification1 = identification(company1, 30);
     final Identification identification2 = identification(company1, 45);
-    final List<Identification> sorted = helper.sortBySla(Arrays.asList(identification1, identification2));
-    final List<Identification> expected = Arrays.asList(identification2, identification1);
-    Assert.assertEquals(expected, sorted);
+    Assert.assertEquals(Arrays.asList(identification2, identification1), helper.sortBySla(Arrays.asList(identification1, identification2)));
   }
 
   @Test
@@ -53,9 +50,25 @@ public class IdentificationSortingHelperTest {
     final Company company2 = company2();
     final Identification identification1 = identification(company1, 30);
     final Identification identification2 = identification(company2, 30);
-    final List<Identification> sorted = helper.sortBySla(Arrays.asList(identification1, identification2));
-    final List<Identification> expected = Arrays.asList(identification2, identification1);
-    Assert.assertEquals(expected, sorted);
+    Assert.assertEquals(Arrays.asList(identification2, identification1), helper.sortBySla(Arrays.asList(identification1, identification2)));
+  }
+
+  @Test
+  public void testSortBySlaSortsLowerSlaTimeFirstForSameWaitingTimesAndCurrentSlaPercentage() {
+    final Company company1 = company1();
+    final Company company2 = company3();
+    final Identification identification1 = identification(company1, 30);
+    final Identification identification2 = identification(company2, 30);
+    Assert.assertEquals(Arrays.asList(identification1, identification2), helper.sortBySla(Arrays.asList(identification1, identification2)));
+  }
+
+  @Test
+  public void testSortBySlaSortsDangerousSlaFirstForSameWaitingTimesAndCurrentSlaPercentage() {
+    final Company company1 = company1();
+    final Company company2 = company4();
+    final Identification identification1 = identification(company1, 45);
+    final Identification identification2 = identification(company2, 30);
+    Assert.assertEquals(Arrays.asList(identification2, identification1), helper.sortBySla(Arrays.asList(identification1, identification2)));
   }
 
   @Nonnull
@@ -71,5 +84,15 @@ public class IdentificationSortingHelperTest {
   @Nonnull
   private Company company2() {
     return TestHelper.buildCompany(RANDOM.nextLong(), "Company1", 60, 0.9f, 0.9f);
+  }
+
+  @Nonnull
+  private Company company3() {
+    return TestHelper.buildCompany(RANDOM.nextLong(), "Company1", 120, 0.8f, 0.95f);
+  }
+
+  @Nonnull
+  private Company company4() {
+    return TestHelper.buildCompany(RANDOM.nextLong(), "Company1", 120, 0.8f, 0.8f);
   }
 }
