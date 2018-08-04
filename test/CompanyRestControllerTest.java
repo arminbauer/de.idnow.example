@@ -7,7 +7,7 @@ import static org.junit.Assert.assertEquals;
 import static play.mvc.Http.Status.OK;
 import static play.test.Helpers.*;
 
-public class CompanyControllerTest {
+public class CompanyRestControllerTest {
 
   @Test
   public void getCompanies() {

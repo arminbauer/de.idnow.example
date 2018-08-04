@@ -12,7 +12,7 @@ import static org.junit.Assert.assertEquals;
 import static play.mvc.Http.Status.OK;
 import static play.test.Helpers.*;
 
-public class IdentificationControllerTest {
+public class IdentificationRestControllerTest {
 
   @Test
   public void getIdentifications() {
