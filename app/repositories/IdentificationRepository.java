@@ -16,15 +16,15 @@ public class IdentificationRepository {
     identification.save();
   }
 
-  public Identification get(final long id) {
+  public Identification getById(final long id) {
     return Ebean.find(Identification.class).where().idEq(id).findUnique();
   }
 
-  public List<Identification> getAllPending() {
+  public List<Identification> allPending() {
     return Ebean.find(Identification.class).where().eq("isDeleted", false).eq("isPending", true).findList();
   }
 
-  public List<Identification> getAll() {
+  public List<Identification> all() {
     return Ebean.find(Identification.class).where().eq("isDeleted", false).findList();
   }
 }

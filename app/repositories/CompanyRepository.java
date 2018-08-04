@@ -17,7 +17,7 @@ public class CompanyRepository {
     company.save();
   }
 
-  public Company get(final long id) {
+  public Company getById(final long id) {
     return Ebean.find(Company.class).where().idEq(id).orderBy("id").findUnique();
   }
 
