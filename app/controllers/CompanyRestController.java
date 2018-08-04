@@ -40,7 +40,9 @@ public class CompanyRestController extends Controller {
       company.setDeleted(false);
     }
     companyRepository.create(company);
-    return ok(Json.toJson(company));
+    final JsonNode created = Json.toJson(company);
+    Logger.debug("Created company: {}", created);
+    return ok(created);
   }
 
   public Result getById(final long id) {

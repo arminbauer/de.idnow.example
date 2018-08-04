@@ -12,7 +12,7 @@ import repositories.IdentificationRepository;
 
 import javax.inject.Inject;
 import javax.inject.Singleton;
-import java.time.Instant;
+import java.time.LocalDateTime;
 
 @SuppressWarnings("unused")
 @Singleton
@@ -42,9 +42,11 @@ public class IdentificationRestController extends Controller {
     if (identification.getId() != null) {
       identification.setId(null);
     }
-    identification.setStartedAt(Instant.now());
+    identification.setStartedAt(LocalDateTime.now());
     identificationRepository.create(identification);
-    return ok(Json.toJson(identification));
+    final JsonNode created = Json.toJson(identification);
+    Logger.debug("Created identification: {}", created);
+    return ok(created);
   }
 
   public Result pendingIdentifications() {
