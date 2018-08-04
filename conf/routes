@@ -1,10 +1,10 @@
 GET     /                                       controllers.Application.index()
 
 POST    /api/v1/addCompany                      controllers.CompaniesRestController.create()
-GET     /api/v1/companies                       controllers.IdentificationsRestController.get()
+GET     /api/v1/companies                       controllers.IdentificationsRestController.getAll()
 GET     /api/v1/companies/:id                   controllers.IdentificationsRestController.getById(id: Long)
 
-GET    /api/v1/identifications                  controllers.IdentificationsRestController.get()
+GET    /api/v1/identifications                  controllers.IdentificationsRestController.getAll()
 GET    /api/v1/identifications/:id              controllers.IdentificationsRestController.getById(id: Long)
 POST   /api/v1/startIdentification              controllers.IdentificationsRestController.startIdentification()
 GET    /api/v1/pendingIdentifications           controllers.IdentificationsRestController.pendingIdentifications()
