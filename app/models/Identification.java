@@ -1,6 +1,7 @@
 package models;
 
 import com.avaje.ebean.Model;
+import com.avaje.ebean.annotation.Index;
 import com.fasterxml.jackson.annotation.JsonGetter;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
@@ -29,6 +30,12 @@ public class Identification extends Model {
   @JoinColumn(name = "COMPANY_ID", nullable = false, updatable = false)
   @Column(nullable = false)
   private Company company;
+  @Index
+  @Column(nullable = false)
+  private boolean isPending = true;
+  @Index
+  @Column(nullable = false)
+  private boolean isDeleted = false;
 
   public Long getId() {
     return id;
@@ -71,5 +78,21 @@ public class Identification extends Model {
   @JsonGetter("Companyid")
   public String companyId() {
     return company.getId();
+  }
+
+  public boolean isPending() {
+    return isPending;
+  }
+
+  public void setPending(final boolean pending) {
+    isPending = pending;
+  }
+
+  public boolean isDeleted() {
+    return isDeleted;
+  }
+
+  public void setDeleted(final boolean deleted) {
+    isDeleted = deleted;
   }
 }

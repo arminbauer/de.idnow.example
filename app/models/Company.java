@@ -1,6 +1,7 @@
 package models;
 
 import com.avaje.ebean.Model;
+import com.avaje.ebean.annotation.Index;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import javax.persistence.Column;
@@ -32,6 +33,9 @@ public class Company extends Model {
   @JsonProperty("Current_SLA_percentage")
   @Column(nullable = false)
   private float currentSlaPercentage;
+  @Index
+  @Column
+  private boolean isDeleted;
 
   public String getId() {
     return id;
@@ -61,7 +65,7 @@ public class Company extends Model {
     return slaPercentage;
   }
 
-  public void setSlaPercentage(final int slaPercentage) {
+  public void setSlaPercentage(final float slaPercentage) {
     this.slaPercentage = slaPercentage;
   }
 
@@ -69,7 +73,15 @@ public class Company extends Model {
     return currentSlaPercentage;
   }
 
-  public void setCurrentSlaPercentage(final int currentSlaPercentage) {
+  public void setCurrentSlaPercentage(final float currentSlaPercentage) {
     this.currentSlaPercentage = currentSlaPercentage;
+  }
+
+  public boolean isDeleted() {
+    return isDeleted;
+  }
+
+  public void setDeleted(final boolean deleted) {
+    isDeleted = deleted;
   }
 }
