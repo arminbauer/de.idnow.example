@@ -84,7 +84,7 @@ public class Identification extends Model {
   }
 
   @JsonGetter("Companyid")
-  public String companyId() {
+  public Long companyId() {
     return company.getId();
   }
 

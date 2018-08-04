@@ -21,7 +21,7 @@ public class Company extends Model {
   @JsonProperty("Id")
   @Id
   @Column(nullable = false, length = 255)
-  private String id;
+  private Long id;
   @JsonProperty("Name")
   @Column(nullable = false, length = 255)
   @Constraints.MinLength(1)
@@ -44,11 +44,11 @@ public class Company extends Model {
   @Column
   private boolean isDeleted;
 
-  public String getId() {
+  public Long getId() {
     return id;
   }
 
-  public void setId(final String id) {
+  public void setId(final Long id) {
     this.id = id;
   }
 
