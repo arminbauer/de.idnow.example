@@ -3,6 +3,7 @@ package models;
 import com.avaje.ebean.Model;
 import com.avaje.ebean.annotation.Index;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import play.data.validation.Constraints;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -23,15 +24,21 @@ public class Company extends Model {
   private String id;
   @JsonProperty("Name")
   @Column(nullable = false, length = 255)
+  @Constraints.MinLength(1)
   private String name;
   @JsonProperty("SLA_time")
   @Column(nullable = false)
+  @Constraints.Min(0)
   private int slaTimeInSeconds;
   @JsonProperty("SLA_percentage")
   @Column(nullable = false)
+  @Constraints.Min(0)
+  @Constraints.Max(100)
   private float slaPercentage;
   @JsonProperty("Current_SLA_percentage")
   @Column(nullable = false)
+  @Constraints.Min(0)
+  @Constraints.Max(100)
   private float currentSlaPercentage;
   @Index
   @Column

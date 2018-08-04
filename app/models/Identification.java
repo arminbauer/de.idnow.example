@@ -4,6 +4,10 @@ import com.avaje.ebean.Model;
 import com.avaje.ebean.annotation.Index;
 import com.fasterxml.jackson.annotation.JsonGetter;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import json.UnixTimestampDateTimeDeserializer;
+import json.UnixTimestampDateTimeSerializer;
 
 import javax.persistence.*;
 import java.time.Duration;
@@ -24,6 +28,8 @@ public class Identification extends Model {
   @Column(nullable = false)
   private String username;
   @JsonProperty("Time")
+  @JsonSerialize(using = UnixTimestampDateTimeSerializer.class)
+  @JsonDeserialize(using = UnixTimestampDateTimeDeserializer.class)
   @Column(nullable = false)
   private Instant startedAt;
   @ManyToOne(optional = false)
@@ -70,6 +76,8 @@ public class Identification extends Model {
   }
 
   @Transient
+  @JsonSerialize(using = UnixTimestampDateTimeSerializer.class)
+  @JsonDeserialize(using = UnixTimestampDateTimeDeserializer.class)
   @JsonGetter("Waiting_time")
   public long waitingTime() {
     return Duration.between(startedAt, Instant.now()).toMillis() / 1000;
