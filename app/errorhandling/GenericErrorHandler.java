@@ -1,5 +1,6 @@
 package errorhandling;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import play.Configuration;
 import play.Environment;
 import play.api.OptionalSourceMapper;
@@ -37,8 +38,10 @@ public class GenericErrorHandler extends DefaultHttpErrorHandler {
   public F.Promise<Result> onServerError(@Nonnull final Http.RequestHeader requestHeader, @Nonnull final Throwable throwable) {
     if (throwable instanceof EntityNotFoundException) {
       return F.Promise.pure(Results.notFound(throwable.getMessage() + " not found"));
-    } else if (throwable instanceof ValidationException || throwable instanceof PersistenceException) {
+    } else if (throwable instanceof ValidationException || throwable instanceof PersistenceException || throwable instanceof JsonProcessingException) {
       return F.Promise.pure(Results.badRequest(throwable.getMessage()));
+    } else if (throwable.getCause() != null && throwable.getCause() instanceof JsonProcessingException) {
+      return F.Promise.pure(Results.badRequest(throwable.getCause().getMessage()));
     } else {
       return super.onServerError(requestHeader, throwable);
     }

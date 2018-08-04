@@ -5,6 +5,7 @@ import models.Company;
 
 import javax.annotation.Nonnull;
 import javax.inject.Singleton;
+import javax.persistence.EntityNotFoundException;
 import java.util.List;
 
 /**
@@ -18,7 +19,12 @@ public class CompanyRepository {
   }
 
   public Company getById(final long id) {
-    return Ebean.find(Company.class).where().idEq(id).orderBy("id").findUnique();
+    final Company unique = Ebean.find(Company.class).where().idEq(id).orderBy("id").findUnique();
+    if (unique == null) {
+      throw new EntityNotFoundException(Company.class.getSimpleName());
+    } else {
+      return unique;
+    }
   }
 
   public List<Company> all() {
