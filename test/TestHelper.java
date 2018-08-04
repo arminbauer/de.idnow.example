@@ -7,6 +7,7 @@ import javax.annotation.Nonnull;
 import java.time.Instant;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
+import java.util.Random;
 
 /**
  * @author Dmitrii Bogdanov
@@ -14,18 +15,20 @@ import java.time.ZoneId;
  */
 @SuppressWarnings("SameParameterValue")
 class TestHelper {
+  private static final Random RANDOM = new Random();
+
   static <T> T parseObjectFromResponse(final WSResponse response, final Class<T> clazz) {
     return Json.fromJson(Json.parse(response.getBody()), clazz);
   }
 
   @Nonnull
-  static Company buildDefaultCompany() {
-    return buildCompany(-100L, "Test Bank", 60, 0.9f, 0.95f);
+  static Company buildDefaultCompany(final long id) {
+    return buildCompany(id, "Test Bank", 60, 0.9f, 0.95f);
   }
 
   @Nonnull
   static Identification buildDefaultIdentification(final Company company) {
-    return buildIdentification(-100L, company, "Peter Huber", LocalDateTime.ofInstant(Instant.ofEpochSecond(1435667215L), ZoneId.of("UTC")));
+    return buildIdentification(RANDOM.nextLong(), company, "Peter Huber", LocalDateTime.ofInstant(Instant.ofEpochSecond(1435667215L), ZoneId.of("UTC")));
   }
 
   @Nonnull

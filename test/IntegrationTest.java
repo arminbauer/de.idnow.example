@@ -41,7 +41,7 @@ public class IntegrationTest {
   @Test
   public void testStartIdentificationReturns404IfCompanyDoesNotExist() {
     running(testServer(3333, fakeApplication(inMemoryDatabase())), () -> {
-      final Identification identification = TestHelper.buildDefaultIdentification(TestHelper.buildDefaultCompany());
+      final Identification identification = TestHelper.buildDefaultIdentification(TestHelper.buildDefaultCompany(-100L));
       final WSResponse response = WS.url("http://localhost:3333/api/v1/startIdentification").post(Json.toJson(identification)).get(10000);
       assertEquals(NOT_FOUND, response.getStatus());
       assertEquals("Company not found", response.getBody());
@@ -51,7 +51,7 @@ public class IntegrationTest {
   @Test
   public void testStartIdentificationReturns400IfCompanyIsNotSet() {
     running(testServer(3333, fakeApplication(inMemoryDatabase())), () -> {
-      final Identification identification = TestHelper.buildDefaultIdentification(TestHelper.buildDefaultCompany());
+      final Identification identification = TestHelper.buildDefaultIdentification(TestHelper.buildDefaultCompany(-100L));
       final WSResponse response = WS.url("http://localhost:3333/api/v1/startIdentification").post(Json.toJson(identification)).get(10000);
       assertEquals(BAD_REQUEST, response.getStatus());
       assertEquals("CompanyId is not set for identification", response.getBody());
@@ -62,7 +62,7 @@ public class IntegrationTest {
   public void testStartIdentificationForExistingCompanyReturns200AndCorrectEntity() {
     running(testServer(3333, fakeApplication(inMemoryDatabase())), () -> {
       final Company createdCompany = TestHelper.parseObjectFromResponse(WS.url("http://localhost:3333/api/v1/addCompany")
-                                                                          .post(Json.toJson(TestHelper.buildDefaultCompany()))
+                                                                          .post(Json.toJson(TestHelper.buildDefaultCompany(-100L)))
                                                                           .get(10000L),
                                                                         Company.class);
       final Identification identification = TestHelper.buildDefaultIdentification(createdCompany);
@@ -75,7 +75,7 @@ public class IntegrationTest {
   @Test
   public void testAddCompanyReturns200AndCorrectEntity() {
     running(testServer(3333, fakeApplication(inMemoryDatabase())), () -> {
-      final WSResponse response = WS.url("http://localhost:3333/api/v1/addCompany").post(Json.toJson(TestHelper.buildDefaultCompany())).get(10000L);
+      final WSResponse response = WS.url("http://localhost:3333/api/v1/addCompany").post(Json.toJson(TestHelper.buildDefaultCompany(-100L))).get(10000L);
       assertEquals(OK, response.getStatus());
       assertNotNull(TestHelper.parseObjectFromResponse(response, Company.class).getId());
     });
