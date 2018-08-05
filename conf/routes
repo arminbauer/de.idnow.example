@@ -9,4 +9,7 @@ GET    /api/v1/identifications/:id              controllers.IdentificationRestCo
 POST   /api/v1/startIdentification              controllers.IdentificationRestController.startIdentification()
 GET    /api/v1/pendingIdentifications           controllers.IdentificationRestController.pendingIdentifications()
 
+POST   /ui/startIdentification                  controllers.Application.startIdentification()
+POST   /ui/addCompany                           controllers.Application.addCompany()
+
 GET    /assets/*file                            controllers.Assets.versioned(path="/public", file: Asset)

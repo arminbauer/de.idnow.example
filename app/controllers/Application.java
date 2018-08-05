@@ -1,5 +1,8 @@
 package controllers;
 
+import models.Company;
+import models.Identification;
+import play.data.Form;
 import play.mvc.Controller;
 import play.mvc.Result;
 import repositories.CompanyRepository;
@@ -21,6 +24,14 @@ public class Application extends Controller {
   }
 
   public Result index() {
-    return ok(main.render(identificationRepository.allPending(), companyRepository.all()));
+    return ok(main.render(identificationRepository.allPending(), companyRepository.all(), Form.form(Identification.class), Form.form(Company.class)));
+  }
+
+  public Result addCompany() {
+    return null;
+  }
+
+  public Result startIdentification() {
+    return null;
   }
 }
