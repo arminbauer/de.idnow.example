@@ -12,6 +12,7 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicLong;
+import java.util.stream.Collectors;
 
 /**
  * @author Dmitrii Bogdanov
@@ -91,13 +92,7 @@ public class IdentificationSortingHelperTest {
                                                                        identification4,
                                                                        identification5,
                                                                        identification6));
-    final List<Identification> expected = Arrays.asList(identification2,
-                                                        identification6,
-                                                        identification3,
-                                                        identification4,
-                                                        identification5,
-                                                        identification1);
-    Assert.assertEquals(expected, actual);
+    Assert.assertEquals(Arrays.asList(2L, 6L, 3L, 4L, 5L, 1L), actual.stream().map(Identification::getId).collect(Collectors.toList()));
   }
 
   @Nonnull
