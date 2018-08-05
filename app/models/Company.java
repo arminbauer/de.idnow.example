@@ -30,19 +30,19 @@ public class Company extends Model {
   private String name;
   @JsonProperty("SLA_time")
   @Column(nullable = false)
-  @Constraints.Min(0)
+  @Constraints.Min(1)
   @Constraints.Required
   private int slaTimeInSeconds;
   @JsonProperty("SLA_percentage")
   @Column(nullable = false)
   @Constraints.Min(0)
-  @Constraints.Max(100)
+  @Constraints.Max(1)
   @Constraints.Required
   private float slaPercentage;
   @JsonProperty("Current_SLA_percentage")
   @Column(nullable = false)
   @Constraints.Min(0)
-  @Constraints.Max(100)
+  @Constraints.Max(1)
   @Constraints.Required
   private float currentSlaPercentage;
   @Index

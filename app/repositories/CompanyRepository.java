@@ -16,6 +16,7 @@ import java.util.List;
 public class CompanyRepository {
   public void create(@Nonnull final Company company) {
     company.save();
+    company.refresh();
   }
 
   public Company getById(final long id) {
