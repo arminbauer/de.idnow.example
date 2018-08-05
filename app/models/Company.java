@@ -14,7 +14,7 @@ import javax.persistence.Table;
  * @author Dmitrii Bogdanov
  * Created at 04.08.18
  */
-@SuppressWarnings("DefaultAnnotationParam")
+@SuppressWarnings({"DefaultAnnotationParam", "unused"})
 @Entity
 @Table(name = "COMPANY")
 public class Company extends Model {

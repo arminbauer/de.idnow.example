@@ -19,6 +19,7 @@ import java.time.LocalDateTime;
  * @author Dmitrii Bogdanov
  * Created at 04.08.18
  */
+@SuppressWarnings("unused")
 @Entity
 @Table(name = "IDENTIFICATION")
 public class Identification extends Model {

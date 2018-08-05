@@ -37,6 +37,9 @@ public class IdentificationRestController extends Controller {
 
   public Result startIdentification() {
     final JsonNode json = request().body().asJson();
+    if (json == null) {
+      return badRequest("Provide entity");
+    }
     Logger.debug("Start identification for: {}", json);
     final Identification identification = Json.fromJson(json, Identification.class);
     if (identification.getId() != null) {

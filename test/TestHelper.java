@@ -35,7 +35,11 @@ class TestHelper {
   static Identification buildIdentification(final long id, final Company company, final String username, final LocalDateTime startedAt) {
     final Identification identification = new Identification();
     identification.setId(id);
-    identification.setCompanyId(company.getId());
+    if (company == null) {
+      identification.setCompanyId(null);
+    } else {
+      identification.setCompanyId(company.getId());
+    }
     identification.setCompany(company);
     identification.setUsername(username);
     identification.setStartedAt(startedAt);
