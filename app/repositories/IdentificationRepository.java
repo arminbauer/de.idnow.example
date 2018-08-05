@@ -10,6 +10,7 @@ import javax.inject.Singleton;
 import javax.persistence.EntityNotFoundException;
 import javax.persistence.PersistenceException;
 import javax.validation.ValidationException;
+import java.time.LocalDateTime;
 import java.util.List;
 
 /**
@@ -38,6 +39,7 @@ public class IdentificationRepository {
         identification.setCompany(company);
       }
     }
+    identification.setStartedAt(LocalDateTime.now());
     identification.save();
     identification.refresh();
   }

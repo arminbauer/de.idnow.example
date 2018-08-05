@@ -45,7 +45,6 @@ public class IdentificationRestController extends Controller {
     if (identification.getId() != null) {
       identification.setId(null);
     }
-    identification.setStartedAt(LocalDateTime.now());
     identificationRepository.create(identification);
     final JsonNode created = Json.toJson(identification);
     Logger.debug("Created identification: {}", created);

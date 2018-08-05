@@ -28,10 +28,16 @@ public class Application extends Controller {
   }
 
   public Result addCompany() {
-    return null;
+    final Form<Company> form = Form.form(Company.class).bindFromRequest();
+    final Company company = form.get();
+    companyRepository.create(company);
+    return index();
   }
 
   public Result startIdentification() {
-    return null;
+    final Form<Identification> form = Form.form(Identification.class).bindFromRequest();
+    final Identification identification = form.get();
+    identificationRepository.create(identification);
+    return index();
   }
 }

@@ -21,7 +21,6 @@ public class Company extends Model {
   @JsonProperty("Id")
   @Id
   @Column(nullable = false, length = 255)
-  @Constraints.Required
   private Long id;
   @JsonProperty("Name")
   @Column(nullable = false, length = 255)

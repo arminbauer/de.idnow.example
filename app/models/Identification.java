@@ -28,7 +28,6 @@ public class Identification extends Model {
   @JsonProperty("Id")
   @Column(nullable = false)
   @Id
-  @Constraints.Required
   private Long id;
   @JsonProperty("Name")
   @Column(nullable = false)
@@ -38,12 +37,10 @@ public class Identification extends Model {
   @JsonSerialize(using = UnixTimestampDateTimeSerializer.class)
   @JsonDeserialize(using = UnixTimestampDateTimeDeserializer.class)
   @Column(nullable = false)
-  @Constraints.Required
   private LocalDateTime startedAt;
   @ManyToOne(optional = false, fetch = FetchType.EAGER, cascade = CascadeType.REFRESH)
   @JoinColumn(name = "COMPANY_ID", nullable = false, updatable = false, referencedColumnName = "ID")
   @Column(nullable = false)
-  @Constraints.Required
   private Company company;
   @Index
   @Column(nullable = false)
@@ -54,6 +51,7 @@ public class Identification extends Model {
   @Constraints.Required
   private boolean isDeleted = false;
   @Transient
+  @Constraints.Required
   private Long companyId;
   @Formula(select = " ABS(DATEDIFF('SECOND', CURRENT_TIMESTAMP, STARTED_AT)) ")
   private Long waitingTime;
