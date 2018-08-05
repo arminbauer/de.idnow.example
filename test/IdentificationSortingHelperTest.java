@@ -77,8 +77,8 @@ public class IdentificationSortingHelperTest {
   @Test
   public void testSortMultipleItemsReturnsCorrectResult() {
     final Company company1 = company1();
-    final Company company2 = company4();
-    final Company company3 = company4();
+    final Company company2 = company2();
+    final Company company3 = company3();
     final Company company4 = company4();
     final Identification identification1 = identification(company1, 30);
     final Identification identification2 = identification(company1, 45);
@@ -92,7 +92,7 @@ public class IdentificationSortingHelperTest {
                                                                        identification4,
                                                                        identification5,
                                                                        identification6));
-    Assert.assertEquals(Arrays.asList(2L, 6L, 3L, 4L, 5L, 1L), actual.stream().map(Identification::getId).collect(Collectors.toList()));
+    Assert.assertEquals(Arrays.asList(2L, 6L, 5L, 3L, 1L, 4L), actual.stream().map(Identification::getId).collect(Collectors.toList()));
   }
 
   @Nonnull

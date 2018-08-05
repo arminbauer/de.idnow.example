@@ -15,18 +15,18 @@ import java.util.stream.Collectors;
 @Singleton
 public class IdentificationSortingHelper {
   private static final double DANGER_ZONE_SLA_PERCENTAGE_RATIO_THRESHOLD = 0.05;
-  private static final double DANGER_ZONE_SLA_WAITING_TIME_RATIO_THRESHOLD = 0.4;
+  private static final double DANGER_ZONE_SLA_WAITING_TIME_RATIO_THRESHOLD = 0.25;
   private final Comparator<Identification> waitingTimeComparator = (o1, o2) -> Comparator.comparingLong(Identification::waitingTime).compare(o2, o1);
-  private final Comparator<Identification> slaPercentageComparator = (o1, o2) -> Comparator.comparingDouble(this::getSlaPercentageRatio).compare(o1, o2);
-  private final Comparator<Identification> slaTimeComparator = (o1, o2) -> Comparator.comparingInt(this::getSlaTime).compare(o2, o1);
+  private final Comparator<Identification> slaTimeComparator = (o1, o2) -> Comparator.comparingInt(this::slaTime).compare(o1, o2);
+  private final Comparator<Identification> slaCurrentPercentageComparator = (o1, o2) -> Comparator.comparingDouble(this::currentSlaPercentage).compare(o1, o2);
   private final Comparator<Identification> dangerousZoneComparator = (o1, o2) -> {
-    final boolean o1DangerousInTermsOfMissedSla = isInDangerousZone(o1);
-    final boolean o2DangerousInTermsOfMissedSla = isInDangerousZone(o2);
-    if (o1DangerousInTermsOfMissedSla || o2DangerousInTermsOfMissedSla) {
-      if (!o1DangerousInTermsOfMissedSla) {
-        return 1;
-      } else if (!o2DangerousInTermsOfMissedSla) {
+    final boolean o1CloseToMissSla = isCloseToMissSla(o1);
+    final boolean o2CloseToMissSla = isCloseToMissSla(o2);
+    if (o1CloseToMissSla || o2CloseToMissSla) {
+      if (!o1CloseToMissSla) {
         return -1;
+      } else if (!o2CloseToMissSla) {
+        return 1;
       } else {
         return 0;
       }
@@ -38,13 +38,13 @@ public class IdentificationSortingHelper {
   public List<Identification> sortBySla(final List<Identification> identifications) {
     return identifications.stream()
                           .sorted(slaTimeComparator)
-                          .sorted(slaPercentageComparator)
+                          .sorted(slaCurrentPercentageComparator)
                           .sorted(waitingTimeComparator)
                           .sorted(dangerousZoneComparator)
                           .collect(Collectors.toList());
   }
 
-  private boolean isInDangerousZone(final Identification identification) {
+  private boolean isCloseToMissSla(final Identification identification) {
     return isSlaCloseToNonAgreement(identification) && isWaitingTimeCloseToMiss(identification);
   }
 
@@ -55,14 +55,18 @@ public class IdentificationSortingHelper {
   }
 
   private boolean isSlaCloseToNonAgreement(final Identification identification) {
-    return getSlaPercentageRatio(identification) - 1 <= DANGER_ZONE_SLA_PERCENTAGE_RATIO_THRESHOLD;
+    return slaPercentageRatio(identification) - 1 <= DANGER_ZONE_SLA_PERCENTAGE_RATIO_THRESHOLD;
   }
 
-  private double getSlaPercentageRatio(final Identification c) {
+  private double slaPercentageRatio(final Identification c) {
     return c.getCompany().getCurrentSlaPercentage() / c.getCompany().getSlaPercentage();
   }
 
-  private int getSlaTime(final Identification c) {
+  private int slaTime(final Identification c) {
     return c.getCompany().getSlaTimeInSeconds();
+  }
+
+  private float currentSlaPercentage(final Identification c) {
+    return c.getCompany().getCurrentSlaPercentage();
   }
 }

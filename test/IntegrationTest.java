@@ -55,7 +55,6 @@ public class IntegrationTest {
   @Test
   public void testStartIdentificationReturns400IfBodyIsNull() {
     running(testServer(3333, fakeApplication(inMemoryDatabase())), () -> {
-      final JsonNode node = Json.newArray();
       final WSResponse response = WS.url("http://localhost:3333/api/v1/startIdentification").post((JsonNode) null).get(DEFAULT_TIMEOUT);
       assertEquals(BAD_REQUEST, response.getStatus());
       assertEquals(response.getBody(), "Provide entity");
@@ -75,7 +74,6 @@ public class IntegrationTest {
   @Test
   public void testAddCompanyReturns400IfBodyIsNull() {
     running(testServer(3333, fakeApplication(inMemoryDatabase())), () -> {
-      final JsonNode node = Json.newArray();
       final WSResponse response = WS.url("http://localhost:3333/api/v1/addCompany").post((JsonNode) null).get(DEFAULT_TIMEOUT);
       assertEquals(BAD_REQUEST, response.getStatus());
       assertEquals(response.getBody(), "Provide entity");
@@ -185,8 +183,7 @@ public class IntegrationTest {
       assertTrue(pendingIdentifications instanceof ArrayNode);
       final List<Identification> idents = new ArrayList<>();
       pendingIdentifications.forEach(jsonNode -> idents.add(Json.fromJson(jsonNode, Identification.class)));
-      final List<Long> expected = Arrays.asList(2L, 6L, 3L, 4L, 5L, 1L);
-      assertEquals(expected, idents.stream().map(Identification::getId).collect(Collectors.toList()));
+      assertEquals(Arrays.asList(2L, 6L, 5L, 3L, 1L, 4L), idents.stream().map(Identification::getId).collect(Collectors.toList()));
       Evolutions.cleanupEvolutions(db);
     });
   }
