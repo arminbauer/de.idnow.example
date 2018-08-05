@@ -36,7 +36,9 @@
                 }
                 </tbody>
             </table>
+            <br/>
             <div>
+                <h3>Add Company</h3>
                 @helper.form(action = routes.Application.addCompany()) {
                     @helper.inputText(field = companyForm("name"), '_label -> "Name", 'class -> "form-control", '_showConstraints -> false, '_showErrors -> true)
                     @helper.inputText(field = companyForm("slaTimeInSeconds"), '_label -> "SLA Time", 'class -> "form-control", '_showConstraints -> false, '_showErrors -> true)
@@ -46,6 +48,8 @@
                 }
             </div>
         </div>
+        <br/>
+        <br/>
         <div>
             <h2>Identifications</h2>
             <table class="table">
@@ -70,7 +74,9 @@
                     }
                 </tbody>
             </table>
+            <br/>
             <div>
+                <h3>Start Identification</h3>
                 @helper.form(action = routes.Application.startIdentification()) {
                     @helper.inputText(field = companyForm("username"), '_label -> "User Name", 'class -> "form-control", '_showConstraints -> false, '_showErrors -> true)
                     @helper.inputText(field = companyForm("companyId"), '_label -> "CompanyId", 'class -> "form-control", '_showConstraints -> false, '_showErrors -> true)
