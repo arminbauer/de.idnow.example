@@ -10,6 +10,7 @@ import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import json.UnixTimestampDateTimeDeserializer;
 import json.UnixTimestampDateTimeSerializer;
+import play.data.validation.Constraints;
 
 import javax.persistence.*;
 import java.time.Duration;
@@ -26,24 +27,30 @@ public class Identification extends Model {
   @JsonProperty("Id")
   @Column(nullable = false)
   @Id
+  @Constraints.Required
   private Long id;
   @JsonProperty("Name")
   @Column(nullable = false)
+  @Constraints.Required
   private String username;
   @JsonProperty("Time")
   @JsonSerialize(using = UnixTimestampDateTimeSerializer.class)
   @JsonDeserialize(using = UnixTimestampDateTimeDeserializer.class)
   @Column(nullable = false)
+  @Constraints.Required
   private LocalDateTime startedAt;
-  @ManyToOne(optional = false)
-  @JoinColumn(name = "COMPANY_ID", nullable = false, updatable = false)
+  @ManyToOne(optional = false, fetch = FetchType.EAGER, cascade = CascadeType.REFRESH)
+  @JoinColumn(name = "COMPANY_ID", nullable = false, updatable = false, referencedColumnName = "ID")
   @Column(nullable = false)
+  @Constraints.Required
   private Company company;
   @Index
   @Column(nullable = false)
+  @Constraints.Required
   private boolean isPending = true;
   @Index
   @Column(nullable = false)
+  @Constraints.Required
   private boolean isDeleted = false;
   @Transient
   private Long companyId;

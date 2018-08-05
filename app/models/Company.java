@@ -21,27 +21,33 @@ public class Company extends Model {
   @JsonProperty("Id")
   @Id
   @Column(nullable = false, length = 255)
+  @Constraints.Required
   private Long id;
   @JsonProperty("Name")
   @Column(nullable = false, length = 255)
   @Constraints.MinLength(1)
+  @Constraints.Required
   private String name;
   @JsonProperty("SLA_time")
   @Column(nullable = false)
   @Constraints.Min(0)
+  @Constraints.Required
   private int slaTimeInSeconds;
   @JsonProperty("SLA_percentage")
   @Column(nullable = false)
   @Constraints.Min(0)
   @Constraints.Max(100)
+  @Constraints.Required
   private float slaPercentage;
   @JsonProperty("Current_SLA_percentage")
   @Column(nullable = false)
   @Constraints.Min(0)
   @Constraints.Max(100)
+  @Constraints.Required
   private float currentSlaPercentage;
   @Index
   @Column
+  @Constraints.Required
   private boolean isDeleted;
 
   public Long getId() {

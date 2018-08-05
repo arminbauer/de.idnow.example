@@ -51,10 +51,22 @@ public class IdentificationRepository {
   }
 
   public List<Identification> allPending() {
-    return Ebean.find(Identification.class).where().eq("isDeleted", false).eq("isPending", true).findList();
+    return Ebean
+        .find(Identification.class)
+        .fetch("company")
+        .where()
+        .eq("isDeleted", false)
+        .eq("isPending", true)
+        .orderBy("startedAt")
+        .findList();
   }
 
   public List<Identification> all() {
-    return Ebean.find(Identification.class).where().eq("isDeleted", false).findList();
+    return Ebean
+        .find(Identification.class)
+        .fetch("company")
+        .where()
+        .eq("isDeleted", false)
+        .findList();
   }
 }

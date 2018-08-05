@@ -19,7 +19,12 @@ public class CompanyRepository {
   }
 
   public Company getById(final long id) {
-    final Company unique = Ebean.find(Company.class).where().idEq(id).orderBy("id").findUnique();
+    final Company unique = Ebean
+        .find(Company.class)
+        .where()
+        .idEq(id)
+        .orderBy("id")
+        .findUnique();
     if (unique == null) {
       throw new EntityNotFoundException(Company.class.getSimpleName());
     } else {
@@ -28,6 +33,12 @@ public class CompanyRepository {
   }
 
   public List<Company> all() {
-    return Ebean.find(Company.class).where().eq("isDeleted", false).orderBy().asc("id").findList();
+    return Ebean
+        .find(Company.class)
+        .where()
+        .eq("isDeleted", false)
+        .orderBy()
+        .asc("id")
+        .findList();
   }
 }
