@@ -7,12 +7,12 @@ import com.fasterxml.jackson.databind.JsonDeserializer;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.node.NumericNode;
 import com.fasterxml.jackson.databind.node.TextNode;
+import config.TimeZone;
 import play.Logger;
 
 import javax.annotation.Nonnull;
 import java.time.Instant;
 import java.time.LocalDateTime;
-import java.time.ZoneId;
 
 /**
  * @author Dmitrii Bogdanov
@@ -38,6 +38,6 @@ public class UnixTimestampDateTimeDeserializer extends JsonDeserializer<LocalDat
 
   @Nonnull
   private LocalDateTime getUtc(final long timestamp) {
-    return LocalDateTime.ofInstant(Instant.ofEpochSecond(timestamp), ZoneId.of("UTC"));
+    return LocalDateTime.ofInstant(Instant.ofEpochSecond(timestamp), TimeZone.ZONE);
   }
 }

@@ -6,8 +6,6 @@ import org.junit.Before;
 import org.junit.Test;
 
 import javax.annotation.Nonnull;
-import java.time.LocalDateTime;
-import java.time.temporal.ChronoUnit;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
@@ -19,13 +17,15 @@ import java.util.stream.Collectors;
  * Created at 04.08.18
  */
 public class IdentificationSortingHelperTest {
-  private static final AtomicLong IDENT_ID = new AtomicLong(1);
-  private static final AtomicLong COMPANY_ID = new AtomicLong(1);
+  private AtomicLong identId;
+  private AtomicLong companyId;
   private IdentificationSortingHelper helper;
 
   @Before
   public void setUp() {
     helper = new IdentificationSortingHelper();
+    identId = new AtomicLong(1);
+    companyId = new AtomicLong(1);
   }
 
   @Test
@@ -97,26 +97,26 @@ public class IdentificationSortingHelperTest {
 
   @Nonnull
   private Identification identification(final Company company1, final int waitingTime) {
-    return TestHelper.buildIdentification(IDENT_ID.getAndIncrement(), company1, "default", LocalDateTime.now().minus(waitingTime, ChronoUnit.SECONDS));
+    return TestHelper.buildIdentification(identId.getAndIncrement(), company1, "default", waitingTime);
   }
 
   @Nonnull
   private Company company1() {
-    return TestHelper.buildCompany(COMPANY_ID.getAndIncrement(), "Company1", 60, 0.9f, 0.95f);
+    return TestHelper.buildCompany(companyId.getAndIncrement(), "Company1", 60, 0.9f, 0.95f);
   }
 
   @Nonnull
   private Company company2() {
-    return TestHelper.buildCompany(COMPANY_ID.getAndIncrement(), "Company2", 60, 0.9f, 0.9f);
+    return TestHelper.buildCompany(companyId.getAndIncrement(), "Company2", 60, 0.9f, 0.9f);
   }
 
   @Nonnull
   private Company company3() {
-    return TestHelper.buildCompany(COMPANY_ID.getAndIncrement(), "Company3", 120, 0.8f, 0.95f);
+    return TestHelper.buildCompany(companyId.getAndIncrement(), "Company3", 120, 0.8f, 0.95f);
   }
 
   @Nonnull
   private Company company4() {
-    return TestHelper.buildCompany(COMPANY_ID.getAndIncrement(), "Company4", 120, 0.8f, 0.8f);
+    return TestHelper.buildCompany(companyId.getAndIncrement(), "Company4", 120, 0.8f, 0.8f);
   }
 }

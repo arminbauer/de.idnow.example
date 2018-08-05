@@ -1,6 +1,7 @@
 package models;
 
 import com.avaje.ebean.Model;
+import com.avaje.ebean.annotation.Formula;
 import com.avaje.ebean.annotation.Index;
 import com.fasterxml.jackson.annotation.JsonGetter;
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -8,12 +9,12 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonSetter;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.google.common.annotations.VisibleForTesting;
 import json.UnixTimestampDateTimeDeserializer;
 import json.UnixTimestampDateTimeSerializer;
 import play.data.validation.Constraints;
 
 import javax.persistence.*;
-import java.time.Duration;
 import java.time.LocalDateTime;
 
 /**
@@ -54,6 +55,8 @@ public class Identification extends Model {
   private boolean isDeleted = false;
   @Transient
   private Long companyId;
+  @Formula(select = " ABS(DATEDIFF('SECOND', CURRENT_TIMESTAMP, STARTED_AT)) ")
+  private Long waitingTime;
 
   public Long getId() {
     return id;
@@ -89,11 +92,15 @@ public class Identification extends Model {
     this.company = company;
   }
 
-  @Transient
   @JsonGetter("Waiting_time")
+  public Long waitingTime() {
+    return waitingTime;
+  }
+
   @JsonIgnore
-  public long waitingTime() {
-    return Duration.between(startedAt, LocalDateTime.now()).toMillis() / 1000;
+  @VisibleForTesting
+  public void setWaitingTime(final long waitingTime) {
+    this.waitingTime = waitingTime;
   }
 
   @Transient

@@ -3,16 +3,20 @@ import com.fasterxml.jackson.databind.node.ArrayNode;
 import models.Company;
 import models.Identification;
 import org.junit.Test;
+import play.api.db.evolutions.ClassLoaderEvolutionsReader;
+import play.db.Database;
+import play.db.evolutions.Evolutions;
 import play.libs.Json;
 import play.libs.ws.WS;
 import play.libs.ws.WSResponse;
+import play.test.FakeApplication;
+import play.test.Helpers;
 
 import javax.annotation.Nonnull;
-import java.time.LocalDateTime;
-import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import static org.junit.Assert.*;
 import static play.test.Helpers.*;
@@ -171,43 +175,28 @@ public class IntegrationTest {
 
   @Test
   public void testGetPendingIdentificationsReturns200AndListOfIdentificationsInCorrectOrder() {
-    running(testServer(3333, fakeApplication(inMemoryDatabase())), () -> {
-      final Company company1 = createAndParseCompanyFromResponse(TestHelper.buildCompany(DEFAULT_ID, "Company1", 60, 0.9f, 0.95f));
-      final Company company2 = createAndParseCompanyFromResponse(TestHelper.buildCompany(DEFAULT_ID, "Company2", 60, 0.9f, 0.9f));
-      final Company company3 = createAndParseCompanyFromResponse(TestHelper.buildCompany(DEFAULT_ID, "Company3", 120, 0.8f, 0.95f));
-      final Company company4 = createAndParseCompanyFromResponse(TestHelper.buildCompany(DEFAULT_ID, "Company4", 120, 0.8f, 0.8f));
-      final Identification identification1 = createAndParseIdentificationFromResponse(company1, 30);
-      final Identification identification2 = createAndParseIdentificationFromResponse(company1, 45);
-      final Identification identification3 = createAndParseIdentificationFromResponse(company2, 30);
-      final Identification identification4 = createAndParseIdentificationFromResponse(company3, 30);
-      final Identification identification5 = createAndParseIdentificationFromResponse(company4, 30);
-      final Identification identification6 = createAndParseIdentificationFromResponse(company1, 45);
+    final FakeApplication app = Helpers.fakeApplication();
+    final Database db = app.injector().instanceOf(Database.class);
+    running(testServer(3333, app), () -> {
+      Evolutions.applyEvolutions(db, ClassLoaderEvolutionsReader.forPrefix("testdatabase/"));
       final WSResponse pendingIdentificationsResponse = WS.url("http://localhost:3333/api/v1/pendingIdentifications").get().get(DEFAULT_TIMEOUT);
       assertEquals(OK, pendingIdentificationsResponse.getStatus());
       final JsonNode pendingIdentifications = pendingIdentificationsResponse.asJson();
       assertTrue(pendingIdentifications instanceof ArrayNode);
       final List<Identification> idents = new ArrayList<>();
       pendingIdentifications.forEach(jsonNode -> idents.add(Json.fromJson(jsonNode, Identification.class)));
-      assertEquals(6, idents.size());
-      final List<Identification> expected = Arrays.asList(identification2,
-                                                          identification6,
-                                                          identification3,
-                                                          identification4,
-                                                          identification5,
-                                                          identification1);
-      assertEquals(expected, idents);
+      final List<Long> expected = Arrays.asList(2L, 6L, 3L, 4L, 5L, 1L);
+      assertEquals(expected, idents.stream().map(Identification::getId).collect(Collectors.toList()));
+      Evolutions.cleanupEvolutions(db);
     });
   }
 
-  private Identification createAndParseIdentificationFromResponse(final Company company, final int waitingTime) {
-    return TestHelper.parseObjectFromResponse(createIdentification(company, waitingTime), Identification.class);
-  }
-
+  @SuppressWarnings("SameParameterValue")
   private WSResponse createIdentification(final Company company, final int waitingTime) {
     final Identification identification = TestHelper.buildIdentification(DEFAULT_ID,
                                                                          company,
                                                                          "default",
-                                                                         LocalDateTime.now().minus(waitingTime, ChronoUnit.SECONDS));
+                                                                         waitingTime);
     return WS.url("http://localhost:3333/api/v1/startIdentification").post(Json.toJson(identification)).get(DEFAULT_TIMEOUT);
   }
 

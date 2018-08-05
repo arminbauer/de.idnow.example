@@ -39,6 +39,7 @@ public class IdentificationRepository {
       }
     }
     identification.save();
+    identification.refresh();
   }
 
   public Identification getById(final long id) {

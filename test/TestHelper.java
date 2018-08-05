@@ -4,9 +4,8 @@ import play.libs.Json;
 import play.libs.ws.WSResponse;
 
 import javax.annotation.Nonnull;
-import java.time.Instant;
 import java.time.LocalDateTime;
-import java.time.ZoneId;
+import java.time.temporal.ChronoUnit;
 import java.util.Random;
 
 /**
@@ -28,11 +27,11 @@ class TestHelper {
 
   @Nonnull
   static Identification buildDefaultIdentification(final Company company) {
-    return buildIdentification(RANDOM.nextLong(), company, "Peter Huber", LocalDateTime.ofInstant(Instant.ofEpochSecond(1435667215L), ZoneId.of("UTC")));
+    return buildIdentification(RANDOM.nextLong(), company, "Peter Huber", 30);
   }
 
   @Nonnull
-  static Identification buildIdentification(final long id, final Company company, final String username, final LocalDateTime startedAt) {
+  static Identification buildIdentification(final long id, final Company company, final String username, final long waitingTime) {
     final Identification identification = new Identification();
     identification.setId(id);
     if (company == null) {
@@ -42,7 +41,8 @@ class TestHelper {
     }
     identification.setCompany(company);
     identification.setUsername(username);
-    identification.setStartedAt(startedAt);
+    identification.setWaitingTime(waitingTime);
+    identification.setStartedAt(LocalDateTime.now().minus(waitingTime, ChronoUnit.SECONDS));
     return identification;
   }
 
