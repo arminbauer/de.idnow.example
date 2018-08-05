@@ -1,12 +1,15 @@
-# Routes
-# This file defines all application routes (Higher priority routes first)
-# ~~~~
+GET     /                                       controllers.Application.index()
 
-# Home page
-GET     /                           controllers.Application.index()
-POST    /api/v1/addCompany          controllers.RestController.addCompany()
-POST    /api/v1/startIdentification controllers.RestController.startIdentification()
-GET     /api/v1/identifications     controllers.RestController.identifications()
+POST    /api/v1/addCompany                      controllers.CompanyRestController.create()
+GET     /api/v1/companies                       controllers.CompanyRestController.getAll()
+GET     /api/v1/companies/:id                   controllers.CompanyRestController.getById(id: Long)
 
-# Map static resources from the /public folder to the /assets URL path
-GET     /assets/*file               controllers.Assets.versioned(path="/public", file: Asset)
+GET    /api/v1/identifications                  controllers.IdentificationRestController.getAll()
+GET    /api/v1/identifications/:id              controllers.IdentificationRestController.getById(id: Long)
+POST   /api/v1/startIdentification              controllers.IdentificationRestController.startIdentification()
+GET    /api/v1/pendingIdentifications           controllers.IdentificationRestController.pendingIdentifications()
+
+POST   /ui/startIdentification                  controllers.Application.startIdentification()
+POST   /ui/addCompany                           controllers.Application.addCompany()
+
+GET    /assets/*file                            controllers.Assets.versioned(path="/public", file: Asset)

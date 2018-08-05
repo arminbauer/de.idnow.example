@@ -1,6 +1,8 @@
-#Welcome to the IDnow example project
+[![Build Status](https://travis-ci.org/dimyriy/de.idnow.example.svg?branch=master)](https://travis-ci.org/dimyriy/de.idnow.example)
 
-##Setup
+# Welcome to the IDnow example project
+
+## Setup
 
 You need:
 * Java 8 installed
@@ -17,7 +19,7 @@ To run the unit tests:
 * Linux / Mac: run "./activator test"
 * Windows: run "./activator.bat test"
 
-##Your tasks
+## Your tasks
 
 You are provided with the JSON representation of 2 objects:
 - An identification which is a request of a user to be identified by IDnow
@@ -75,7 +77,7 @@ Example 4:
 - Identification 2 belonging to Company2: Waiting_time=30
 What is the expected order here?
 
-##What do we check?
+## What do we check?
 
 How do we check the results:
 - First we check if the tasks have been finished and if they work correctly
@@ -87,13 +89,13 @@ How do we check the results:
 Bonus task:
 - Create a web interface to add new identifications to the REST interface
 
-##Where to start
+## Where to start
 
 - Check the test/RestController.Test.java for an example test
 - Check the conf/routes for the REST routes
 - Check the app/controllers/RestController.java for the stubs for the REST interface
 
-##How to turn in the assignment
+## How to turn in the assignment
 
 - Clone this Github repository
 - Check in your code
