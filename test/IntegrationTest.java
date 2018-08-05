@@ -35,14 +35,6 @@ public class IntegrationTest {
   }
 
   @Test
-  public void testWelcomePage() {
-    running(testServer(3333, fakeApplication(inMemoryDatabase())), HTMLUNIT, browser -> {
-      browser.goTo("http://localhost:3333");
-      assertTrue(browser.pageSource().contains("Your new application is ready."));
-    });
-  }
-
-  @Test
   public void testStartIdentificationReturns400IfRequestIsMalformed() {
     running(testServer(3333, fakeApplication(inMemoryDatabase())), () -> {
       final JsonNode node = Json.newArray();
