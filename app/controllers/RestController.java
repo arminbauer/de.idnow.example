@@ -4,16 +4,19 @@ import com.fasterxml.jackson.databind.JsonNode;
 
 import play.libs.Json;
 import play.mvc.*;
+import service.IndentificationServiceI;
+import service.IndetificationServiceImpl;
 
 public class RestController extends Controller {
 
     public Result startIdentification() {
-    	//Get the parsed JSON data
-    	JsonNode json = request().body().asJson();
     	
-    	//Do something with the identification
+    	  
+    	IndentificationServiceI identifcationService = new IndetificationServiceImpl();
+    	 identifcationService.getOptimalOrder(request().body().asJson());
     	
-        return ok();
+    	
+        return ok(request().body().asJson()).as("application/json");
     }
 
     public Result addCompany() {
@@ -36,4 +39,5 @@ public class RestController extends Controller {
         return ok(identifications);
     }
 
+   
 }

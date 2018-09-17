@@ -2,6 +2,15 @@
 
 ##Setup
 
+[
+    	  { "companyId": "1" , "companyName": "CABC", "slaTime":"60",  "slaPercentage":"0.98", "Current_SLA_percentage" : "95%" },
+    	 { "companyId": "2" , "companyName": "CXYZ", "SLA_time":"45",  "SLA_percentage":"0.80", "Current_SLA_percentage" : "80%" },
+    	  { "Id" : "Id1","Name":"IdOne" ,"Waiting_time" : "60", "Companyid" : "1" },
+    	  { "Id" : "Id2","Name":"IdTwo" ,"Waiting_time" : "80", "Companyid" : "2" }
+    	  ] 
+    	
+    	  
+
 You need:
 * Java 8 installed
 * A checkout of this project (obviously)
