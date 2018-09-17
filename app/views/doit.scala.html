@@ -1,0 +1,14 @@
+@(message:String,username: String, names : List[String])
+<html>
+<body>
+I can do it. @message
+
+ @username
+
+<ul>
+ @for(name <- names) {
+ <li>@name</li>
+}
+
+</body>
+</html>

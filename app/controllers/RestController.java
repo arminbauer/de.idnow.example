@@ -1,19 +1,25 @@
 package controllers;
 
+import java.util.List;
+
 import com.fasterxml.jackson.databind.JsonNode;
 
+import models.*;
 import play.libs.Json;
 import play.mvc.*;
+import service.IndentificationServiceI;
+import service.IndetificationServiceImpl;
 
 public class RestController extends Controller {
 
     public Result startIdentification() {
-    	//Get the parsed JSON data
-    	JsonNode json = request().body().asJson();
     	
-    	//Do something with the identification
-    	
-        return ok();
+    	  
+    	IndentificationServiceI identifcationService = new IndetificationServiceImpl();
+    	List<Identification> idList =  identifcationService.getOptimalOrder(request().body().asJson());
+    	//here only the sorted Identiy objects are returned.
+    	JsonNode personJson = Json.toJson(idList); 
+        return ok(personJson).as("application/json");
     }
 
     public Result addCompany() {
@@ -36,4 +42,5 @@ public class RestController extends Controller {
         return ok(identifications);
     }
 
+   
 }
