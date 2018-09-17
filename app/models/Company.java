@@ -1,5 +1,6 @@
 package models;
 
+import java.util.Comparator;
 
 public class Company {
 
@@ -40,6 +41,7 @@ public class Company {
 		this.currentSlaPercentage = currentSlaPercentage;
 	}
 	
-
+   
 	
 }
+

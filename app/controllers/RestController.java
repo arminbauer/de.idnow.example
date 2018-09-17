@@ -1,7 +1,10 @@
 package controllers;
 
+import java.util.List;
+
 import com.fasterxml.jackson.databind.JsonNode;
 
+import models.*;
 import play.libs.Json;
 import play.mvc.*;
 import service.IndentificationServiceI;
@@ -13,10 +16,10 @@ public class RestController extends Controller {
     	
     	  
     	IndentificationServiceI identifcationService = new IndetificationServiceImpl();
-    	 identifcationService.getOptimalOrder(request().body().asJson());
-    	
-    	
-        return ok(request().body().asJson()).as("application/json");
+    	List<Identification> idList =  identifcationService.getOptimalOrder(request().body().asJson());
+    	//here only the sorted Identiy objects are returned.
+    	JsonNode personJson = Json.toJson(idList); 
+        return ok(personJson).as("application/json");
     }
 
     public Result addCompany() {

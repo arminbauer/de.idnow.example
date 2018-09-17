@@ -4,17 +4,21 @@ package service;
 import play.libs.Json;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
+import java.util.ListIterator;
 import java.util.Map;
 import java.util.Map.Entry;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
+
 import common.Utility;
 import models.Company;
+import models.CompanySla;
 import models.Identification;
 
 public class IndetificationServiceImpl implements IndentificationServiceI {
@@ -23,42 +27,38 @@ public class IndetificationServiceImpl implements IndentificationServiceI {
 	 * @see service.IndentificationServiceI#getOptimalOrder()
 	 */
 	@Override
-	public void getOptimalOrder(JsonNode json) {
+	public List<Identification> getOptimalOrder(JsonNode json) {
 	  // read all the values then create a hashmap with the order.
 		
 		List<Company> companyList =  new ArrayList<Company>();
 		List<Identification> idList = new ArrayList<Identification>();
-		
+		List<Identification> sortedList = new ArrayList<Identification>();
 		for (int i = 0; i < json.size(); i++) {
 			
 			JsonNode node = json.get(i);
 			//get the key values 
 			if(i <= 1) { //the first two objects in JSON are defaulty considered as Company json
-				System.out.println("This is company");
 			Company c1 =  Json.fromJson(node, Company.class);
-			System.out.println(c1.getCompanyId());
-			System.out.println(c1.getCompanyName());
 			companyList.add(c1);
 			c1 = null;
 			} else { //the rest are identifications for the first two companies
 				Identification identification = Json.fromJson(node, Identification.class);
-				System.out.println("This is identification");
-				System.out.println("The identitfication::" + identification.getCustomerName());
 				idList.add(identification);
 				identification = null;
 			}
 		}
+		Collections.sort(companyList, new CompanySla()); 
+		//get the order of the company and set the same order for Identification list 
+		for (int i = 0; i < companyList.size(); i++) {
+			Company c = companyList.get(i);
+			 Iterator<Identification> ideI = idList.iterator();
+			 while(ideI.hasNext()) {
+				 Identification  id = ideI.next();
+				 if(c.getCompanyId().equals(id.getCompanyId())) {
+					 sortedList.add(id);
+				 }
+			 }
+		}
+		return sortedList;
 	}
-	
-	private void findOrder(List<Company> companyList, List<Identification> idList) {
-		
-		//find the company 
-		
-		
-	}
-
-    	
-	
-	
-
 }
