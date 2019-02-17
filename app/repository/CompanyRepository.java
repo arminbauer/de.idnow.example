@@ -26,13 +26,14 @@ public class CompanyRepository {
         ebeanServer = Ebean.getServer(ebeanConfig.defaultServer());
     }
 
-    public void save(CompanyEntity companyEntity) {
+    public boolean save(CompanyEntity companyEntity) {
         Optional<CompanyEntity> identificationEntity = Optional.ofNullable(ebeanServer.find(CompanyEntity.class).setId(companyEntity.getId()).findUnique());
         if (identificationEntity.isPresent()) {
             LOG.warn("Company with id {} already exists", companyEntity.getId());
-            return;
+            return false;
         }
         ebeanServer.save(companyEntity);
+        return true;
     }
 
     public CompanyEntity getById(Long id) {

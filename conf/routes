@@ -4,7 +4,7 @@
 
 # Home page
 GET     /                           controllers.Application.index()
-POST    /api/v1/addCompany          controllers.RestController.addCompany()
+POST    /api/v1/addCompany          controllers.CompanyController.addCompany()
 POST    /api/v1/startIdentification controllers.RestController.startIdentification()
 GET     /api/v1/identifications     controllers.RestController.identifications()
 

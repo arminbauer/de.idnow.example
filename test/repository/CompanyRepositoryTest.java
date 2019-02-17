@@ -2,12 +2,13 @@ package repository;
 
 import models.CompanyEntity;
 import org.junit.After;
-import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import play.Application;
 import play.inject.guice.GuiceApplicationBuilder;
 import play.test.WithApplication;
+
+import static org.junit.Assert.assertEquals;
 
 /**
  * Company repository test cases
@@ -44,10 +45,10 @@ public class CompanyRepositoryTest extends WithApplication {
 
         companyRepository.save(companyEntity);
         CompanyEntity companyEntityToCheck = companyRepository.getById(companyEntity.getId());
-        Assert.assertEquals("Ids are not the same", companyEntity.getId(), companyEntityToCheck.getId());
-        Assert.assertEquals("Names are not the same", companyEntity.getName(), companyEntityToCheck.getName());
-        Assert.assertEquals("SLA times are not the same", companyEntity.getSlaTime(), companyEntityToCheck.getSlaTime());
-        Assert.assertEquals("SLA percentages are not the same", companyEntity.getSlaPercentage(), companyEntityToCheck.getSlaPercentage());
-        Assert.assertEquals("Current SLA percentages are not the same", companyEntity.getCurrentSlaPercentage(), companyEntityToCheck.getCurrentSlaPercentage());
+        assertEquals("Ids are not the same", companyEntity.getId(), companyEntityToCheck.getId());
+        assertEquals("Names are not the same", companyEntity.getName(), companyEntityToCheck.getName());
+        assertEquals("SLA times are not the same", companyEntity.getSlaTime(), companyEntityToCheck.getSlaTime());
+        assertEquals("SLA percentages are not the same", companyEntity.getSlaPercentage(), companyEntityToCheck.getSlaPercentage());
+        assertEquals("Current SLA percentages are not the same", companyEntity.getCurrentSlaPercentage(), companyEntityToCheck.getCurrentSlaPercentage());
     }
 }
