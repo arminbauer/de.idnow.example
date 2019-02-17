@@ -26,7 +26,7 @@ public class Company {
     }
 
     //TODO:: better to change it with Lombok
-    public Company(Long id, String name, Long slaTime, Float slaPercentage, Float currentSlaPercentage) {
+    private Company(Long id, String name, Long slaTime, Float slaPercentage, Float currentSlaPercentage) {
         this.id = id;
         this.name = name;
         this.slaTime = slaTime;
@@ -45,7 +45,7 @@ public class Company {
         private Float slaPercentage;
         private Float currentSlaPercentage;
 
-        public CompanyBuilder() {
+        CompanyBuilder() {
         }
 
         public CompanyBuilder id(Long id) {

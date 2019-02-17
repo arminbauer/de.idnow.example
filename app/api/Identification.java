@@ -23,7 +23,7 @@ public class Identification {
     public Identification() {
     }
 
-    public Identification(Long id, String name, Long time, Long waitingTime, Long companyId) {
+    private Identification(Long id, String name, Long time, Long waitingTime, Long companyId) {
         this.id = id;
         this.name = name;
         this.time = time;
@@ -42,7 +42,7 @@ public class Identification {
         private Long waitingTime;
         private Long companyId;
 
-        public IdentificationBuilder() {
+        IdentificationBuilder() {
         }
 
         public IdentificationBuilder id(Long id) {
