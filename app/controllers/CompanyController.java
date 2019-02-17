@@ -5,8 +5,8 @@ import com.fasterxml.jackson.databind.JsonNode;
 import play.libs.Json;
 import play.mvc.Controller;
 import play.mvc.Result;
-import service.CompanyService;
-import service.CompanyValidator;
+import service.company.CompanyService;
+import service.company.CompanyValidator;
 
 import javax.inject.Inject;
 import java.util.List;

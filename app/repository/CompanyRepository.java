@@ -11,15 +11,15 @@ import javax.inject.Inject;
 import java.util.Optional;
 
 /**
- * Company entity (DBO)
+ * Company repository
  *
  * @author Sergii R.
  * @since 17/02/19
  */
 public class CompanyRepository {
 
-    private final EbeanServer ebeanServer;
     private static final Logger LOG = LoggerFactory.getLogger(CompanyRepository.class);
+    private final EbeanServer ebeanServer;
 
     @Inject
     public CompanyRepository(EbeanConfig ebeanConfig) {
@@ -27,8 +27,8 @@ public class CompanyRepository {
     }
 
     public boolean save(CompanyEntity companyEntity) {
-        Optional<CompanyEntity> identificationEntity = Optional.ofNullable(ebeanServer.find(CompanyEntity.class).setId(companyEntity.getId()).findUnique());
-        if (identificationEntity.isPresent()) {
+        Optional<CompanyEntity> company = Optional.ofNullable(ebeanServer.find(CompanyEntity.class).setId(companyEntity.getId()).findUnique());
+        if (company.isPresent()) {
             LOG.warn("Company with id {} already exists", companyEntity.getId());
             return false;
         }

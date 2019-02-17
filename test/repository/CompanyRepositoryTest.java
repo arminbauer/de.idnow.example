@@ -19,12 +19,12 @@ import static org.junit.Assert.assertEquals;
  */
 public class CompanyRepositoryTest extends WithApplication {
 
+    private CompanyRepository companyRepository;
+
     @Override
     protected Application provideApplication() {
         return new GuiceApplicationBuilder().build();
     }
-
-    private CompanyRepository companyRepository;
 
     @Before
     public void createCompanyRepository() {

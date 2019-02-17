@@ -1,4 +1,4 @@
-package service;
+package service.company;
 
 import api.Company;
 import org.apache.commons.lang3.StringUtils;

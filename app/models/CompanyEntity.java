@@ -33,49 +33,11 @@ public class CompanyEntity extends Model {
         this.currentSlaPercentage = currentSlaPercentage;
     }
 
-    public CompanyEntity(){}
-
-    public static CompanyEntityBuilder builder(){
-        return new CompanyEntityBuilder();
+    public CompanyEntity() {
     }
 
-    public static class CompanyEntityBuilder {
-        private Long id;
-        private String name;
-        private Long slaTime;
-        private Float slaPercentage;
-        private Float currentSlaPercentage;
-
-        CompanyEntityBuilder(){}
-
-        public CompanyEntityBuilder id(Long id){
-            this.id = id;
-            return this;
-        }
-
-        public CompanyEntityBuilder name(String name){
-            this.name = name;
-            return this;
-        }
-
-        public CompanyEntityBuilder slaTime(Long slaTime){
-            this.slaTime = slaTime;
-            return this;
-        }
-
-        public CompanyEntityBuilder slaPercentage(Float slaPercentage){
-            this.slaPercentage = slaPercentage;
-            return this;
-        }
-
-        public CompanyEntityBuilder currentSlaPercentage(Float currentSlaPercentage){
-            this.currentSlaPercentage = currentSlaPercentage;
-            return this;
-        }
-
-        public CompanyEntity build(){
-            return new CompanyEntity(id, name, slaTime, slaPercentage, currentSlaPercentage);
-        }
+    public static CompanyEntityBuilder builder() {
+        return new CompanyEntityBuilder();
     }
 
     public Long getId() {
@@ -132,5 +94,45 @@ public class CompanyEntity extends Model {
                 && Objects.equals(slaTime, companyToCheck.getSlaTime())
                 && Objects.equals(slaPercentage, companyToCheck.getSlaPercentage())
                 && Objects.equals(currentSlaPercentage, companyToCheck.getCurrentSlaPercentage());
+    }
+
+    public static class CompanyEntityBuilder {
+        private Long id;
+        private String name;
+        private Long slaTime;
+        private Float slaPercentage;
+        private Float currentSlaPercentage;
+
+        CompanyEntityBuilder() {
+        }
+
+        public CompanyEntityBuilder id(Long id) {
+            this.id = id;
+            return this;
+        }
+
+        public CompanyEntityBuilder name(String name) {
+            this.name = name;
+            return this;
+        }
+
+        public CompanyEntityBuilder slaTime(Long slaTime) {
+            this.slaTime = slaTime;
+            return this;
+        }
+
+        public CompanyEntityBuilder slaPercentage(Float slaPercentage) {
+            this.slaPercentage = slaPercentage;
+            return this;
+        }
+
+        public CompanyEntityBuilder currentSlaPercentage(Float currentSlaPercentage) {
+            this.currentSlaPercentage = currentSlaPercentage;
+            return this;
+        }
+
+        public CompanyEntity build() {
+            return new CompanyEntity(id, name, slaTime, slaPercentage, currentSlaPercentage);
+        }
     }
 }

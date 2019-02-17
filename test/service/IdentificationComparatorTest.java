@@ -3,6 +3,7 @@ package service;
 import models.CompanyEntity;
 import models.IdentificationEntity;
 import org.junit.Test;
+import service.identification.IdentificationComparator;
 
 import java.util.Arrays;
 import java.util.List;

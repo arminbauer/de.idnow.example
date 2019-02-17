@@ -2,10 +2,8 @@ package models;
 
 import com.avaje.ebean.Model;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
@@ -24,8 +22,7 @@ public class IdentificationEntity extends Model {
     private String name;
     private Long time;
     private Long waitingTime;
-    @ManyToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "companyId")
+    @ManyToOne
     private CompanyEntity companyEntity;
     private IdentificationStatus identificationStatus;
 
@@ -43,53 +40,6 @@ public class IdentificationEntity extends Model {
 
     public static IdentificationEntityBuilder builder() {
         return new IdentificationEntityBuilder();
-    }
-
-    public static class IdentificationEntityBuilder {
-        private Long id;
-        private String name;
-        private Long time;
-        private Long waitingTime;
-        private CompanyEntity companyEntity;
-        private IdentificationStatus identificationStatus;
-
-        IdentificationEntityBuilder() {
-        }
-
-        public IdentificationEntityBuilder id(Long id) {
-            this.id = id;
-            return this;
-        }
-
-        public IdentificationEntityBuilder name(String name) {
-            this.name = name;
-            return this;
-        }
-
-        public IdentificationEntityBuilder time(Long time) {
-            this.time = time;
-            return this;
-        }
-
-        public IdentificationEntityBuilder waitingTime(Long waitingTime) {
-            this.waitingTime = waitingTime;
-            return this;
-        }
-
-        public IdentificationEntityBuilder companyEntity(CompanyEntity companyEntity) {
-            this.companyEntity = companyEntity;
-            return this;
-        }
-
-        public IdentificationEntityBuilder identificationStatus(IdentificationStatus identificationStatus) {
-            this.identificationStatus = identificationStatus;
-            return this;
-        }
-
-        public IdentificationEntity build() {
-            return new IdentificationEntity(id, name, time, waitingTime, companyEntity, identificationStatus);
-        }
-
     }
 
     public Long getId() {
@@ -138,5 +88,52 @@ public class IdentificationEntity extends Model {
 
     public void setIdentificationStatus(IdentificationStatus identificationStatus) {
         this.identificationStatus = identificationStatus;
+    }
+
+    public static class IdentificationEntityBuilder {
+        private Long id;
+        private String name;
+        private Long time;
+        private Long waitingTime;
+        private CompanyEntity companyEntity;
+        private IdentificationStatus identificationStatus;
+
+        IdentificationEntityBuilder() {
+        }
+
+        public IdentificationEntityBuilder id(Long id) {
+            this.id = id;
+            return this;
+        }
+
+        public IdentificationEntityBuilder name(String name) {
+            this.name = name;
+            return this;
+        }
+
+        public IdentificationEntityBuilder time(Long time) {
+            this.time = time;
+            return this;
+        }
+
+        public IdentificationEntityBuilder waitingTime(Long waitingTime) {
+            this.waitingTime = waitingTime;
+            return this;
+        }
+
+        public IdentificationEntityBuilder companyEntity(CompanyEntity companyEntity) {
+            this.companyEntity = companyEntity;
+            return this;
+        }
+
+        public IdentificationEntityBuilder identificationStatus(IdentificationStatus identificationStatus) {
+            this.identificationStatus = identificationStatus;
+            return this;
+        }
+
+        public IdentificationEntity build() {
+            return new IdentificationEntity(id, name, time, waitingTime, companyEntity, identificationStatus);
+        }
+
     }
 }

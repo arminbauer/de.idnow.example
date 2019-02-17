@@ -6,6 +6,7 @@ import org.junit.Test;
 import play.Application;
 import play.inject.guice.GuiceApplicationBuilder;
 import play.test.WithApplication;
+import service.company.CompanyValidator;
 
 import java.util.List;
 
@@ -18,12 +19,12 @@ import static org.junit.Assert.assertEquals;
  * @since 17/02/19
  */
 public class CompanyValidatorTest extends WithApplication {
+    private CompanyValidator companyValidator;
+
     @Override
     protected Application provideApplication() {
         return new GuiceApplicationBuilder().build();
     }
-
-    private CompanyValidator companyValidator;
 
     @Before
     public void createCompanyValidator() {

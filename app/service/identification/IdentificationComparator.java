@@ -1,4 +1,4 @@
-package service;
+package service.identification;
 
 import models.IdentificationEntity;
 
@@ -12,9 +12,9 @@ import java.util.Comparator;
  */
 public class IdentificationComparator implements Comparator<IdentificationEntity> {
 
-    private final float slaDifferenceWeight;
-    private final float slaWeight;
-    private final float waitingTimeWeight;
+    private float slaDifferenceWeight;
+    private float slaWeight;
+    private float waitingTimeWeight;
 
     /**
      * The order of the identifications regarding the SLAs of the companies (some identifications can be not finished)
@@ -47,7 +47,7 @@ public class IdentificationComparator implements Comparator<IdentificationEntity
      *
      * @param identification1 first identification to check
      * @param identification2 second identification to check
-     * @return
+     * @return the order of sorting
      */
     @Override
     public int compare(IdentificationEntity identification1, IdentificationEntity identification2) {
@@ -82,11 +82,11 @@ public class IdentificationComparator implements Comparator<IdentificationEntity
      * 2. sla percentage ratio weight
      * 3. time difference (sla time - waiting time) ratio weight
      *
-     * @param currentSlaPercentage
-     * @param slaPercentage
-     * @param slaTime
-     * @param waitingTime
-     * @return
+     * @param currentSlaPercentage - the SLA (Service Level Agreement) percentage of the company
+     * @param slaPercentage        - the current SLA percentage of this company in this month
+     * @param slaTime              - the SLA (Service Level Agreement) time of this company in seconds
+     * @param waitingTime          - the current waiting time of the identification in seconds (since the user started)
+     * @return total weight
      */
     private float getTotalWeight(float currentSlaPercentage, float slaPercentage, long slaTime, long waitingTime) {
         return getSlaDifferenceRatioWeight(currentSlaPercentage, slaPercentage)
@@ -98,8 +98,8 @@ public class IdentificationComparator implements Comparator<IdentificationEntity
     /**
      * Calculates the weight of SLA percentage difference (currentSlaPercentage - slaPercentage) ratio
      *
-     * @param currentSlaPercentage
-     * @param slaPercentage
+     * @param currentSlaPercentage - the current SLA percentage of this company in this month
+     * @param slaPercentage        - the SLA (Service Level Agreement) percentage of the company
      * @return the weight of Sla difference ratio
      */
     private float getSlaDifferenceRatioWeight(float currentSlaPercentage, float slaPercentage) {
@@ -119,11 +119,23 @@ public class IdentificationComparator implements Comparator<IdentificationEntity
     /**
      * Calculates the ratio weight between sla time and waiting time
      *
-     * @param slaTime
-     * @param waitingTime
-     * @return
+     * @param slaTime     - the SLA (Service Level Agreement) time of this company in seconds
+     * @param waitingTime - the current waiting time of the identification in seconds (since the user started)
+     * @return time difference ratio weight
      */
     private float getTimeDifferenceRatioWeight(long slaTime, long waitingTime) {
         return waitingTimeWeight * (slaTime - waitingTime) / slaTime;
+    }
+
+    public void setSlaDifferenceWeight(float slaDifferenceWeight) {
+        this.slaDifferenceWeight = slaDifferenceWeight;
+    }
+
+    public void setSlaWeight(float slaWeight) {
+        this.slaWeight = slaWeight;
+    }
+
+    public void setWaitingTimeWeight(float waitingTimeWeight) {
+        this.waitingTimeWeight = waitingTimeWeight;
     }
 }

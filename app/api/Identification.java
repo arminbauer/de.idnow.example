@@ -18,6 +18,7 @@ public class Identification {
     @JsonProperty("waiting_time")
     private Long waitingTime;
 
+    @JsonProperty("companyid")
     private Long companyId;
 
     public Identification() {
@@ -33,6 +34,46 @@ public class Identification {
 
     public static IdentificationBuilder builder() {
         return new IdentificationBuilder();
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public Long getTime() {
+        return time;
+    }
+
+    public void setTime(Long time) {
+        this.time = time;
+    }
+
+    public Long getWaitingTime() {
+        return waitingTime;
+    }
+
+    public void setWaitingTime(Long waitingTime) {
+        this.waitingTime = waitingTime;
+    }
+
+    public Long getCompanyId() {
+        return companyId;
+    }
+
+    public void setCompanyId(Long companyId) {
+        this.companyId = companyId;
     }
 
     public static class IdentificationBuilder {
@@ -74,45 +115,5 @@ public class Identification {
             return new Identification(id, name, time, waitingTime, companyId);
         }
 
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public Long getTime() {
-        return time;
-    }
-
-    public void setTime(Long time) {
-        this.time = time;
-    }
-
-    public Long getWaitingTime() {
-        return waitingTime;
-    }
-
-    public void setWaitingTime(Long waitingTime) {
-        this.waitingTime = waitingTime;
-    }
-
-    public Long getCompanyId() {
-        return companyId;
-    }
-
-    public void setCompanyId(Long companyId) {
-        this.companyId = companyId;
     }
 }

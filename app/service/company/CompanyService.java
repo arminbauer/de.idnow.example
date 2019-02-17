@@ -1,7 +1,8 @@
-package service;
+package service.company;
 
 import api.Company;
 import repository.CompanyRepository;
+import service.ConversionService;
 
 import javax.inject.Inject;
 

@@ -38,46 +38,6 @@ public class Company {
         return new CompanyBuilder();
     }
 
-    public static class CompanyBuilder {
-        private Long id;
-        private String name;
-        private Long slaTime;
-        private Float slaPercentage;
-        private Float currentSlaPercentage;
-
-        CompanyBuilder() {
-        }
-
-        public CompanyBuilder id(Long id) {
-            this.id = id;
-            return this;
-        }
-
-        public CompanyBuilder name(String name) {
-            this.name = name;
-            return this;
-        }
-
-        public CompanyBuilder slaTime(Long slaTime) {
-            this.slaTime = slaTime;
-            return this;
-        }
-
-        public CompanyBuilder slaPercentage(Float slaPercentage) {
-            this.slaPercentage = slaPercentage;
-            return this;
-        }
-
-        public CompanyBuilder currentSlaPercentage(Float currentSlaPercentage) {
-            this.currentSlaPercentage = currentSlaPercentage;
-            return this;
-        }
-
-        public Company build() {
-            return new Company(id, name, slaTime, slaPercentage, currentSlaPercentage);
-        }
-    }
-
     public Long getId() {
         return id;
     }
@@ -116,5 +76,45 @@ public class Company {
 
     public void setCurrentSlaPercentage(Float currentSlaPercentage) {
         this.currentSlaPercentage = currentSlaPercentage;
+    }
+
+    public static class CompanyBuilder {
+        private Long id;
+        private String name;
+        private Long slaTime;
+        private Float slaPercentage;
+        private Float currentSlaPercentage;
+
+        CompanyBuilder() {
+        }
+
+        public CompanyBuilder id(Long id) {
+            this.id = id;
+            return this;
+        }
+
+        public CompanyBuilder name(String name) {
+            this.name = name;
+            return this;
+        }
+
+        public CompanyBuilder slaTime(Long slaTime) {
+            this.slaTime = slaTime;
+            return this;
+        }
+
+        public CompanyBuilder slaPercentage(Float slaPercentage) {
+            this.slaPercentage = slaPercentage;
+            return this;
+        }
+
+        public CompanyBuilder currentSlaPercentage(Float currentSlaPercentage) {
+            this.currentSlaPercentage = currentSlaPercentage;
+            return this;
+        }
+
+        public Company build() {
+            return new Company(id, name, slaTime, slaPercentage, currentSlaPercentage);
+        }
     }
 }

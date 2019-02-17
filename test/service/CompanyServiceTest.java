@@ -6,6 +6,7 @@ import org.junit.Test;
 import play.Application;
 import play.inject.guice.GuiceApplicationBuilder;
 import play.test.WithApplication;
+import service.company.CompanyService;
 
 import static org.junit.Assert.assertTrue;
 
@@ -17,12 +18,12 @@ import static org.junit.Assert.assertTrue;
  */
 public class CompanyServiceTest extends WithApplication {
 
+    private CompanyService companyService;
+
     @Override
     protected Application provideApplication() {
         return new GuiceApplicationBuilder().build();
     }
-
-    private CompanyService companyService;
 
     @Before
     public void createCompanyService() {
