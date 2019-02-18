@@ -52,17 +52,17 @@ public class IdentificationComparator implements Comparator<IdentificationEntity
     @Override
     public int compare(IdentificationEntity identification1, IdentificationEntity identification2) {
 
-        long waitingTime1 = identification1.getWaitingTime();
-        long waitingTime2 = identification2.getWaitingTime();
+        long waitingTime1 = Math.abs(identification1.getWaitingTime()); //Assume that somebody who is working with db can add - by mistake, it can be different check based on config e.g. sla percentage can't be lower than 20
+        long waitingTime2 = Math.abs(identification2.getWaitingTime());
 
-        long slaTime1 = identification1.getCompanyEntity().getSlaTime();
-        long slaTime2 = identification2.getCompanyEntity().getSlaTime();
+        long slaTime1 = Math.abs(identification1.getCompanyEntity().getSlaTime());
+        long slaTime2 = Math.abs(identification2.getCompanyEntity().getSlaTime());
 
-        float slaPercentage1 = identification1.getCompanyEntity().getSlaPercentage();
-        float slaPercentage2 = identification2.getCompanyEntity().getSlaPercentage();
+        float slaPercentage1 = Math.abs(identification1.getCompanyEntity().getSlaPercentage());
+        float slaPercentage2 = Math.abs(identification2.getCompanyEntity().getSlaPercentage());
 
-        float currentSlaPercentage1 = identification1.getCompanyEntity().getCurrentSlaPercentage();
-        float currentSlaPercentage2 = identification2.getCompanyEntity().getCurrentSlaPercentage();
+        float currentSlaPercentage1 = Math.abs(identification1.getCompanyEntity().getCurrentSlaPercentage());
+        float currentSlaPercentage2 = Math.abs(identification2.getCompanyEntity().getCurrentSlaPercentage());
 
 
         if (slaPercentage1 == slaPercentage2) {

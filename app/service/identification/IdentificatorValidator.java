@@ -30,17 +30,23 @@ public class IdentificatorValidator {
 
         if (identification.getId() == null) {
             errors.add("Identification id is required!");
+        } else if (identification.getId() <= 0) {
+            errors.add("Identification id should be greater than zero!");
         }
         if (StringUtils.isEmpty(identification.getName())) {
             errors.add("Company name is required!");
         }
         if (identification.getWaitingTime() == null) {
             errors.add("Waiting time is required!");
+        } else if (identification.getWaitingTime() <= 0) {
+            errors.add("Identification waiting time should be greater than zero!");
         }
         if (identification.getCompanyId() == null) {
             errors.add("Company id is required!");
         } else {
-            if (companyRepository.getById(identification.getCompanyId()) == null) {
+            if (identification.getCompanyId() <= 0) {
+                errors.add("Company id should be greater than zero!");
+            } else if (companyRepository.getById(identification.getCompanyId()) == null) {
                 errors.add("Company with this id doesn't exist");
             }
         }

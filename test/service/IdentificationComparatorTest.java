@@ -96,6 +96,35 @@ public class IdentificationComparatorTest {
     }
 
     @Test
+    public void testMultipleIdentificationsWithNegativeNumbers() {
+        CompanyEntity company = CompanyEntity.builder().id(1L).name("Company 1")
+                .slaTime(60L).slaPercentage(90F).currentSlaPercentage(95F).build();
+        CompanyEntity company2 = CompanyEntity.builder().id(2L).name("Company 2")
+                .slaTime(120L).slaPercentage(-80F).currentSlaPercentage(80F).build();
+        CompanyEntity company3 = CompanyEntity.builder().id(3L).name("Company 3")
+                .slaTime(-60L).slaPercentage(90F).currentSlaPercentage(95F).build();
+        CompanyEntity company4 = CompanyEntity.builder().id(4L).name("Company 4")
+                .slaTime(60L).slaPercentage(90F).currentSlaPercentage(-90F).build();
+
+        IdentificationEntity identification1 = IdentificationEntity.builder()
+                .id(1L).waitingTime(45L).companyEntity(company).build();
+        IdentificationEntity identification2 = IdentificationEntity.builder()
+                .id(2L).waitingTime(60L).companyEntity(company2).build();
+        IdentificationEntity identification3 = IdentificationEntity.builder()
+                .id(3L).waitingTime(45L).companyEntity(company2).build();
+        IdentificationEntity identification4 = IdentificationEntity.builder()
+                .id(4L).waitingTime(30L).companyEntity(company3).build();
+        IdentificationEntity identification5 = IdentificationEntity.builder()
+                .id(5L).waitingTime(45L).companyEntity(company4).build();
+
+        IdentificationComparator identificationComparator = new IdentificationComparator();
+        List<IdentificationEntity> identificationList = Arrays.asList(identification1, identification2,
+                identification3, identification4, identification5);
+        identificationList.sort(identificationComparator);
+        assertEquals("2,3,5,1,4", getQueueString(identificationList));
+    }
+
+    @Test
     public void testMultipleIdentificationsWithTwoWeights() {
         CompanyEntity company = CompanyEntity.builder().id(1L).name("Company 1")
                 .slaTime(60L).slaPercentage(90F).currentSlaPercentage(95F).build();

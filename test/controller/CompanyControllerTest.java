@@ -38,4 +38,18 @@ public class CompanyControllerTest {
         });
     }
 
+    @Test
+    public void testAddNewCompanyWithNegativeNumbers() {
+        running(testServer(3333, fakeApplication(inMemoryDatabase())), () -> {
+            JsonNode company = Json.parse("{\"id\": 1, \"name\": \"Test Bank\", \"sla_time\": -60, \"sla_percentage\": -0.9, \"current_sla_percentage\": -0.95}");
+            assertEquals(WS.url("http://localhost:3333/api/v1/addCompany").post(company).get(10000).getStatus(), BAD_REQUEST);
+
+            JsonNode company2 = Json.parse("{\"id\": 2, \"name\": \"Test Bank\", \"sla_time\": -60, \"sla_percentage\": -0.9, \"current_sla_percentage\": -0.95}");
+            assertEquals(WS.url("http://localhost:3333/api/v1/addCompany").post(company2).get(10000).getBody(),
+                    "Company sla time should be greater than zero! " +
+                            "Company sla percentage should be greater than zero! " +
+                            "Company current sla percentage can't be negative!");
+        });
+    }
+
 }
