@@ -1,0 +1,27 @@
+@import models.Company
+    @(companyForm: Form[Company])
+
+    @import helper._
+
+@main("Company Form") {
+        <div class="container">
+            <h1 >Add Company</h1>
+
+            <br><br>
+            <div align="center">
+            @helper.form(action = routes.RestController.addCompanyForm()){
+                @helper.inputText(companyForm("id"))
+                @helper.inputText(companyForm("name"))
+                @helper.inputText(companyForm("slaTime"))
+                @helper.inputText(companyForm("slaPercentage"))
+                @helper.inputText(companyForm("currentSlaPercentage"))
+                <button type="submit" class="btn btn-primary">ADD</button>
+                }
+            </div>
+            <br>
+            <div align="center">
+                <a href="@routes.Application.index()"><button>BACK</button></a>
+            </div>
+        </div>
+
+    }

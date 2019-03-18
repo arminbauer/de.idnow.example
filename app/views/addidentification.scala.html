@@ -1,0 +1,27 @@
+@import models.Identification
+@import java.util
+@(identificationForm: Form[Identification], identifications: util.List[Identification])
+
+    @import helper._
+
+@main("Identification Form") {
+        <div class="container">
+            <h1 >Add Identification</h1>
+
+            <br><br>
+            <div align="center">
+            @helper.form(action = routes.RestController.addIdentificationForm()){
+                @helper.inputText(identificationForm("id"))
+                @helper.inputText(identificationForm("name"))
+                @helper.inputText(identificationForm("time"))
+                @helper.inputText(identificationForm("waitingTime"))
+                @helper.inputText(identificationForm("companyId"))
+                <button type="submit" class="btn btn-primary">ADD</button>
+                }
+            </div>
+            <br>
+            <div align="center">
+                <a href="@routes.Application.index()"><button>BACK</button></a>
+            </div>
+        </div>
+    }

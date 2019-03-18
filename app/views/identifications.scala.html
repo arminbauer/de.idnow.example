@@ -1,0 +1,42 @@
+@import models.Identification
+@import java.util
+@(identifications: util.List[util.List[Identification]])
+
+@import helper._
+
+@main("Identifications") {
+    <div class="container">
+        <h1>Identifications</h1>
+        <br><br>
+        <div align="center">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <td>Id</td>
+                        <td>Name</td>
+                        <td>Time</td>
+                        <td>Waiting Time</td>
+                        <td>Company Id</td>
+                    </tr>
+                </thead>
+                <tbody>
+                    @for(i <- identifications){
+                        @for(j <- i) {
+                            <tr>
+                                <td>@j.getId()</td>
+                                <td>@j.getName()</td>
+                                <td>@j.getTime()</td>
+                                <td>@j.getWaitingTime()</td>
+                                <td>@j.getCompanyId()</td>
+                            </tr>
+                        }
+                    }
+                </tbody>
+            </table>
+        </div>
+        <br>
+        <div align="center">
+            <a href="@routes.Application.index()"><button>BACK</button></a>
+        </div>
+    </div>
+}

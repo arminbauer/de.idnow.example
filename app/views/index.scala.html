@@ -2,6 +2,21 @@
 
 @main("Welcome to Play") {
 
-    @play20.welcome(message, style = "Java")
+    <div class="container">
+        <h1> Welcome </h1>
+        <div class="row">
+            <div>
+                <a href="@routes.RestController.getCompanyForm()" class="btn btn-secondary">Add Company</a>
+            </div>
+            <br>
+            <div>
+                <a href="@routes.RestController.getIdentificationForm()" class="btn btn-secondary">Add Identification</a>
+            </div>
+            <br>
+            <div>
+                <a href="@routes.RestController.getPendingIdentification()" class="btn btn-secondary">View Identifications</a>
+            </div>
+        </div>
+    </div>
 
 }
