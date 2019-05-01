@@ -102,7 +102,7 @@ public class RestControllerTest {
 
 				JsonNode arr = WS.url("http://localhost:3333/api/v1/identifications").get().get(10000).asJson();
 				assertNotEquals(arr.size(), 0);
-				assertEquals(arr.get(0), identification3); //the first element is expected to be id 2
+				assertEquals(arr.get(0), identification3); //the first element is expected to be id 3
 				assertEquals(arr.get(1), identification2);
 				assertEquals(arr.get(2), identification1);
 			}

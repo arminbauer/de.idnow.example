@@ -73,13 +73,15 @@ public class Identification implements Scorable {
 
     @Override
     public double score() {
-        if (this.getCompany() == null) {
+        try {
+            if (this.getCompany() == null) {
+                return 0;
+            }
+            double score1 = Scorable.weight1 * ((double) this.getCompany().getSla_time() / this.getWaiting_time());
+            double score2 = Scorable.weight2 * (this.getCompany().getCurrent_sla_percentage() / this.getCompany().getSla_percentage());
+            return score1 + score2;
+        } catch (ArithmeticException e) {
             return 0;
         }
-
-        double score1 = Scorable.weight1 * ((double) this.getCompany().getSla_time()/this.getWaiting_time());
-        double score2 = Scorable.weight2 * (this.getCompany().getCurrent_sla_percentage()/this.getCompany().getSla_percentage());
-
-        return score1 + score2;
     }
 }
