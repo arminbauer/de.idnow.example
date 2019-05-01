@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Identifications</title>
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+        integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>
+    <style>
+        * {
+            font-family: "verdana";
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="container">
+        <h1 style="text-align: center">Identifications Assignemnt</h1>
+        <ul class="nav nav-tabs" id="myTab" role="tablist">
+            <li class="nav-item">
+                <a class="nav-link active" id="company-tab" data-toggle="tab" href="#company" role="tab"
+                    aria-controls="company" aria-selected="true">addCompany </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" id="id-tab" data-toggle="tab" href="#id" role="tab" aria-controls="id"
+                    aria-selected="false">startIdentification</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" id="contact-tab" data-toggle="tab" href="#contact" role="tab"
+                    aria-controls="contact" aria-selected="false">identifications</a>
+            </li>
+        </ul>
+        <div class="tab-content" id="myTabContent">
+            <div class="tab-pane fade show active" id="company" role="tabpanel" aria-labelledby="company-tab">
+                <div>
+                    <h2>Company input</h2>
+                    <div class="row">
+                        <div class="col-md-4">
+                            <form id="form2">
+                                <div class="form-group">
+                                    <label>Company ID:</label>
+                                    <input type="text" class="form-control" name="id" />
+                                </div>
+                                <div class="form-group">
+                                    <label>Company Name:</label>
+                                    <input type="text" class="form-control" name="name" />
+                                </div>
+                                <div class="form-group">
+                                    <label>SLA Time:</label>
+                                    <input type="number" class="form-control" name="sla_time" />
+                                </div>
+                                <div class="form-group">
+                                    <label>SLA Percentage:</label>
+                                    <input type="number" class="form-control" name="sla_percentage" />
+                                </div>
+                                <div class="form-group">
+                                    <label>Current SLA Percentage:</label>
+                                    <input type="number" class="form-control" name="current_sla_percentage" />
+                                </div>
+
+                                <button type="button" class="btn btn-submit btn-default">Submit</button>
+                            </form>
+                        </div>
+                        <div class="col-md-4">
+                            <br>
+                            <textarea rows="10" cols="50" id="response-message"></textarea>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="tab-pane fade" id="id" role="tabpanel" aria-labelledby="id-tab">
+                <div>
+                    <h2>ID input</h2>
+                    <div class="row">
+                        <div class="col-md-4">
+                            <form id="form1">
+                                <div class="form-group">
+                                    <label>Ident ID:</label>
+                                    <input type="text" class="form-control" name="id" />
+                                </div>
+                                <div class="form-group">
+                                    <label>Name:</label>
+                                    <input type="text" class="form-control" name="name" />
+                                </div>
+                                <div class="form-group">
+                                    <label>Waiting Time:</label>
+                                    <input type="number" class="form-control" name="waiting_time" />
+                                </div>
+                                <div class="form-group">
+                                    <label>Company ID:</label>
+                                    <input type="number" class="form-control" name="companyid" />
+                                </div>
+
+                                <button type="button" class="btn btn-submit btn-default">Submit</button>
+                            </form>
+                        </div>
+                        <div class="col-md-4">
+                            <br>
+                            <textarea rows="10" cols="50" id="id-response-message"></textarea>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+            <div class="tab-pane fade" id="contact" role="tabpanel" aria-labelledby="contact-tab">
+                <button type="button" class="btn btn-default" id="btn-get-id">Get Identifications</button>
+                <div class="col-md-4">
+                    <br>
+                    <textarea rows="20" cols="80" id="get-response-message"></textarea>
+                </div>
+            </div>
+        </div>
+
+
+
+    </div>
+
+    <script>
+        $("#form1 .btn-submit").click(function () {
+            var data = {
+                id: $("#form1 input[name=id]").val(),
+                name: $("#form1 input[name=name]").val(),
+                waiting_time: $("#form1 input[name=waiting_time]").val(),
+                companyid: $("#form1 input[name=companyid]").val(),
+            };
+            $.ajax({
+                url: "/api/v1/startIdentification",
+                data: JSON.stringify(data),
+                success: function (result) {
+                    $('#id-response-message').val(result);
+                },
+                method: "POST",
+                dataType: "text",
+                contentType: "application/json"
+            });
+        });
+
+        $("#form2 .btn-submit").click(function () {
+            var data = {
+                id: $("#form2 input[name=id]").val(),
+                name: $("#form2 input[name=name]").val(),
+                sla_time: $("#form2 input[name=sla_time]").val(),
+                sla_percentage: $("#form2 input[name=sla_percentage]").val(),
+                current_sla_percentage: $("#form2 input[name=current_sla_percentage]").val(),
+            };
+            $.ajax({
+                url: "/api/v1/addCompany",
+                data: JSON.stringify(data),
+                success: function (result) {
+                    $('#response-message').val(result);
+                },
+                method: "POST",
+                dataType: "text",
+                contentType: "application/json"
+            });
+        });
+
+        $("#btn-get-id").click(function () {
+            $.ajax({
+                url: "/api/v1/identifications",
+                success: function (result) {
+                    var textedJson = JSON.stringify(JSON.parse(result), null, 4);
+                    $('#get-response-message').text(textedJson);
+                },
+                method: "GET",
+                dataType: "text",
+                contentType: "application/json"
+            });
+        });
+
+    </script>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+        integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+        crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
+        integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+        crossorigin="anonymous"></script>
+
+</body>
+
+</html>
