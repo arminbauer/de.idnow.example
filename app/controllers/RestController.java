@@ -9,13 +9,21 @@ import model.Identification;
 import model.IdentificationSorter;
 import play.libs.Json;
 import play.mvc.*;
+import service.company.CompanyService;
+import service.identification.IdentificationService;
 
+import javax.inject.Inject;
 import java.util.*;
 
 public class RestController extends Controller {
     ObjectMapper objectMapper = new ObjectMapper();
-    Map<Integer, Identification> identMap = new HashMap();
-    Map<Integer, Company> companyMap = new HashMap<>();
+    
+    @Inject
+    IdentificationService idService;
+
+    @Inject
+    CompanyService companyService;
+
     public Result startIdentification() {
         //Get the parsed JSON data
         JsonNode json = request().body().asJson();
@@ -26,7 +34,7 @@ public class RestController extends Controller {
         } else {
             try {
                 Identification ident = objectMapper.treeToValue(json, Identification.class);
-                Company parentCompany = companyMap.get(ident.getCompanyid());
+                Company parentCompany = companyService.getCompany(ident.getCompanyid());
                 if (parentCompany == null) {
                     throw new Exception("Cannot reference to Company ID, company doesn't exist");
                 } else {
@@ -35,8 +43,8 @@ public class RestController extends Controller {
                 if (ident.getWaiting_time() <= 0) {
                     throw new Exception("[Waiting_time] Negative or zero values are not allowed");
                 }
-                identMap.put(ident.getId(), ident);
-                return ok("Identifications: " + identMap);
+                idService.addIdentification(ident);
+                return ok("Identifications: " + idService.getIdentMap());
             } catch (Exception ex) {
                 return internalServerError(ex.getMessage());
             }
@@ -56,8 +64,8 @@ public class RestController extends Controller {
                 if (comp.getSla_percentage() <= 0.0 || comp.getCurrent_sla_percentage() <= 0.0 || comp.getSla_time() <= 0.0) {
                     throw new Exception("[SLA_Percentage|Current_SLA_Percentage|SLA_TIME] Negative or zero values are not allowed");
                 }
-                companyMap.put(comp.getId(), comp);
-                return ok("Companies: " + companyMap);
+                companyService.addCompany(comp);
+                return ok("Companies: " + companyService.getCompanyMap());
             } catch (Exception ex) {
                 return internalServerError(ex.getMessage());
             }
@@ -66,20 +74,14 @@ public class RestController extends Controller {
 
     public Result identifications() {
         JsonNode identifications = Json.newArray();
-
         //Get the current identification
         //Compute correct order
         //Create new identification JSON with JsonNode identification = Json.newObject();
         //Add identification to identifications list
-
-        List<Identification> identList = new ArrayList<>(identMap.values());
-
-        // calling custom sort will calculate the score of each identification
-        // then sort by the scores
-        identList.sort(new IdentificationSorter());
+        List<Identification> sortedList = idService.getSortedIdentList();
 
         // write data to result array
-        for (Identification id : identList) {
+        for (Identification id : sortedList) {
             JsonNode js = objectMapper.valueToTree(id);
             ((ArrayNode) identifications).add(js);
         }
