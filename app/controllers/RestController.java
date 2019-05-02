@@ -26,11 +26,16 @@ public class RestController extends Controller {
         } else {
             try {
                 Identification ident = objectMapper.treeToValue(json, Identification.class);
-                ident.setCompany(companyMap.get(ident.getCompanyid()));
+                Company parentCompany = companyMap.get(ident.getCompanyid());
+                if (parentCompany == null) {
+                    throw new Exception("Cannot reference to Company ID, company doesn't exist");
+                } else {
+                    ident.setCompany(parentCompany);
+                }
                 identMap.put(ident.getId(), ident);
                 return ok("Identifications: " + identMap);
             } catch (Exception ex) {
-                return badRequest(ex.getMessage());
+                return internalServerError(ex.getMessage());
             }
         }
     }
@@ -48,7 +53,7 @@ public class RestController extends Controller {
                 companyMap.put(comp.getId(), comp);
                 return ok("Companies: " + companyMap);
             } catch (Exception ex) {
-                return badRequest(ex.getMessage());
+                return internalServerError(ex.getMessage());
             }
         }
     }

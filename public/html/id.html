@@ -134,6 +134,9 @@
                 success: function (result) {
                     $('#id-response-message').val(result);
                 },
+                error: function (request, status, error) {
+                    alert(request.responseText);
+                },
                 method: "POST",
                 dataType: "text",
                 contentType: "application/json"
@@ -153,6 +156,9 @@
                 data: JSON.stringify(data),
                 success: function (result) {
                     $('#response-message').val(result);
+                },
+                error: function (request, status, error) {
+                    alert(request.responseText);
                 },
                 method: "POST",
                 dataType: "text",
