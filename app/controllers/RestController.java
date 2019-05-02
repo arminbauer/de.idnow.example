@@ -28,7 +28,7 @@ public class RestController extends Controller {
                 Identification ident = objectMapper.treeToValue(json, Identification.class);
                 ident.setCompany(companyMap.get(ident.getCompanyid()));
                 identMap.put(ident.getId(), ident);
-                return ok("Added Identification: " + ident);
+                return ok("Identifications: " + identMap);
             } catch (Exception ex) {
                 return badRequest(ex.getMessage());
             }
@@ -46,7 +46,7 @@ public class RestController extends Controller {
             try {
                 Company comp = objectMapper.treeToValue(json, Company.class);
                 companyMap.put(comp.getId(), comp);
-                return ok("Added company: " + comp);
+                return ok("Companies: " + companyMap);
             } catch (Exception ex) {
                 return badRequest(ex.getMessage());
             }

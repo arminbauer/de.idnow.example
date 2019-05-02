@@ -6,9 +6,6 @@ import static play.test.Helpers.inMemoryDatabase;
 import static play.test.Helpers.running;
 import static play.test.Helpers.testServer;
 
-import model.Company;
-import model.Identification;
-import model.IdentificationSorter;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -16,9 +13,6 @@ import play.libs.Json;
 import play.libs.ws.WS;
 
 import com.fasterxml.jackson.databind.JsonNode;
-
-import java.util.ArrayList;
-import java.util.List;
 
 /**
 *
@@ -111,7 +105,7 @@ public class RestControllerTest {
 	}
 
 	@Test
-	public void orderingTest_Example2() {
+	public void orderingTest_MoreUrgent_SLA() {
 		running(testServer(3333, fakeApplication(inMemoryDatabase())), new Runnable() {
 			@Override
 			public void run() {
@@ -137,7 +131,7 @@ public class RestControllerTest {
 	}
 
 	@Test
-	public void orderingTest_Example3() {
+	public void orderingTest_MoreUrgent_SLATime() {
 		running(testServer(3333, fakeApplication(inMemoryDatabase())), new Runnable() {
 			@Override
 			public void run() {
@@ -163,7 +157,7 @@ public class RestControllerTest {
 	}
 
 	@Test
-	public void orderingTest_Example4() {
+	public void orderingTest_Mixed() {
 		running(testServer(3333, fakeApplication(inMemoryDatabase())), new Runnable() {
 			@Override
 			public void run() {
