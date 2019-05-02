@@ -79,8 +79,14 @@ public class Identification implements Scorable {
             }
             double score1 = Scorable.weight1 * ((double) this.getCompany().getSla_time() / this.getWaiting_time());
             double score2 = Scorable.weight2 * (this.getCompany().getCurrent_sla_percentage() / this.getCompany().getSla_percentage());
+
+            if (score1 == Double.POSITIVE_INFINITY || score2 == Double.POSITIVE_INFINITY) {
+                throw new ArithmeticException("Possible divided by zero");
+            }
+
             return score1 + score2;
         } catch (ArithmeticException e) {
+            System.out.println(e.getMessage());
             return 0;
         }
     }

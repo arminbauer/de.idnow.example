@@ -38,6 +38,39 @@ public class SortTest {
     }
 
     @Test
+    public void testScorableClass_DividedByZero() {
+        Company company1 = new Company();
+        company1.setId(1);
+        company1.setName("Test Bank 1");
+        company1.setSla_time(60);
+        company1.setSla_percentage(0.9);
+        company1.setCurrent_sla_percentage(0.9);
+
+        Identification id1 = new Identification();
+        id1.setId(1);
+        id1.setCompany(company1);
+        id1.setName("Frodo");
+        id1.setWaiting_time(0);
+
+        assertEquals(id1.score(), 0.0, 0.0);
+
+        Company company2 = new Company();
+        company2.setId(2);
+        company2.setName("Test Bank 2");
+        company2.setSla_time(60);
+        company2.setSla_percentage(0.0);
+        company2.setCurrent_sla_percentage(4.0);
+
+        Identification id2 = new Identification();
+        id2.setId(2);
+        id2.setCompany(company2);
+        id2.setName("Baggins");
+        id2.setWaiting_time(120);
+
+        assertEquals(id2.score(), 0.0, 0.0);
+    }
+
+    @Test
     public void testScorableClass_Comparison() {
         /* Company 1 */
         Company company1 = new Company();

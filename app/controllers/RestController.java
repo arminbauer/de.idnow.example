@@ -32,6 +32,9 @@ public class RestController extends Controller {
                 } else {
                     ident.setCompany(parentCompany);
                 }
+                if (ident.getWaiting_time() <= 0) {
+                    throw new Exception("[Waiting_time] Negative or zero values are not allowed");
+                }
                 identMap.put(ident.getId(), ident);
                 return ok("Identifications: " + identMap);
             } catch (Exception ex) {
@@ -50,6 +53,9 @@ public class RestController extends Controller {
         } else {
             try {
                 Company comp = objectMapper.treeToValue(json, Company.class);
+                if (comp.getSla_percentage() <= 0.0 || comp.getCurrent_sla_percentage() <= 0.0 || comp.getSla_time() <= 0.0) {
+                    throw new Exception("[SLA_Percentage|Current_SLA_Percentage|SLA_TIME] Negative or zero values are not allowed");
+                }
                 companyMap.put(comp.getId(), comp);
                 return ok("Companies: " + companyMap);
             } catch (Exception ex) {
