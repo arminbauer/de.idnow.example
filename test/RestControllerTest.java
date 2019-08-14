@@ -22,7 +22,7 @@ import com.fasterxml.jackson.databind.JsonNode;
 * If you are interested in mocking a whole application, see the wiki for more details.
 *
 */
-class RestControllerTest {
+public class RestControllerTest {
 
 	JsonNode identifications;
 
