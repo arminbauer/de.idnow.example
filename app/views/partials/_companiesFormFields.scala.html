@@ -1,0 +1,9 @@
+@import model.Company
+
+@(compFrom : Form[Company])
+
+@helper.inputText(compFrom("id"),'class -> "form-control")
+@helper.inputText(compFrom("name"),'class -> "form-control")
+@helper.inputText(compFrom("slaTime"),'class -> "form-control")
+@helper.inputText(compFrom("slaPercentage"),'class -> "form-control")
+@helper.inputText(compFrom("currentSlaPercentage"),'class -> "form-control")

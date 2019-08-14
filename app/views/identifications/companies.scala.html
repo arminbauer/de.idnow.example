@@ -1,0 +1,16 @@
+@import model.Company
+@import helper._
+
+@(companies : List[Company])
+
+@layout("All Companies"){
+<h1>All Companies</h1>
+@for(company <- companies){
+<a href="">@company.getId()</a>
+<p>Name : @company.getName()</p>
+<p>SlaTime : @company.getSlaTime()</p>
+<p>SLA% : @company.getSlaPercentage()</p>
+<p>CurrentSla% : @company.getCurrentSlaPercentage()</p>
+
+}
+}

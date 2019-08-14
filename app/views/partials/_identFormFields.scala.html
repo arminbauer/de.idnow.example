@@ -1,0 +1,9 @@
+@import model.Identification
+
+@(identFrom : Form[Identification])
+
+@helper.inputText(identFrom("id"),'class -> "form-control")
+@helper.inputText(identFrom("name"),'class -> "form-control")
+@helper.inputText(identFrom("time"),'class -> "form-control")
+@helper.inputText(identFrom("waitingTime"),'class -> "form-control")
+@helper.inputText(identFrom("companyId"),'class -> "form-control")

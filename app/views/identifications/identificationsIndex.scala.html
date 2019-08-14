@@ -1,0 +1,16 @@
+@import model.Identification
+@import helper._
+
+@(ids : List[Identification])
+
+@layout("All Identifications"){
+<h1>All Identifications</h1>
+@for(identify <- ids){
+<a href="">@identify.getId()</a>
+<p>Name : @identify.getName()</p>
+<p>Time : @identify.getTime()</p>
+<p>WaitTime : @identify.getWaitingTime()</p>
+<p>CompanyId : @identify.getCompanyId()</p>
+
+}
+}
